@@ -1,0 +1,31 @@
+* Structura textului
+** WHY: motivatia lucrarii
+*** rezultate slabe in trecut, solutia simpla este exponentiala
+*** potrivirea intre matematica computationala si teoria grafurilor
+** WHAT: descrierea formala a problemei
+** HOW: solutia propusa
+
+* Structure tezei
+** Sumar
+** Introducere
+** Context
+*** Definitii si notatii
+**** Teoria grafurilor [0%]
+***** TODO Concepte generale
+***** TODO Grafuri bipartite
+***** TODO Cuplaje perfecte
+**** Matematica computationala [0%]
+***** TODO Lema izolarii
+***** TODO Lema Schwartz–Zippel
+***** Algoritmi pentru calcularea determinantului [0%]
+****** TODO Eliminare Gauss
+****** TODO Black Box - Block Wiedemann
+***** TODO Walsh–Hadamard transform
+*** Lucrari similare
+**** TODO Matrix is as Easy as Matrix Inversion
+** Contributii
+*** Future work
+** Evaluare
+*** Implementare si evaluarea performantei
+** Referinte
+** Addenda
