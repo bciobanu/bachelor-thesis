@@ -1,5 +1,5 @@
 \documentclass[12pt,letterpaper]{report}
-\usepackage[left=1.1in, right=1.1in, top=1.0in, bottom=1.0in]{geometry}
+\usepackage[a4paper,left=1.3in, right=1.3in, top=1.2in, bottom=1.2in]{geometry}
 
 % Check if with latex or pdflatex.
 \ifx\pdftexversion\undefined
@@ -12,6 +12,7 @@
 \usepackage{titlesec}
 \usepackage{enumerate}
 \usepackage{amsmath}
+\usepackage{amsthm}
 \usepackage{fancyvrb}
 \usepackage{float}
 \usepackage{hyperref}
@@ -43,6 +44,19 @@
 % Rename "Contents"
 \renewcommand{\contentsname}{Continut}
 
+
+% Teorema
+\theoremstyle{definition} % Italics don't look as nice?
+  \newtheorem{thm}{Teorema}[chapter]
+
+% Definitie
+\theoremstyle{definition}
+  \newtheorem{defn}[thm]{Definitia}
+
+% Corolar
+\theoremstyle{definition}
+\newtheorem{clr}[thm]{Corolar}
+
 \begin{document}
 
   \onehalfspacing
@@ -69,8 +83,9 @@
   \pagenumbering{arabic}
   \setcounter{page}{1}
 
-  \setstretch{1.8}
+  \setstretch{1.5}
   \include{chapters/introduction}
+  \include{chapters/context}
   %\include{chapters/RelatedWork}
   %\include{chapters/Approach}
   %\include{chapters/Evaluation}

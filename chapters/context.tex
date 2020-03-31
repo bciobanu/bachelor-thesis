@@ -1,0 +1,45 @@
+\chapter{Context}
+
+\section{Teoria grafurilor}
+
+\begin{defn}
+  Un \textbf{graf neorientat} este o pereche ordonata $G(V, E)$, unde:
+  \begin{itemize}
+    \item{$V$ este multimea de noduri}.
+    \item{$E \subseteq \{(x, y)\ |\ (x, y) \in V^2 \land x \neq y\}$ este
+      multimea de muchii, care sunt perechi neordonate de noduri}.
+  \end{itemize}
+\end{defn}
+
+\begin{defn}
+  Un \textbf{graf bipartit} este un graf neorientat $G(V, E)$ ale carui noduri pot fi
+  partitionate in doua multimi disjuncte $V_{1}$ si $V_{2}$, altfel incat fiecare muchie
+  conecteaza un nod din multimea $V_{1}$ cu un nod din multimea $V_{2}$. Atunci,
+  se va nota cu $G(V_{1}, V_{2}, E)$.
+\end{defn}
+
+\begin{defn}
+  \textbf{Matricea Edmonds} $A$ a grafului bipartit $G(U, V, E)$, unde
+  $U = \{u_{1}, u_{2}, u_{3}, \ldots, u_{n}\}$,
+  $V = \{v_{1}, v_{2}, v_{3}, \ldots, v_{n}\}$ si $x_{i,j}$ indeterminate, se defineste ca:
+   \begin{equation}
+    A=
+    \begin{cases}
+      x_{i,j} & \text{daca}\ (u_{i}, v_{j}) \in E \\
+      0 & \text{altfel}
+    \end{cases}
+  \end{equation}
+\end{defn}
+
+\begin{thm}
+  Un graf bipartit $G(U, V, E)$ admite cuplaj perfect daca si numai daca
+  polinomul determinantului matricei sale Edmonds nu este polinomul nul.
+\end{thm}
+
+\begin{clr}
+  Numarul de cuplaje perfecte este egal cu numarul monoamelor in polinomul $det(A_{i,j})$.
+\end{clr}
+
+\begin{clr}
+  Rangul matricei Edmonds este egal marimea cuplajului maximal.
+\end{clr}
