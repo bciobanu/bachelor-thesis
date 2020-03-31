@@ -32,6 +32,7 @@
 \end{defn}
 
 \begin{thm}
+  \label{edmonds}
   Un graf bipartit $G(U, V, E)$ admite cuplaj perfect daca si numai daca
   polinomul determinantului matricei sale Edmonds nu este polinomul nul.
 \end{thm}
@@ -43,3 +44,50 @@
 \begin{clr}
   Rangul matricei Edmonds este egal marimea cuplajului maximal.
 \end{clr}
+
+\pagebreak
+
+\section{Lema Schwartz–Zippel}
+\textbf{Lema Schwartz-Zippel} este o metoda utila pentru a verifica intr-un mod
+probabilistic daca un polinom in mai multe variabile este polinomul nul.
+% TODO: poate discutie despre autori?
+
+\begin{thm}
+  Fie $P \in F \lbrack x_{1}, x_{2}, \ldots, x_{n} \rbrack$ un polinom nenul de grad $d \geq 0$
+  peste corpul $F$ si $S$ o submultime finita a lui $F$. Alegem
+  $r_{1}, r_{2}, \ldots, r_{n}$ uniform aleator si independent din $S$. Atunci:
+  \begin{equation}
+    \Pr \lbrack P(r_{1}, r_{2}, \ldots, r_{n}) = 0 \rbrack \leq \frac{d}{|S|}
+  \end{equation}
+\end{thm}
+
+Acest rezultat are sens odata ce ne gandim pe cazul de baza, cand $n=1$ deoarece
+un polinom de grad $d$ are cel mult $d$ radacini. Intreaga demonstratie se
+bazeaza pe inductie matematica si se poate consulta in \cite{schwartzzippel}.
+
+\begin{thm}
+  Lema Schwartz-Zippel se poate folosi in \ref{edmonds} pentru a verifica
+  existenta unui cuplaj perfect in timp polinomial.
+\end{thm}
+
+\section{Lema de izolare}
+\textbf{Lema de izolare} este o metoda de a reduce numarul de solutii ale unei
+probleme la una singura, daca aceasta exista. Aceasta se obtine prin adaugarea
+unor constrangeri aleatoare in asa fel incat, cu o probabilitate neglijabila,
+va exista o singura solutie care satisface constragerile aditionale.
+
+Lema a fost introdusa de Valiant si Vazirani in lucrarea ``NP is as easy as
+detecting unique solutions'', publicata in 1986.
+
+\begin{thm}
+  Fie $n$ si $m$ doua numere intregi pozitive si $F$ o familie de submultimi a
+  lui $\{1, 2, \ldots n\}$. Fie
+  $w : \{1, 2, \ldots, n\} \to \{1, 2, \ldots, m\}$ o functie care asociaza
+  valori uniform aleatoare si independente din codomeniu. Atunci, cu o
+  probabilitate de cel putin $1 - \frac{n}{m}$, va exista o singura multime $S$ in
+  $F$ pentru care $\sum_{x\in S}{w(x)}$ este minima.
+\end{thm}
+
+\begin{thm}
+
+\end{thm}
