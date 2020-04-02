@@ -19,6 +19,10 @@
 \end{defn}
 
 \begin{defn}
+  Un \textbf{cuplaj} intr-un graf este o multime de muchii fara noduri in comun.
+\end{defn}
+
+\begin{defn}
   \textbf{Matricea Edmonds} $A$ a grafului bipartit $G(U, V, E)$, unde
   $U = \{u_{1}, u_{2}, u_{3}, \ldots, u_{n}\}$,
   $V = \{v_{1}, v_{2}, v_{3}, \ldots, v_{n}\}$ si $x_{i,j}$ indeterminate, se defineste ca:
@@ -80,6 +84,7 @@ Lema a fost introdusa de Valiant si Vazirani in lucrarea ``NP is as easy as
 detecting unique solutions'', publicata in 1986.
 
 \begin{thm}
+  \label{isolation}
   Fie $n$ si $m$ doua numere intregi pozitive si $F$ o familie de submultimi a
   lui $\{1, 2, \ldots n\}$. Fie
   $w : \{1, 2, \ldots, n\} \to \{1, 2, \ldots, m\}$ o functie care asociaza
@@ -88,6 +93,92 @@ detecting unique solutions'', publicata in 1986.
   $F$ pentru care $\sum_{x\in S}{w(x)}$ este minima.
 \end{thm}
 
-\begin{thm}
+\pagebreak
 
-\end{thm}
+In ``Matching is as easy as matrix inversion'' \cite{matchingezmatrix} se
+descrie o metoda pentru a cauta cuplajul perfect folosind acest rezultat.
+Consideram $G(U, V, E)$ un graf bipartit. Asociem fiecarei muchii din $E$ un
+cost uniform din multimea $\{1, 2, \ldots, 2|E|\}$. Conform \ref{isolation}, cu
+probabilitate de cel putin $\frac{1}{2}$ va exista un cuplaj unic de cost minim.
+Consideram $U = \{u_{1}, u_{2}, u_{3}, \ldots, u_{n}\}$,
+$V = \{v_{1}, v_{2}, v_{3}, \ldots, v_{n}\}$ si costul aleator ales mai devreme muchiei
+$(u_{i}, v_{j})$ ca fiind $w_{i,j}$. Fie $A$ matricea Edmonds a acestui
+graf, construita in felul urmator:
+\begin{equation}
+A=
+\begin{cases}
+  2^{w_{i,j}} & \text{daca}\ (u_{i}, v_{j}) \in E \\
+  0 & \text{altfel}
+\end{cases}
+\end{equation}
+
+Definim costul unui cuplaj ca fiind suma costurilor muchiilor alese in acea multime.
+\begin{lem}
+  Daca $p$ este costul cuplajului minim si acesta este si unic, atunci $\det(A) \neq 0$, iar
+  $2^{p} \ |\ \det(A)$ si $2^{p+1} \not| \ \det(A)$.
+\end{lem}
+
+Fie $\text{sgn} : S_{n} \to \{\pm 1\}$, $\text{sgn}(P)$ este $+1$ daca $P$
+este permutare para, altfel $-1$. $\text{sgn}(P)$ se numeste signatura
+permutarii $P$.
+
+\begin{equation}
+  \label{isolationdet}
+  \det(A) = \sum_{P \in S_{n}} (\text{sgn}(P) \prod_{1 \leq i \leq N} A_{i, P_{i}})
+\end{equation}
+
+Pentru fiecare cuplaj din $G$ putem asocia unic o permutare $P$ din $S_{n}$:
+daca muchia $(u_{i}, v_{j})$ este aleasa in cuplaj, atunci $P_{i} \equiv j$.
+Pentru o permutare care nu are asociat un cuplaj perfect, aceasta nu va
+contribui deloc la valoarea expresiei \ref{isolationdet}. \par
+
+Daca $P$ este permutarea asociata cuplajului de cost minim, atunci
+$\prod_{1 \leq i \leq N} A_{i, P_{i}} = 2^{p}$. Valoarea celorlalte permutari
+este fie $0$, fie o putere de $2$ mai mare decat $2^{p}$ (deoarece $P$ este
+unica). Asadar, valoarea determinatului o sa fie divizibila cu $2^{p}$ si
+mai mult, aceasta va fi cel mai mare divizor de aceasta forma.
+
+\pagebreak
+
+Pentru a determina multimea muchiilor din cuplaj, trebuie sa mai notam cateva observatii.
+
+\begin{lem}
+  Fie $A'$ matricea obtinuta eliminand linia $i$ si coloana $j$. Fie
+  $C \def \det(A') \cdot \frac{2^{w_{i,j}}}$. Muchia
+  $(u_{i}, v_{j})$ face parte din cuplaj daca si numai daca $2^{p} \ | \ C$,
+  $2^{p+1} \not| \ C$ si $C \neq 0$.
+\end{lem}
+
+In primul rand, valoarea $\det(A') \cdot 2^{w_{i,j}}$ este chiar valoarea
+determinantului calculat dupa formula de la \ref{isolationdet}, cu precizarea ca
+se vor consider doar permutarile $P$ cu $P_{i} = j$. Acest lucru se datoreaza
+faptului ca permutarile alese in calculul lui $\det(A')$ vor avea cu un element
+mai putin decat cele din $\det(A)$, iar pentru elementul lipsa inmultim mereu cu
+valorea asociata muchiei $(u_{i}, v_{j})$, adica $2^{w_{i,j}}$.
+Aplicand apoi observatiile demonstratiei pentru \ref{isolationdet} obtinem
+rezultatul dorit si in cele din urma, un algoritm pentru determinarea cuplajului
+perfect care nu se bazeaza pe retele de flux, ci doar pe obiect de algebra
+liniara: \par
+
+\vspace{5 mm}
+
+\begin{algorithm}[H]
+ \KwData{Graf bipartit G(U, V, E) care admite cuplaj perfect}
+ \KwResult{Multimea muchiilor alese intr-un posibil cuplaj perfect}
+ \Begin{
+  determina w\;
+  construieste A\;
+  $p \longleftarrow \det(A)$\;
+  $C \longleftarrow \{\}$\;
+  \For{$(u_{i}, v_{j}) \in E$}{
+    determina $A'$\;
+    \If{$\frac{\det(A') \cdot 2^{w_{i,j}}}{2^{p}} \mod 2 = 1$}{
+      $C \longleftarrow C \cup \{(u_{i}, v_{j})\}$\;
+    }
+  }
+  \Return{$C$}\;
+ }
+ \caption{Cuplaj perfect lema de izolare}
+\end{algorithm}
+
+... descrie complexitate evidenta si apoi Matrix determinant lemma
