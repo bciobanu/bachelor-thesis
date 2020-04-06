@@ -1,5 +1,58 @@
 \chapter{Context}
 
+\section{Concepte din algebra liniara}
+
+\begin{defn}
+  Un \textbf{monoid} $G = (A, \circ)$ este o structura algebrica formata dintr-o
+  multime $A$ si o lege de compozitie asociativa si cu element neutru.
+\end{defn}
+
+\begin{defn}
+  Un \textbf{grup} $G = (A, \circ)$ este o structura algebrica formata dintr-o
+  multime $A$ si o lege de compozitie care respecta urmatoarele proprietati:
+  \begin{itemize}
+      \item{$\forall\ x_{1}, x_{2} \in G, x_{1} \circ x_{2} \in G$.}
+      \item{$\forall\ x_{1}, x_{2}, x_{3} \in G, (x_{1} \circ x_{2}) \circ x_{3} = x_{1} \circ (x_{2} \circ x_{3})$.}
+      \item{$\exists\ e \in G \text{ astfel
+      incat } \forall\ x \in G\ e \circ x = x \circ e = x$.}
+      \item{$\forall\ x_{1} \in G\ \exists\ x_{2} \in G \ x_{1} \circ x_{2} = x_{2} \circ x_{1} = e$.}
+  \end{itemize}
+  In plus, acesta este abelian daca
+  $\forall\ x_{1}, x_{2} \in G\ x_{1} \circ x_{2} = x_{2} \circ x_{1}$.
+\end{defn}
+
+\begin{defn}
+  Un \textbf{inel} $I = (A, +, *)$ este o structura algebrica formata dintr-o
+  multime $A$ si doua operatii binare definite pe $A \times A$ cu valori tot in
+  $A$, care respecta urmatoarele proprietati:
+  \begin{itemize}
+      \item{$(A, +)$ este un grup abelian.}
+      \item{$(A, *)$ este un monoid.}
+      \item{Distributivitatea lui $*$ fata de $+$.}
+  \end{itemize}
+\end{defn}
+
+\begin{defn}
+  Un \textbf{polinom} este o expresie construita dintr-una sau mai multe
+  variabile si constante, folosind doar operatii de adunare, scadere, inmultire
+  si ridicare la putere constanta pozitiva intreaga.
+\end{defn}
+
+\begin{defn}
+  O \textbf{matrice} este un tabel dreptunghiular de elemente ale unui inel.
+\end{defn}
+
+\subsection{Interpolare Lagrange}
+
+\textbf{Polinomul de interpolare Lagrange} este un polinom $P$ construit in asa
+fel incat avand $k + 1$ perechi
+$(x_{1}, y_{1}), (x_{2}, y_{2}), \ldots, (x_{k+1}, y_{k+1})$ avem ca
+$P(x_{i}) = y_{i}\ \forall\ 1 \leq i \leq K + 1$. \par
+Constructia lui $P$ a fost oferita de Joseph Louis Lagrange in $1795$:
+\begin{equation}
+  P(x) := \sum_{i_{1}=0}^{k} y_{i_{1}} * \prod_{1 \leq i_{2} \leq k + 1 \ \land \ i_{1} \neq i_{2}} \frac{x - x_{i_{2}}}{x_{i_{1}} - x_{i_{2}}}
+\end{equation}
+
 \section{Teoria grafurilor}
 
 \begin{defn}
