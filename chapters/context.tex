@@ -50,7 +50,7 @@ $(x_{1}, y_{1}), (x_{2}, y_{2}), \ldots, (x_{k+1}, y_{k+1})$ avem ca
 $P(x_{i}) = y_{i}\ \forall\ 1 \leq i \leq K + 1$. \par
 Constructia lui $P$ a fost oferita de Joseph Louis Lagrange in $1795$:
 \begin{equation}
-  P(x) := \sum_{i_{1}=0}^{k} y_{i_{1}} * \prod_{1 \leq i_{2} \leq k + 1 \ \land \ i_{1} \neq i_{2}} \frac{x - x_{i_{2}}}{x_{i_{1}} - x_{i_{2}}}
+  P(x) := \sum_{i_{1}=0}^{k} (y_{i_{1}} * \prod_{1 \leq i_{2} \leq k + 1 \ \land \ i_{1} \neq i_{2}} \frac{x - x_{i_{2}}}{x_{i_{1}} - x_{i_{2}}})
 \end{equation}
 
 \section{Teoria grafurilor}
@@ -158,6 +158,7 @@ detecting unique solutions'', publicata in 1986.
 \pagebreak
 
 \section{Algoritm paralelizabil pentru cuplaj}
+\label{Algoritm paralelizabil pentru cuplaj}
 
 In ``Matching is as easy as matrix inversion'' \cite{matchingezmatrix} se
 descrie o metoda pentru a cauta cuplajul perfect folosind acest rezultat.
@@ -188,7 +189,7 @@ permutarii $P$.
 
 \begin{equation}
   \label{isolationdet}
-  \det(A) = \sum_{P \in S_{n}} (\text{sgn}(P) \prod_{1 \leq i \leq N} A_{i, P_{i}})
+  \det(A) = \sum_{P \in S_{n}} (\text{sgn}(P) * \prod_{1 \leq i \leq N} A_{i, P_{i}})
 \end{equation}
 
 Pentru fiecare cuplaj din $G$ putem asocia unic o permutare $P$ din $S_{n}$:
@@ -208,12 +209,12 @@ Pentru a determina multimea muchiilor din cuplaj, trebuie sa mai notam cateva ob
 
 \begin{lem}
   Fie $A'$ matricea obtinuta eliminand linia $i$ si coloana $j$. Fie
-  $C \def \det(A') \cdot \frac{2^{w_{i,j}}}$. Muchia
+  $C \def \det(A') * \frac{2^{w_{i,j}}}$. Muchia
   $(u_{i}, v_{j})$ face parte din cuplaj daca si numai daca $2^{p} \ | \ C$,
   $2^{p+1} \not| \ C$ si $C \neq 0$.
 \end{lem}
 
-In primul rand, valoarea $\det(A') \cdot 2^{w_{i,j}}$ este chiar valoarea
+In primul rand, valoarea $\det(A') * 2^{w_{i,j}}$ este chiar valoarea
 determinantului calculat dupa formula de la \ref{isolationdet}, cu precizarea ca
 se vor consider doar permutarile $P$ cu $P_{i} = j$. Acest lucru se datoreaza
 faptului ca permutarile alese in calculul lui $\det(A')$ vor avea cu un element
@@ -237,7 +238,7 @@ liniara: \par
   $C \longleftarrow \{\}$\;
   \For{$(u_{i}, v_{j}) \in E$}{
     determina $A'$\;
-    \If{$\frac{\det(A') \cdot 2^{w_{i,j}}}{2^{p}} \mod 2 = 1$}{
+    \If{$\frac{\det(A') * 2^{w_{i,j}}}{2^{p}} \mod 2 = 1$}{
       $C \longleftarrow C \cup \{(u_{i}, v_{j})\}$\;
     }
   }
@@ -284,8 +285,8 @@ ori pentru a gasi un rezultat de certitudine mare.
 Sa consideram un graf bipartit $G(U, V, E)$, unde $E_{1}$ este multimea
 muchiilor rosii, $E_{2}$ este multimea muchiilor albastre, iar
 $E = E_{1} \cup E_{2}$. Dorim sa alfam daca exista un cuplaj perfect
-in care se folosesc exact $k$ muchii rosii, stiind ca daca acesta exista, este
-si unic. \par
+in care se folosesc exact $k$ muchii rosii, stiind ca daca acesta exista, atunci
+este si \textbf{unic}. \par
 
 Aceasta problema nu se poate rezolva cu algoritmi de flux maxim, spre deosebire
 de celelalte probleme de pana acum. Totusi, avem sanse sa o rezolvam, daca
@@ -304,6 +305,50 @@ culoarea muchiilor alese in cuplaj:
 $\det(A)$ va fi un polinom in $y$ de grad $n$. $G$ va avea un cuplaj perfect cu
 $k$ muchii rosii daca coeficientul lui $y^{k}$ va fi nenul. Pentru a determina
 acest numar putem sa interpolam polinomul $\det(A)$ folosind interpolarea
-Lagrange. Tot ce ramane de facut este sa evaluam polinomul in $n+1$ puncte.
+Lagrange. Tot ce ramane de facut este sa evaluam polinomul in $n+1$ puncte. \par
 
-... discuta 2 abordari cand nu e unic, cu lema de izolare si cu schartz-zippel
+Pentru cazul general, cand cuplajul rosu-albastru nu este neaparat unic, putem
+folosi una din cele doua leme sa reducem problema la una mai simpla.
+
+\subsection{Folosind Lema Schwartz-Zippel}
+
+Pentru fiecare muchie $(u_{i}, v_{j})$ alegem o valoarea aleatoare $x_{i,j}$ dintr-o
+multimea $S$. Construim matricea astfel:
+
+\begin{equation}
+  A=
+  \begin{cases}
+    y * x_{i,j} & \text{daca}\ (u_{i}, v_{j}) \in E_{1} \\
+    x_{i,j} & \text{daca}\ (u_{i}, v_{j}) \in E_{2} \\
+    0 & \text{altfel}
+  \end{cases}
+\end{equation}
+
+Ca inainte, vom interpola $\det(A)$ pentru a afla coeficientul lui $y^{k}$.
+Acest coeficient trebuie sa fie nenul. Iar acum, cu probabilitate mare, acest
+lucru este adevarat, pentru ca daca doua polinoame se ``anuleaza'' unul pe
+celalalt in urma calculului determinantului, atunci cu probabilitate de cel mult
+$\frac{n}{|S|}$ acestea erau diferite.
+
+\subsection{Folosind Lema de izolare}
+Asemanator algoritmului prezentat la \ref{Algoritm paralelizabil pentru cuplaj}
+si solutiei precedente cu Lema Schwartz-Zippel, avand valorile $w_{i,j}$ alese
+din $\{1, 2, \ldots, 2|E_{1} \cup E_{2}|\}$, vom construi matricea astfel:
+
+\begin{equation}
+  A=
+  \begin{cases}
+    y * 2^{w_{i,j}} & \text{daca}\ (u_{i}, v_{j}) \in E_{1} \\
+    2^{w_{i,j}} & \text{daca}\ (u_{i}, v_{j}) \in E_{2} \\
+    0 & \text{altfel}
+  \end{cases}
+\end{equation}
+
+In continuare ramane sa ne uitam la coeficientul lui $y^{k}$ in $\det(A)$. Spre
+deosebire de lema \textbf{Schwartz-Zippel}, acesta varianta are posibilitatea sa fie
+paralelizabil, deoarece, cu probabilitate de cel putin $\frac{1}{2}$, cuplajul
+pe care vrem sa-l gasim este acum unic.
+
+\pagebreak
+
+\section{Transformari Fourier}
