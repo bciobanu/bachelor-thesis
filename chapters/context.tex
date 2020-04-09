@@ -352,3 +352,45 @@ pe care vrem sa-l gasim este acum unic.
 \pagebreak
 
 \section{Transformari Fourier}
+
+\subsection{Transformarea Fourier Discreta}
+Consideram $n = 2^{p}$ si urmatorul polinom de grad $n-1$:
+\begin{equation}
+  A = a_{0}x^{0} + a_{1}x^{1} + \ldots + a_{n-1}x^{n-1}
+\end{equation}
+
+Solutia ecuatiei $x^{n} = 1$ are $n$ solutii in multimea numerelor complexe.
+Acestea sunt de forma $w_{p} = e^{\frac{2k\pi i}{n}}$ pentru $p$ un numar intreg
+intre $0$ si $n-1$. Aceste radacini au multe proprietati utile, iar cea pe care
+urmeaza sa o folosim este ca $w_{p} = w_{0}^{p}$. \par
+\textbf{Transformarea discreta fourier} a polinomului $A$ este definita ca fiind
+vectorul obtinut prin evaluarea polinomului in radacinile unitatii:
+
+\begin{equation}
+  \label{dft}
+  \text{DFT}(A) = (A(w_{0}), A(w_{1}), \ldots, A(w_{n-1})) \\
+                = (A(w_{0}^{1}), A(w_{0}^{2}), \ldots, A(w_{0}^{n-1}))
+\end{equation}
+
+Similar, avand vectorul din partea dreapta a ecuatiei \ref{dft}, \textbf{inversa
+transformarii discrete Fourieri} reconstituie coeficientii polinomului $A$:
+$(a_{0}, a_{1}, \ldots a_{n-1})$. Vom nota aceasta transformare cu
+$\text{InverseDFT}$. \par
+
+O aplicatie utila este inmultirea polinoamelor. Fie $\textbf{dot}$ operatia de
+inmultire scalara a doi vectori. Aceasta se bazeaza pe o
+proprietatea a transformarii, si anume:
+\begin{equation}
+  \text{DFT}(A * B) = \text{dot}(\text{DFT}(A), \text{DFT}(B))
+\end{equation}
+
+Aceasta proprietate este utila, fiind la baza unui algoritm rapid de inmultire a
+polinoamelor, deoarece $\text{DFT}(A)$ si $\text{InverseDFT}(A)$ se pot calcula
+in timp $O(n \log n)$.
+
+\subsection{Transformarea Hadamard}
+
+\textbf{Transformarea Hadamard} este o transformare Fourier generalizata,
+executand o operatie liniara pe $2^{n}$ numere reale. Aceasta este echivalenta
+cu o transformare discreta $n$-dimensionala Fourier de marime
+$2 \times 2 \ldots \times 2$.
