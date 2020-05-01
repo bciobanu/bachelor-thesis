@@ -363,7 +363,7 @@ Solutia ecuatiei $x^{n} = 1$ are $n$ solutii in multimea numerelor complexe.
 Acestea sunt de forma $w_{p} = e^{\frac{2k\pi i}{n}}$ pentru $p$ un numar intreg
 intre $0$ si $n-1$. Aceste radacini au multe proprietati utile, iar cea pe care
 urmeaza sa o folosim este ca $w_{p} = w_{0}^{p}$. \par
-\textbf{Transformarea discreta fourier} a polinomului $A$ este definita ca fiind
+\textbf{Transformarea discreta Fourier} a polinomului $A$ este definita ca fiind
 vectorul obtinut prin evaluarea polinomului in radacinile unitatii:
 
 \begin{equation}
@@ -393,4 +393,85 @@ in timp $O(n \log n)$.
 \textbf{Transformarea Hadamard} este o transformare Fourier generalizata,
 executand o operatie liniara pe $2^{n}$ numere reale. Aceasta este echivalenta
 cu o transformare discreta $n$-dimensionala Fourier de marime
-$2 \times 2 \ldots \times 2$.
+$2 \times 2 \ldots \times 2$. In mod intuitiv, se inmultesc monoame a $n$
+variabile, aplicandu-se modulo $x^{2}-1$ pe fiecare variabila. Fie $p_{i_{1}, i_{2}} \in \{0, 1\}$:
+\begin{equation}
+  A = a_{0} x_{0}^{p_{0, 0}} x_{1}^{p_{0, 1}} \ldots x_{n-1}^{p_{0, n-1}}
+  + a_{1} x_{0}^{p_{1, 0}} x_{1}^{p_{1, 1}} \ldots x_{n-1}^{p_{1, n-1}}
+  + \ldots
+  + a_{n-1} x_{0}^{p_{n-1, 0}} x_{1}^{p_{n-1, 1}} \ldots x_{n-1}^{p_{n-1, n-1}}
+\end{equation}
+
+Daca in cazul \textbf{transformarii Fourieri discrete} obtineam
+$C_{i+j} = \sum A_{i} B_{j}$, in cazul \textbf{transformarii Hadamard} obtinem
+$C_{i \oplus j} = \sum A_{i} B_{j}$, unde $\oplus$ este operatia de sau exclusiv
+(xor) pe biti. Intuitiv, de ce se obtine operatie de xor este pentru ca
+cele $n$ monoame reprezentau bitii fiecarui numar de la $0$ la $2^{n} - 1$.
+Acestora la inmultire li se aplica modulo $x^{2} - 1$, asemanator bitilor in
+timpul unei operatii de xor, care este ca o adunare, in urma careia se aplica
+modulo $2$, totul efectuat separat pe fiecare bit in parte.
+
+\subsection{Algoritmul Fast Walsh-Hadamard}
+
+\textbf{Algoritmul Fast Walsh-Hadamard} este un algoritm eficient pentru a
+calcula \textbf{transformarea Hadamard}. O implementare naiva a transformarii
+necesita complexitate de timp $O(2^{2n})$, in timp ce algoritmul pe care urmeaza
+sa-l prezentam necesita doar $O(n2^{n})$. Algoritmul se bazeaza pe paradigma
+divide et impera, impartind o problema de marime $2^{n}$ in doua de marime
+$2^{n-1}$, urmarind definitia recursiva a matricei Hadamard:
+
+\begin{equation}
+  \label{hadamardmatrix}
+  H_{n} =
+  \begin{pmatrix}
+    H_{n-1} & H_{n-1}\\
+    H_{n-1} & -H_{n-1}
+  \end{pmatrix}
+\end{equation}
+
+Ecuatia \ref{hadamardmatrix} omite factorul de normalizare de
+$\frac{1}{\sqrt{2}}$, care poate fi aplicat la final.
+
+\begin{algorithm}[H]
+  \DontPrintSemicolon
+  \SetKwFunction{FMain}{FWHT}
+  \SetKwProg{Fn}{Function}{:}{}
+  \Fn{\FMain{$a$, $n$}}{
+    \If{$n = -1$}{
+      \KwRet\;
+    }
+    offset := $2^{n - 1}$\;
+    \FMain($a[0 \ldots \text{offset}]$, n - 1)\;
+    \FMain($a[\text{offset} \ldots 2^{n}]$, n - 1)\;
+    \For{i in $0 \ldots 2^{n}$}{
+      x := $a_{i}$\;
+      y := $a_{i + \text{offset}}$\;
+      $a_{i}$ := x + y\;
+      $a_{i + \text{offset}}$ := x - y\;
+    }
+    \KwRet\;
+  }
+  \;
+\end{algorithm}
+
+\begin{algorithm}[H]
+  \DontPrintSemicolon
+  \SetKwFunction{FMain}{IFWHT}
+  \SetKwProg{Fn}{Function}{:}{}
+  \Fn{\FMain{$a$, $n$}}{
+    \If{$n = -1$}{
+      \KwRet\;
+    }
+    offset := $2^{n - 1}$\;
+    \FMain($a[0 \ldots \text{offset}]$, n - 1)\;
+    \FMain($a[\text{offset} \ldots 2^{n}]$, n - 1)\;
+    \For{i in $0 \ldots 2^{n}$}{
+      x := $a_{i}$\;
+      y := $a_{i + \text{offset}}$\;
+      $a_{i}$ := x - y\;
+      $a_{i + \text{offset}}$ := x + y\;
+    }
+    \KwRet\;
+  }
+  \;
+\end{algorithm}
