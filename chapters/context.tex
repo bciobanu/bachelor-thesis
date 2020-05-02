@@ -475,3 +475,83 @@ $\frac{1}{\sqrt{2}}$, care poate fi aplicat la final.
   }
   \;
 \end{algorithm}
+
+\pagebreak
+
+\section{Algoritmul lui Coppersmith}
+
+In cadrul algoritmilor de algebra liniara pentru cuplaj avem des problema de a
+calcula determinanti. De obicei, aceste grafuri nu vor fi atat de dense, deci
+nici matricea Edmonds (\ref{edmonds}) nu va avea multe elemente nenule.
+
+\textbf{Algoritmul lui Coppersmith} \cite{wiedemann} este un algoritm rapid pentru calcularea
+vectorilor nucleu al unei matrice intr-un corp finit. Acesta este in particular
+eficient pentru matricele rare, cele care nu au atat de multe elemente nenule. \\
+
+Consideram $A$ o matrice patratica de marime $n \times n$ peste un corp finit $F$, atunci:
+
+\begin{defn}
+  Polinomul caracteristic al lui $A$ este definit ca
+  $p(\lambda) = \det(\lambda I_{n} - A)$.
+\end{defn}
+
+\begin{thm}
+  \label{cayleyhamilton}
+  \textbf{Cayley-Hamilton} spune ca fiecare matrice patratica intr-un inel
+  comutativ isi satisface ecuatia caracteristica, mai exact $p(A) = 0$.
+\end{thm}
+
+$A$ are un polinom monic $P$ peste corpul $F$ de grad minim pentru care
+$P(A) = 0$. $P$ se numeste polinomul minim al lui $A$. In
+cazul matricelor rare, ne asteptam ca acest polinom sa aiba un grad mai mic
+decat cel al polinomului caracteristic. $P$ mereu va divide polinomul
+caracteristic, iar din \ref{cayleyhamilton}, gradul acestuia nu va fi mai mare
+de $n$. Fie $P = a_{0} + a_{1}x + \ldots + a_{n'}x^{n'}$, unde $n' \leq n$.
+
+\begin{lem}
+  \label{polminimdet}
+  Daca $n' = n$, atunci $P$ este chiar polinomul caracteristic al lui $A$, iar
+  determinantul este chiar $(-1)^{n}P(0)$.
+\end{lem}
+
+\begin{lem}
+  Putem folosi polinomul minimal pentru a calcula determinantul matricei $A$.
+\end{lem}
+
+\begin{proof}
+  Fie $d$ un vector de $n$ elemente
+  alese uniform aleator si independent din $F$, iar
+  $D =
+  \begin{bmatrix}
+    d_{1} & 0 & \dots \\
+    0 & d_{2} & \dots \\
+    \vdots & \ddots & \\
+    0 & \dots & d_{n}
+  \end{bmatrix}$. Conform lemei Schwartz-Zippel, matricea $AD$ este singulara cu
+  probabilitate de cel mult $\frac{n}{|F|}$. In cazul in care nu este, atunci ne
+  asteptam ca polinomul minim sa aiba grad egal chiar cu $n$. In acest caz,
+  putem calcula rapid $\det(AD)$ folsind \ref{polminimdet} si apoi sa aflam
+  $\det(A) = \frac{\det(AD)}{det(D)}$, iar $\det(D) = \prod_{i=1}^{n} d_{i}$.
+\end{proof}
+
+Fie $x'$ un vector de $n$ elemente alese uniform aleator si independent din $F$,
+iar $x = Ax'$. Fie $S = [x, Ax, A^{2}x, \ldots]$.
+Consideram un alt vector de $n$ elemente, $y$ si urmatorul sir de valori din $F$: $[yx, yAx, yA^{2}x, \ldots ]$.
+
+Stim ca $P(A) = 0$, atunci $\sum_{i=0}^{n'} a_{i} A^{i} = 0$. Obtinem ca si
+$\sum_{i=0}^{n'} y (a_{i} (A^{i} x)) = 0$. Intuitiv, stim ca $P(S) = 0$, insa nu
+stim sa calculam eficient o secventa $b_{0}, b_{1}, \ldots b_{k}$ astfel incat
+$\sum_{i=0}^{k} b_{i} S_{i+o} = 0 \ \forall \ o \geq 0$, pentru ca elementele din $S$ sunt vectori, insa
+atunci cand reducem la cazul cu valori, o sansa destul de mare ca secventa $b$
+care anihileaza $yS$ sa anihileze si $S$, deci
+$\sum_{i=0}^{k} b_{i} M^{i}x = 0$.
+Inlocuind cu $x = Ax'$, obtinem ca $M \sum_{i=0}^{k} b_{i} M^{i} x' = 0$, deci
+daca $b_{i} M^{i} x'$ este nenul, atunci am obtinem un nucleu al lui $M$.
+
+\begin{defn}
+  Pentru a calcula elementele secventei $b$, se foloseste algoritmul
+  \textbf{Berlekamp Massey} daca $|F|$ este un numar prim, altfel, se factorizeaza
+  $|F| = p_{1}^{k_{1}} p_{2}^{k_{2}} \ldots p_{t}^{k_{t}}$ si se rezolva $t$
+  probleme cu $|F_{i}'| = p_{i}^{k_{i}}$ cu algoritmul \textbf{Reeds-Sloane}, iar
+  rezultatele se combina folosind teorema chineza a resturilor.
+\end{defn}
