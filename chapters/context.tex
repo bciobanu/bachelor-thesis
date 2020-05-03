@@ -548,10 +548,83 @@ $\sum_{i=0}^{k} b_{i} M^{i}x = 0$.
 Inlocuind cu $x = Ax'$, obtinem ca $M \sum_{i=0}^{k} b_{i} M^{i} x' = 0$, deci
 daca $b_{i} M^{i} x'$ este nenul, atunci am obtinem un nucleu al lui $M$.
 
+Pentru a calcula elementele secventei $S$ se folosesc algoritmi pentru gasirea
+\textbf{polinomului minim al unei recurente liniare}. Algoritmul
+\textbf{Berlekamp Massey} daca $|F|$ este un numar prim (doua corpuri de
+aceeasi marime sunt izomorfe), altfel, se factorizeaza
+$|F| = p_{1}^{k_{1}} p_{2}^{k_{2}} \ldots p_{t}^{k_{t}}$ si se rezolva $t$
+probleme cu $|F_{i}'| = p_{i}^{k_{i}}$ cu algoritmul \textbf{Reeds-Sloane}, iar
+rezultatele se combina folosind teorema chineza a resturilor. In ce urmeaza vom
+prezenta un alt algoritm echivalent care nu foloseste impartiri, deci nu este
+constans la un tip de corp anume \cite{sugiyama}.
+
+\pagebreak
+
+\section{Polinomul minim al unei recurente liniare}
+
 \begin{defn}
-  Pentru a calcula elementele secventei $b$, se foloseste algoritmul
-  \textbf{Berlekamp Massey} daca $|F|$ este un numar prim, altfel, se factorizeaza
-  $|F| = p_{1}^{k_{1}} p_{2}^{k_{2}} \ldots p_{t}^{k_{t}}$ si se rezolva $t$
-  probleme cu $|F_{i}'| = p_{i}^{k_{i}}$ cu algoritmul \textbf{Reeds-Sloane}, iar
-  rezultatele se combina folosind teorema chineza a resturilor.
+  O secventa infinita $a$ cu elemente dintr-un corp $F$ se numeste recurenta
+  liniara daca si numai daca exista constantele $c_{1}, c_{2}, \ldots, c_{k}$
+  astfel incat
+  $a_{t} = a_{t-1}c_{1} + a_{t-2}c_{2} + \ldots + a_{t-k}c_{k} \ \forall \ t > k$.
 \end{defn}
+
+\begin{defn}
+  Pentru o recurenta liniara $a$ si $c_{0}, c_{1}, \ldots c_{k} \in F$, astfel
+  incat
+  $c_{0} a_{t} = a_{t-1}c_{1} + a_{t-2}c_{2} + \ldots + a_{t-k}c_{k} \ \forall \ t > k$,
+  atunci polinomul $c_{0} x^{k} + c_{1} x^{k-1} + \ldots + c_{k} x^{0}$ se
+  numeste anihilator al lui $a$.
+\end{defn}
+
+\begin{defn}
+  Un ideal al unui inel $R$ generat de $S \subset R$ este
+  $\{f = \sum_{i=1}^{r} x_{i}s_{i} \ | \ r \in \mathbb{N}, \ s_{i} \in S, x_{i} \in R\}$.
+\end{defn}
+
+\begin{defn}
+  Un ideal $<S>$ dintr-un inel $R$ este de tip finit daca admite un sistem finit de generatori:
+  $\exists \ s_{1}, s_{2}, \ldots s_{r} \in \ <S>$  astfel incat
+  $\forall \ s \in \ <S>, s = \sum_{i=1}^{r} x_{i} s_{i}, \ x_{i} \in R$.
+\end{defn}
+
+\begin{defn}
+  Un ideal se numeste principal daca admite un sistem de generatori format
+  dintr-un singur element.
+\end{defn}
+
+\begin{defn}
+  Inelul $R$ se numeste principal daca orice ideal este principal.
+\end{defn}
+
+\begin{thm}
+  $F[x]$ este un inel principal.
+\end{thm}
+
+\begin{lem}
+  Anihilatoarele lui $a$ formeaza un ideal in $F[x]$.
+\end{lem}
+
+\begin{clr}
+  Idealul format din anihilatoarele lui $a$ este generat de un polinom monic de
+  grad minim. Acesta se numeste polinomul minim al lui $a$.
+\end{clr}
+
+\begin{thm}
+  Functia generatoare $A(x) = \sum_{n=0}^{\infty} a_{n}x^{n}$ este rationala:
+  $A(x) = \frac{P(x)}{Q(x)}$ unde $deg(P) < k$, iar $Q(x) = 1 - \sum_{i=1}^{k} c_{i}x^{i}$.
+\end{thm}
+
+\begin{thm}
+  Daca stim ca gradul polinomului minim este cel mult $m$, atunci acesta este
+  unic determinat de primele $2m$ elemente ale lui $a$; sau altfel spus
+  $P(x) \equiv Q(X) A(X) \mod x^{2m}$.
+\end{thm}
+
+\textbf{Identitatea lui Bezout}: daca $g$ este cel mai mare divizor comun al
+polinoamelor $a$ si $b$, atunci exista doua polinoame $u$ si $v$ astfel incat
+$ua + vb = g$.
+
+In \cite{sugiyama} se arata ca putem executa algoritmul lui Euclid extins pentru
+calcularea valorilor $u$ si $v$, alegand $a = A(x) \mod x^{2m}$, iar
+$b = x^{2m}$ pana cand $deg(g) < m$.
