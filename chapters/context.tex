@@ -628,3 +628,27 @@ $ua + vb = g$.
 In \cite{sugiyama} se arata ca putem executa algoritmul lui Euclid extins pentru
 calcularea valorilor $u$ si $v$, alegand $a = A(x) \mod x^{2m}$, iar
 $b = x^{2m}$ pana cand $deg(g) < m$.
+
+\pagebreak
+
+\section{Filtrare prin radacini ale unitatii}
+
+\textbf{Filtrarea prin radacini ale unitatii} este o tehnica de izolare si
+insumare a coeficientilor unui polinom. Aceasta se preteaza, in particular,
+atunci cand indexurile sunt periodice modulo $n$.
+
+\begin{thm}
+  Daca $p$ este un polinom si $\zeta$ este o radacina a unitatii de ordin
+  $n$ ($\zeta^{n} = 1$), atunci $\frac{1}{n} \sum_{i=0}^{n-1} p(\zeta^{i})$
+  este suma indexurilor dizibile prin $n$.
+\end{thm}
+
+\begin{proof}
+  Fie $p = a_{0}x^{0} + a_{1}x^{1} + \ldots + a_{k}x^{k}$. Consideram contributia
+  unui index $p$, nedivizibil prin $n$ la suma
+  $\sum_{i=0}^{n-1} p(\zeta^{i}) = a_{p}(\zeta^{0} + \zeta^{p} + \zeta^{2p} + \ldots + \zeta^{(n-1)p})$.
+  Termenul din partea dreapta este de fapt $\sum_{i=0}^{n-1} \zeta^{i*p} = \frac{\zeta^{p*n} - 1}{\zeta^{p} - 1} = 0$,
+  deci se anuleaza. Celelalte indexuri vor avea coeficient $1$ pentru fiecare
+  $\zeta^{i}$, deci se vor aduna in total de $n$ ori, motiv pentru care toata suma
+  se imparte la $n$.
+\end{proof}
