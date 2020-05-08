@@ -11,11 +11,27 @@
 
 \hspace{1cm}
 
-\noindent \textbf{Enunt.} Se da un graf bipartit $G(V, E)$ cu $1 \leq |V| \leq 100$,
-un numar intreg $1 \leq K \leq 100$ si o functie pentru a determina valoarea unei muchii
-$f : E \to \{0, 1, \ldots, K\}$. Sa se determine daca exista un cuplaj perfect $M$,
+\noindent \textbf{Enunt.} Se da un graf bipartit $G(U \cup V, E)$ cu $1 \leq |U| = |V| \leq 100$,
+un numar intreg $2 \leq K \leq 100$ si o functie pentru a determina valoarea unei muchii
+$f : E \to \{0, 1, \ldots, K-1\}$. Sa se determine daca exista un cuplaj perfect $M$,
 astfel incat $K \ | \ \sum_{e \in M} f(e)$.
 
 \hspace{1cm}
 
-\noindent \textbf{Solutie.}
+\noindent \textbf{Solutie.} Fara a pierde din generalitate, presupunem ca $|U| = |V| = N$.
+O solutie evidenta in complexitate $O(N!)$ construieste si verifica toate permutarile din $S_{N}$.
+Chiar daca le procesam in ordine aleatoare, numarul asteptat de pasi este tot de ordinul $N!$. \\
+Urmatoarea solutie pe care o putem aborda este sa optimizam solutia de backtracking mentionata anterior
+cu metoda programarii dinamice. Construim tabela $D_{i,\text{rem}, S}$ ca fiind o valoare booleana daca poti
+cupla nodurile $\{u_{1}, u_{2}, \ldots, u_{i}\}$ din $U$ cu nodurile $S \subseteq V$ astfel incat restul sumei
+valorilor muchiilor alese de pana acum, modulo $K$ este rem. Recurenta cu care se poate construi este:
+
+\begin{multline*}
+  D_{i,\text{rem}, S} = \\ D_{i-1, \text{rem} - f(e_{1}) \mod K, S - v_{1}} \text{ or }
+                      D_{i-1, \text{rem} - f(e_{2}) \mod K, S - v_{2}} \text{ or }
+                      \ldots \text{ or  } \\
+                      D_{i-1, \text{rem} - f(e_{p}) \mod K, S - v_{P_{i}}}
+                      \ \forall \ e_{j} = (u_{i}, v_{j}), 1 \leq j \leq P_{i}
+\end{multline*}
+
+\noindent Complexitatea acestei solutii este $O(KN^{2}2^{N})$.
