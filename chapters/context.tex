@@ -655,3 +655,35 @@ atunci cand indexurile sunt periodice modulo $n$.
   $\zeta^{i}$, deci se vor aduna in total de $n$ ori, motiv pentru care toata suma
   se imparte la $n$.
 \end{proof}
+
+
+\pagebreak
+
+\section{Radacini primitive}
+
+In ce urmeaza presupunem ca lucram intr-un corp finit $\mathbb{F}_{p}$, unde $p$ este un numar prim.
+
+\begin{defn}
+  Un numar $g$ se numeste radacina primitiva modulo $n$ daca si numai daca pentru orice $a$ coprim cu $p$ exista un alt numar
+  $l$ astfel incat $g^{l} = a \mod p$.
+\end{defn}
+
+\begin{thm}
+  \label{carmichael}
+  (Functia Carmichael) Fie $g$ o radacina primitiva, atunci cel mai mic numar $l$ astfel incat $g^{l} = 1$ este $\phi(p)$.
+\end{thm}
+
+\begin{thm}
+  \label{carmichaelr}
+  Reciproca teoremei \ref{carmichael} este adevarata si sta la baza algoritmului pentru aflarea generatorului.
+\end{thm}
+
+Un algoritm evident pentru a cauta radacini primitive incearca numerele din $\mathbb{F}_{p}$ pe rand si apoi le calculeaza
+puterile pentru a verifica daca sunt diferite. Desi in general radacina primitiva este un numar destul de mic, acest algoritm
+nu este cel mai eficient posibil.
+
+Din \ref{carmichaelr} stim ca, pentru un $a$ fixat, daca gasim un $l < \phi(p)$ pentru care $a^{l} = 1$, atunci acesta nu este un
+generator. Din \textbf{teorema lui Euler} stim ca orice $a$ coprim cu $p$ satisface $a^{\phi(p)} = 1 \mod p$. Aceste observatii pot
+imbunatati algoritmul mentionat anterior, insa, pentru ca noi il folosim pentru $p$ numar prim, atunci $\phi(p) = p - 1$, deci nu
+ajuta foarte mult. \textbf{Teorema lui Lagrange} mai spune ca este suficient sa verificam ca $a^{d} \neq 1 \mod p$ pentru toti $d \ |\ \phi(p)$.
+Aceasta este deja o imbunatatire foarte mare, deoarece numarul de divizori ai lui $\phi(p)$ este de ordinul $O(p^{\frac{1.066}{\ln \ln p}})$.

@@ -58,14 +58,3 @@ sa gasim un corp potrivit care are radacini ale unitatii de ordinul $K$. Daca nu
 corpul in asa fel incat sa introducem $\zeta \neq 1$ pentru care $\zeta^{K} = 1$. Insa, daca abordam asa, operatiile
 aritmetice vor dura $O(K^{2})$ (sau macar $O(K \log K)$ daca folosim algoritmi de aritmetica "state of the art"),
 in loc de $O(1)$, unde tinteam.
-
-In ce urmeaza presupunem ca lucram intr-un corp finit $\mathbb{F}_{p}$, unde $p$ este un numar prim.
-
-\begin{defn}
-  Un numar $g$ se numeste radacina primitiva modulo $n$ daca si numai daca pentru orice $a$ coprim cu $p$ exista un alt numar
-  $l$ astfel incat $g^{l} = a \mod p$.
-\end{defn}
-
-\begin{thm}
-  Fie $g$ o radacina primitiva, atunci cel mai mic numar $l$ astfel incat $g^{l} = 1$ este $\phi(p)$.
-\end{thm}
