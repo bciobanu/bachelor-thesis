@@ -34,4 +34,38 @@ valorilor muchiilor alese de pana acum, modulo $K$ este rem. Recurenta cu care s
                       \ \forall \ e_{j} = (u_{i}, v_{j}), 1 \leq j \leq P_{i}
 \end{multline*}
 
-\noindent Complexitatea acestei solutii este $O(KN^{2}2^{N})$.
+\noindent Din pacate solutie ramane exponentiala, complexitatea acesteia fiind $O(KN^{2}2^{N})$.
+
+\pagebreak
+
+In ce urmeaza ne putem gandi sa rezolvam o subproblema mai simpla, mai exact cea in care $K=2$.
+Ne intereseaza un cuplaj cu numar par de muchii de $1$. Daca privim muchiile cu $1$ ca fiind
+rosii, iar celelalte ca fiind albastre, atunci obtinem problema \textbf{cuplajului rosu-albastru} (\ref{redbluematching}),
+in care ne intereseaza doar ca numarul de muchii rosii sa fie par. In ce urmeaza ne vom concentra pe varianta
+in care folosim lema Schwartz-Zippel. Avand \textbf{matricea Edmonds} $A$ construita special pentru acest caz,
+$\det(A)$ este un polinom monic in variabila $y$. Atunci cand voiam sa aflam daca exista un cuplaj cu numar
+fix de muchii rosii, interpolam $\det(A)$ si verificam daca $y^{k}$ are un coeficient nenul. In cazul de fata
+ne intereseaza daca exista macar un termen $y^{k}$ cu coeficient nenul, iar $k$ par. O prima varianta este sa
+interpolam polinomul pentru fiecare numar par, insa putem face mai eficient. O metoda sa aflam suma coeficientilor
+pari ai unui polinom $p$ este sa evaluam $\frac{p(1) + p(-1)}{2}$. Desigur, in cazul nostru, acest calcul se
+efectueaza tot intr-un corp finit si putem sa obtinem iar $0$ pentru ca s-au anulat coeficientii adunatii.
+Din fericire, putem aplica iar lema Schwartz-Zippel sa obtinem ca acest fapt este, in continuare, indeajuns
+de improbabil.
+
+Pentru a continua sa rezolvam problema pentru orice $K$, amintim ca insumarea coeficientilor divizibil cu o anumita valoare
+se poate face folosind \textbf{filtrarea prin radacini ale unitatii} (\ref{rootsofunityfilter}). Problema este insa
+sa gasim un corp potrivit care are radacini ale unitatii de ordinul $K$. Daca nu gasim in timp util, mai putem sa extindem
+corpul in asa fel incat sa introducem $\zeta \neq 1$ pentru care $\zeta^{K} = 1$. Insa, daca abordam asa, operatiile
+aritmetice vor dura $O(K^{2})$ (sau macar $O(K \log K)$ daca folosim algoritmi de aritmetica "state of the art"),
+in loc de $O(1)$, unde tinteam.
+
+In ce urmeaza presupunem ca lucram intr-un corp finit $\mathbb{F}_{p}$, unde $p$ este un numar prim.
+
+\begin{defn}
+  Un numar $g$ se numeste radacina primitiva modulo $n$ daca si numai daca pentru orice $a$ coprim cu $p$ exista un alt numar
+  $l$ astfel incat $g^{l} = a \mod p$.
+\end{defn}
+
+\begin{thm}
+  Fie $g$ o radacina primitiva, atunci cel mai mic numar $l$ astfel incat $g^{l} = 1$ este $\phi(p)$.
+\end{thm}
