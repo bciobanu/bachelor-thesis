@@ -687,3 +687,12 @@ generator. Din \textbf{teorema lui Euler} stim ca orice $a$ coprim cu $p$ satisf
 imbunatati algoritmul mentionat anterior, insa, pentru ca noi il folosim pentru $p$ numar prim, atunci $\phi(p) = p - 1$, deci nu
 ajuta foarte mult. \textbf{Teorema lui Lagrange} mai spune ca este suficient sa verificam ca $a^{d} \neq 1 \mod p$ pentru toti $d \ |\ \phi(p)$.
 Aceasta este deja o imbunatatire foarte mare, deoarece numarul de divizori ai lui $\phi(p)$ este de ordinul $O(p^{\frac{1.066}{\ln \ln p}})$.
+
+Daca $\phi(p) = a_{1}^{b_{1}} a_{2}^{b_{2}} \ldots a_{t}^{b_{t}}$, atunci este de ajuns sa se verifice acei $d = \frac{\phi(p)}{a_{i}}$.
+
+\begin{proof}
+  Presupunem ca exista un divizor propriu $d$ al lui $\phi(p)$ astfel incat $g^{d} = 1 \mod p$. Atunci exista un factor prim $a_{i}$
+  din factorizarea lui $\phi(p)$ astfel incat $d \ | \ \frac{\phi(p)}{a_{i}}$ si evident $g^{\frac{\phi(p)}{a_{i}}} = 1 \mod p$.
+\end{proof}
+
+Complexitatea de timp a acestei solutii este acum $O(g \log^{2} p)$, iar daca presupunem ca ipoteza Riemann ca fiind adevarata, $g = O(\log^{6} p)$.
