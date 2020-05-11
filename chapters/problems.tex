@@ -26,13 +26,9 @@ cu metoda programarii dinamice. Construim tabela $D_{i,\text{rem}, S}$ ca fiind 
 cupla nodurile $\{u_{1}, u_{2}, \ldots, u_{i}\}$ din $U$ cu nodurile $S \subseteq V$ astfel incat restul sumei
 valorilor muchiilor alese de pana acum, modulo $K$ este rem. Recurenta cu care se poate construi este:
 
-\begin{multline*}
-  D_{i,\text{rem}, S} = \\ D_{i-1, \text{rem} - f(e_{1}) \mod K, S - v_{1}} \text{ or }
-                      D_{i-1, \text{rem} - f(e_{2}) \mod K, S - v_{2}} \text{ or }
-                      \ldots \text{ or  } \\
-                      D_{i-1, \text{rem} - f(e_{p}) \mod K, S - v_{P_{i}}}
-                      \ \forall \ e_{j} = (u_{i}, v_{j}), 1 \leq j \leq P_{i}
-\end{multline*}
+\begin{equation}
+  D_{i, \text{rem}, S} = \bigvee_{j \in S \wedge e_{i, j} = (u_{i}, v_{j})} D_{i-1, \text{rem} - f(e_{i, j}), S - \{\j\}}
+\end{equation}
 
 \noindent Din pacate solutie ramane exponentiala, complexitatea acesteia fiind $O(KN^{2}2^{N})$.
 
@@ -57,4 +53,55 @@ se poate face folosind \textbf{filtrarea prin radacini ale unitatii} (\ref{roots
 sa gasim un corp potrivit care are radacini ale unitatii de ordinul $K$. Daca nu gasim in timp util, mai putem sa extindem
 corpul in asa fel incat sa introducem $\zeta \neq 1$ pentru care $\zeta^{K} = 1$. Insa, daca abordam asa, operatiile
 aritmetice vor dura $O(K^{2})$ (sau macar $O(K \log K)$ daca folosim algoritmi de aritmetica "state of the art"),
-in loc de $O(1)$, unde tinteam.
+in loc de $O(1)$, unde tinteam. Corpul pe care il cautam va fi $\mathbb{F}_{p}$, unde $p$ este un numar prim pentru care
+$p \mod k = 1$. Pe modelul RAM operatiile aritmetice in $\mathbb{F}_{p}$ dureaza $O(1)$. Presupunem ca generatorul acestui
+corp este $g$, pe care il putem gasi cu \textbf{algoritmul pentru radacini primitive} \ref{primitiveroot}. Stim ca
+$\phi(p) = p - 1$, deci $g^{p - 1} = 1 \mod p$, iar $k\ |\ p - 1$, deci $\zeta = g^{\frac{p-1}{k}}$.
+
+Complexitatea acestei solutii este acum $O(K W(N))$, unde $W(N)$ este timpul necesar calculului de determinant si este
+de ajuns sa se incadreze in limitele date.
+
+\section{Xor Matching}
+
+\begin{tabular}{l@{\extracolsep{1cm}}l}
+  Autor: & Bogdan Ciobanu\\
+  Concurs: & Codechef September Challenge 2018 Division 1\\
+  Limita de timp: & 2\ s\\
+  Limita de memorie: & 2\ GB\\
+\end{tabular}
+
+\hspace{1cm}
+
+\noindent \textbf{Enunt.} Se da o matrice $A$ de marime $N \times N \ (1 \leq N \leq 60)$ cu valori intregi in celule
+din multimea $\{0, 1, \ldots, 1023\}$. Se considera toate permutarile de coloana ale matricei $A$ si se calculeaza
+$A_{1, 1} \oplus A_{2, 2} \oplus \ldots \oplus A_{N, N}$, unde $\oplus$ este operatie de xor pe biti.
+Sa se determine ce valori se pot obtine.
+
+\hspace{1cm}
+
+\noindent \textbf{Solutie.} O prima solutie este sa consideram toate cele $N!$ permutari ale coloanelor si sa se calculeze
+valorile.
+
+O imbunatatire a solutiei precedente este sa aplicam programare dinamica. Mai exact, vom contrui recurenta $D_{i, \text{sum}, S}$
+ca fiind o valoare booleana care indica daca putem permuta pentru primele $i$ linii coloanele din multimea $S$ astfel incat sa
+suma xor pana acum sa fie egala cu $\text{sum}$. Recurenta este urmatoarea:
+
+\begin{equation}
+  D_{i, \text{sum}, S} = \bigvee_{j \in S} D_{i, \text{sum} \oplus A_{i, j}, S - \{j\}}
+\end{equation}
+
+Solutia ramane apoi in acele valori adevarate $\text{sum}$ din $D_{N, \text{sum}, \{1, 2, 3, \ldots, N\}}$. Complexitatea acestei solutii
+este $O(N^{2}2^{N}\max(A))$, care din pacate nu este destul de rapida pentru restrictiile date.
+
+La prima vedere nu este evidenta relatia pe care problema o are cu cuplajul in grafuri bipartite. Insa daca privim liniile matricei ca
+o secventa de noduri $u_{1}, u_{2}, \ldots, u_{N}$, iar coloanele $v_{1}, v_{2}, \ldots, v_{N}$, atunci $A$ este matricea de adiacenta a
+unui graf bipartit in care exista o muchie intre oricare doua noduri $u_{i}, v_{j}, 1 \leq i, j \leq N$ de valoare $A_{i, j}$.
+
+Vom incerca sa rezolvam o problema mai simpla acum, mai exact cazul cand $\max(A) = 1$. In acest caz, putem obtine suma xor $0$ daca exista
+un cuplaj cu numar par de muchii de valoare $1$, iar suma $1$ daca exista un cuplaj cu numar impar de muchii de valoare $1$. Aceasta subproblema
+aduce aminte la problema cuplajului rosu-albastru (\ref{redbluematching}). Ca pana acum, vom considera varianta cu lema Schwartz-Zippel pentru
+simplitatea operatiilor aritmetice. Avand \textbf{matricea Edmonds} $A$ construita special pentru acest caz,
+$\det(A)$ este un polinom monic in variabila $y$. Atunci cand voiam sa aflam daca exista un cuplaj cu numar
+fix de muchii rosii, interpolam $\det(A)$ si verificam daca $y^{k}$ are un coeficient nenul. In cazul de fata
+ne intereseaza daca exista macar un termen $y^{k}$ cu coeficient nenul, iar $k$ e par pentru cazul cu suma
+xor $0$, iar impar pentru cazul cu suma xor $1$.
