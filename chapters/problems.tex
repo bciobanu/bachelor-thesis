@@ -13,9 +13,7 @@
 \hspace{1cm}
 
 \noindent \textbf{Enunt.} Se da un graf orientat aciclic $G(V, E)$. Sa se gaseasca o multime de cardinal minim de cai, astfel incat
-fiecare nod sa faca parte din cel putin o cale.
-
-\hspace{1cm}
+fiecare nod sa faca parte din exact o cale.
 
 \noindent \textbf{Solutie.} Un graf orientat aciclic este un graf orientat fara cicli orientati. Acesta admite o sortate topologica,
 adica o ordonare a nodurilor $v_{1}, v_{2}, \ldots$ in asa fel incat daca exista arcul $(v_{i}, v_{j})$, atunci $v_{i}$ apare inaintea
@@ -39,7 +37,30 @@ lui $v_{j}$ in ordonare. Algoritmul pentru a calcula sortarea topologica este ur
   \;
 \end{algorithm}
 
-Algoritmul trebuie sa adauge abia dupa ce a vizitat:
+\begin{algorithm}[H]
+  \DontPrintSemicolon
+  \SetKwFunction{FMain}{DFS}
+  \SetKwProg{Fn}{Function}{:}{}
+  \Fn{\FMain{$G$}}{
+    \For{$u \in G$}{
+      $color_{u}$ := WHITE\;
+    }
+    T := []\;
+    \For{$u \in G$}{
+      T := DFS-VISIT(G, color, u, T)\;
+    }
+    \KwRet T\;
+  }
+  \;
+\end{algorithm}
+
+\pagebreak
+
+Algoritmul practic construieste inversa postordinii si aceasta este chiar o sortare topologica posibila.
+Nu este corect sa consideram preordinea, asa cum reiese din exemplul urmatorul unde este posibil sa inseram $C$
+inaintea lui $B$ daca este vizitat inainte din $A$.
+
+\hspace{0.2cm}
 
 \begin{tikzpicture}
     \node[shape=circle,draw=black] (A) at (0,0) {A};
