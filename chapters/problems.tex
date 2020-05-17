@@ -1,5 +1,118 @@
 \chapter{Probleme}
 
+\section{Izomorfism de subarbori}
+
+\hspace{1cm}
+
+\noindent \textbf{Enunt.}
+
+\pagebreak
+
+\section{Acoperire cu cai a unui graf orientat aciclic}
+
+\hspace{1cm}
+
+\noindent \textbf{Enunt.} Se da un graf orientat aciclic $G(V, E)$. Sa se gaseasca o multime de cardinal minim de cai, astfel incat
+fiecare nod sa faca parte din cel putin o cale.
+
+\hspace{1cm}
+
+\noindent \textbf{Solutie.} Un graf orientat aciclic este un graf orientat fara cicli orientati. Acesta admite o sortate topologica,
+adica o ordonare a nodurilor $v_{1}, v_{2}, \ldots$ in asa fel incat daca exista arcul $(v_{i}, v_{j})$, atunci $v_{i}$ apare inaintea
+lui $v_{j}$ in ordonare. Algoritmul pentru a calcula sortarea topologica este urmatorul:
+
+\begin{algorithm}[H]
+  \DontPrintSemicolon
+  \SetKwFunction{FMain}{DFS-VISIT}
+  \SetKwProg{Fn}{Function}{:}{}
+  \Fn{\FMain{$G$, $color$, $u$, $T$}}{
+    \If{$color_{u}$ = BLACK}{
+      \KwRet T\;
+    }
+    $color_{u}$ := GRAY\;
+    \For{$v \in G_{u}$}{
+      T := DFS-VISIT($G, color, v, T$)\;
+    }
+    $color_{u}$ := BLACK\;
+    \KwRet [u] + T\;
+  }
+  \;
+\end{algorithm}
+
+Algoritmul trebuie sa adauge abia dupa ce a vizitat:
+
+\begin{tikzpicture}
+    \node[shape=circle,draw=black] (A) at (0,0) {A};
+    \node[shape=circle,draw=black] (B) at (0,3) {B};
+    \node[shape=circle,draw=black] (C) at (2.5,4) {C};
+
+    \path [->] (A) edge node[left] {} (B);
+    \path [->](B) edge node[left] {} (C);
+    \path [->] (A) edge node[left] {} (C);
+\end{tikzpicture}
+
+\pagebreak
+
+\section{Bilingual}
+
+\begin{tabular}{l@{\extracolsep{1cm}}l}
+  Concurs: & Google Code Jam 2015 Round 2\\
+  Limita de timp: & 10\ s\\
+  Limita de memorie: & 256\ MB\\
+\end{tabular}
+
+\hspace{1cm}
+
+\noindent \textbf{Enunt.} Se dau $N + 2 \ (2 \leq N \leq 200)$ liste de cuvinte. Se stie ca prima lista contine doar cuvinte in limba
+engleza, a doua contine doar cuvinte in limba franceza. Restul de $N$ nu se cunosc si trebuie catalogate intr-una
+din cele doua limbi in asa fel incat sa se minimizeze numarul de cuvinte care fac parte in ambele limbi.
+
+\hspace{1cm}
+
+\noindent \textbf{Solutie.} O prima solutie cu backtracking trebuie sa asocieze fiecarei liste o limba si apoi sa
+verifice numarul de cuvinte care se afla in ambele limbi. Sunt $2^{N}$ posibilitati de a alege, iar verificarea poate
+dura si pana la suma numarului de cuvinte, daca acestea se normalizeaza in prealabil. Sunt mai multe moduri in care
+putem imbunatati constanta acestei solutii. In primul rand, putem ignora cuvintele care nu apar in mai mult de o
+propozitie. De asemenea, in cazul acestui backtracking, o alta optimizare semnificativa ar fi iterative deepening pe raspuns,
+adica sa nu urmarim ramuri care cresc numarul de cuvinte incompatibile din raspuns imediat ce le observam (depth-first),
+dar sa o abordam gradual si sa preferam o crestere in latime, nu in adancime. Din pacate aceasta solutie nu este destul
+de rapida, nici macar pentru anul $2015$, cand solutiile la Code Jam se rulau local si se cerea doar rezultatul unei
+rulari de program.
+
+Problema se aseamana unei probleme clasice de taietura minima, numita \textbf{Image segmentation}. Taietura minima este duala
+problemei de flux maxim. In aceasta problema sunt $N$ pixeli. Fiecarui pixel $i$ se poate asocia o culoare de prim plan de cost
+$f_{i}$ sau o culoare de fundal $b_{i}$. Daca doi pixeli $i$ si $j$ sunt adiacenti si au asocieri diferite, atunci trebuie scazuta
+o valoare $p_{i,j}$. Problema cere sa se efectueze asocierile in asa fel incat sa maximizeze costul. Fie $P$ multimea pixelilor carora
+le-a fost asociat prim-planul si $Q$ multimea pixelilor carora le-a fost asociat fundalul, atunci dorim sa maximizam
+$\sum_{i \in P} f_{i} + \sum_{i \in Q} b_{i} - \sum_{i \in P, j \in Q \lor i \in Q, j \in P} p_{i,j}$. Aceasta se poate reformula ca o problema
+de minimizare a valorii $\sum_{i \in P, j \in Q \lor i \in Q, j \in P} p_{i,j}$. Reteaua de flux maxim dubleaza nodurile pentru fiecare pixel
+in asa fel incat un nodul $2u$ inseamna $u$ a fost asociat pe prim-plan, iar $2u+1$ inseamna $u$ a fost asociat pe fundal. Sursa este
+conectata catre toate nodurile de prim-plan $2u$ cu capacitate $f_{u}$, iar destinatia este conectata catre toate nodurile de fundal $2u+1$
+cu capacitate $b_{u}$. Muchii de capacitate $p_{i,j}$ se adauga intre nodurile adiacente de asocieri diferite. A taietura de la sursa la
+destinatie este apoi o asociere a pixelilor in multimile $P$, respectiv $Q$.
+
+In cazul nostru, culoarea de prim plan inseamna un cuvant in limba engleza, iar culoarea de fundal inseamna un cuvant in limba franceza.
+Observam ca nu ne intereseaza valorile $f_{i}, b_{i}$, trebuie doar sa fie suficent de mari, iar valoarea de ``penalty'' se aplica atunci cand
+un cuvant este asociat in ambele limbi si are cost $1$. Trebuie totusi sa avem grija sa nu atribuim mai multe limbi aceleiasi liste, asadar mai
+asociem un cost $\inf$ intre cuvinte de limba diferita din aceeasi propozitie. Trebuie tratate cu atentie cuvintele din primele doua propozitii.
+
+In schimb, nu am prezentat degeaba aceasta problema. Ea poate fi rezolvata mai departe si ca o problema de cuplaj maxim in graf bipartit.
+Putem imparti cuvintele in trei multimi, cuvintele care sunt doar in engleza, cuvintele care sunt doar in franceza si cuvintele
+care sunt in ambele limbi. Pentru a minimiza numarul de cuvinte din ambele limbi ne dorim sa maximizam numarul de cuvinte care sunt intr-o
+singura limba. Ca inainte, vom construi doua noduri pentru fiecare cuvant $u$, nodul $2u$ va fi ales daca $u$ nu este un cuvant in engleza,
+iar nodul $2u + 1$ va fi ales daca $u$ nu este un cuvant in franceza. Pentru fiecare doua cuvinte $u_{1}, u_{2}$ din aceeasi lista adaugam o
+muchie intre $2u_{1}$ si $2u_{2} + 1$. Ramane de gasit cea mai mare multime de noduri astfel incat nu exista o muchie intre nicio pereche, adica
+\textbf{maximal independent set}. Pe caz general aceasta nu se poate rezolva polinomial, insa graful creat este evident unul bipartit. In grafurile
+bipartite \textbf{maximal independent set} este complementul acoperirii minime cu nodurilor (\textbf{minimal vertex cover}).
+
+\begin{thm}
+  \textbf{Kőnig (1931).} In orice graf bipartit, numarul de muchii dintr-un cuplaj maximal este egal cu numarul de noduri din acoperirea minima.
+\end{thm}
+
+Asadar, putem folosi algoritmul de cuplaj maximal \ref{Algoritm paralelizabil pentru cuplaj} pentru a calcula raspunsul problemei.
+
+\pagebreak
+
 \section{Divisible Matching}
 
 \begin{tabular}{l@{\extracolsep{1cm}}l}
