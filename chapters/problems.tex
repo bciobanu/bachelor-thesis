@@ -10,8 +10,6 @@
 
 \section{Acoperire cu cai a unui graf orientat aciclic}
 
-\hspace{1cm}
-
 \noindent \textbf{Enunt.} Se da un graf orientat aciclic $G(V, E)$. Sa se gaseasca o multime de cardinal minim de cai, astfel incat
 fiecare nod sa faca parte din exact o cale.
 
@@ -60,9 +58,10 @@ Algoritmul practic construieste inversa postordinii si aceasta este chiar o sort
 Nu este corect sa consideram preordinea, asa cum reiese din exemplul urmatorul unde este posibil sa inseram $C$
 inaintea lui $B$ daca este vizitat inainte din $A$.
 
-\hspace{0.2cm}
-
-\begin{tikzpicture}
+\begin{figure}
+  \caption{Contra-exemplu pentru algoritmul de sortare topologica in care se foloseste preordinea.}
+  \centering
+  \begin{tikzpicture}
     \node[shape=circle,draw=black] (A) at (0,0) {A};
     \node[shape=circle,draw=black] (B) at (0,3) {B};
     \node[shape=circle,draw=black] (C) at (2.5,4) {C};
@@ -70,7 +69,8 @@ inaintea lui $B$ daca este vizitat inainte din $A$.
     \path [->] (A) edge node[left] {} (B);
     \path [->](B) edge node[left] {} (C);
     \path [->] (A) edge node[left] {} (C);
-\end{tikzpicture}
+  \end{tikzpicture}
+\end{figure}
 
 \pagebreak
 

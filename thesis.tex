@@ -1,55 +1,46 @@
 \documentclass[12pt,letterpaper]{report}
-\usepackage[a4paper,left=1.3in, right=1.3in, top=1.2in, bottom=1.2in]{geometry}
+\usepackage[a4paper,left=2.5cm, right=2.5cm, top=2.5cm, bottom=2.5cm]{geometry}
 
-% Check if with latex or pdflatex.
-\ifx\pdftexversion\undefined
-  \usepackage[dvips]{graphicx}
-\else
-  \usepackage[pdftex]{graphicx}
-\fi
+\usepackage[pdftex]{graphicx}
 
-\usepackage{setspace}
-\usepackage{titlesec}
-\usepackage{enumerate}
-\usepackage{amsmath}
-\usepackage{amsfonts}
-\usepackage{amsthm}
-\usepackage{fancyvrb}
-\usepackage{float}
-\usepackage{hyperref}
-\usepackage{tabulary}
-\usepackage{indentfirst}
-\usepackage{algorithm2e}
-\usepackage{tikz}
+\usepackage{times}       % Font Times New Roman
+\usepackage{setspace}    % Spatierea intre linii
+\usepackage{titlesec}    % Capitole, sectiuni, subsectiuni..
+\usepackage{enumerate}   % Liste
+\usepackage{amsmath}     % Formatari in ecuatii
+\usepackage{amsfonts}    % Formatari speciale, cum ar fi multimea numerelor naturale
+\usepackage{amsthm}      % Modulul de teoreme
+\usepackage{hyperref}    % Linkuri in document
+\usepackage{algorithm2e} % Pseudocod inline
+\usepackage{tikz}        % Creare de diagramare
 
-% Graphics path.
+% Calea catre imagini
 \graphicspath{{images/}}
 
-% Table of contents.
+% Tabel de continut
 \setcounter{secnumdepth}{1}
 \setcounter{tocdepth}{1}
 
-% Chapter title format.
+% Formatarea capitolelor
 \titleformat{\chapter}
   {\normalfont\LARGE\bfseries}{\thechapter}{1em}{}
 
-% Chapter, section, subsection title spacings.
+% Spatierea intre capitole, sectiuni si subsectiuni
 \titlespacing*{\chapter}{0pt}{0ex plus 1ex minus .2ex}{2.3ex plus .2ex}
 \titlespacing*{\section} {0pt}{1ex plus 1ex minus .2ex}{1.5ex plus .2ex}
 \titlespacing*{\subsection} {0pt}{2ex plus 1ex minus .2ex}{1ex plus .2ex}
 
-% Spacing after a caption.
+% Spatierea in jurul figurilor
 \setlength{\belowcaptionskip}{-15pt}
 
-% Spacing before a footer.
+% Spatierea subsolului
 \setlength{\skip\footins}{0.5cm}
 
-% Rename "Contents"
+% Continut
 \renewcommand{\contentsname}{Continut}
 
-
 % Teorema
-\theoremstyle{definition} % Italics don't look as nice?
+\theoremstyle{definition} % Prefer stilul de la definitii si aici
   \newtheorem{thm}{Teorema}[chapter]
 
 % Definitie
@@ -64,36 +55,28 @@
 \theoremstyle{definition}
   \newtheorem{clr}[thm]{Corolar}
 
-% Proof
+% Demonstratie
 \renewcommand*{\proofname}{Demonstratie}
 
 \begin{document}
-
-  \onehalfspacing
+  \doublespacing
   \include{chapters/title}
 
-  \singlespacing
-  \pagenumbering{gobble}
-  %\include{chapters/Signatures}
-
-  \onehalfspacing
   %\include{chapters/Abstract}
 
-  % Roman numeral numbering until introduction.
+  % Numere italice pana la Introducere
   \pagestyle{plain}
   \pagenumbering{roman}
   \setcounter{page}{4}
 
-  \onehalfspacing
   \tableofcontents
   \pagebreak
 
-  % Change the numbering back to normal.
+  % Numere arabice, pornind de la 1
   \pagestyle{plain}
   \pagenumbering{arabic}
   \setcounter{page}{1}
 
-  \setstretch{1.5}
   \include{chapters/introduction}
   \include{chapters/context}
   \include{chapters/problems}
@@ -105,5 +88,4 @@
   \addcontentsline{toc}{chapter}{Bibliography}
   \bibliographystyle{plain}
   \bibliography{references}
-
 \end{document}
