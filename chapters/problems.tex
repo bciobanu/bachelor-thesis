@@ -1,10 +1,60 @@
 \chapter{Probleme}
 
 \section{Izomorfism de subarbori}
+\begin{tabular}{l@{\extracolsep{1cm}}l}
+  Concurs: & Lot Râmnicu Vâlcea 2015 - Baraj 2 Seniori\\
+  Limita de timp: & 0.3\ s\\
+  Limita de memorie: & 64\ MB\\
+\end{tabular}
 
-\hspace{1cm}
+\noindent \textbf{Enunt.} Se dau doi arbori cu radacina in nodul $0$ si cel mult $500$ de noduri, $A$ si $B$.
+O operatia consta in stergerea unei frunze. Care este numarul minim de operatii aplicate pe $A$ astfel incat
+sa devina izomorf cu $B$?
 
-\noindent \textbf{Enunt.}
+\noindent \textbf{Solutie.} Cei doi arbori sunt izomorfi daca exista o re-etichetare a nodurilor in asa fel incat sa fie identici.
+Consideram mai intai o problema mai simpla: cum vedem daca doi arbori sunt izomorfi? Vom atribui fiecarui arbore un polinom in mai
+multe variabile si vom reduce problema la una de echivalenta de polinoame.
+
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[level distance=1.5cm,
+    level 1/.style={sibling distance=3cm},
+    level 2/.style={sibling distance=1.5cm}]
+    \node {$(z + (x + 1)^{2})(z + y + 1)$}
+      child {node {$(x + 1)^{2}$}
+        child {node {$1$}}
+        child {node {$1$}}
+      }
+      child {node {$y + 1$}
+      child {node {$1$}}
+      };
+  \end{tikzpicture}
+  \caption{Constructia polinomului}
+\end{figure}
+
+\begin{algorithm}[H]
+  \DontPrintSemicolon
+  \SetKwFunction{FMain}{DFS-POLY}
+  \SetKwProg{Fn}{Function}{:}{}
+  \Fn{\FMain{$T$, $u$, $p$}}{
+    poly := 1\;
+    \For{$v \in T_{u}$}{
+      \If{$v \neq p$}{
+        poly := poly * ($x_{u}$ + DFS-POLY(T, v, u))\;
+      }
+    }
+    \KwRet poly\;
+  }
+  \;
+\end{algorithm}
+
+Pentru doi arbori, daca evaluam polinoamele cu valori uniform aleatoare alese din $\mathbb{F}_{p}$, atunci probabilitatea de coliziune este de
+cel mult $\frac{N}{p}$, unde $N$ este numarul de noduri, conform lemei \textbf{Schwartz-Zippel}. Doi arbori ne-izomorfi vor avea polinoamele diferite
+pentru ca inelul polinoamelor $\mathbb{F}_{p}[x_{1}, x_{2}, \ldots, x_{N}]$ determina o factorizare unica a polinomului, descompus intr-un produs de
+polinoamele ireductibile si constante.
+
+Avand acest algoritm, putem construi o solutie cu backtracking in care pornind din frunze, eliminam o multime de noduri, mai exact atatea
+noduri cat are $A$ in plus fata de $B$ si apoi verificam izomorfismul cu algoritmul dat.
 
 \pagebreak
 
@@ -54,10 +104,6 @@ lui $v_{j}$ in ordonare. Algoritmul pentru a calcula sortarea topologica este ur
 
 \pagebreak
 
-Algoritmul practic construieste inversa postordinii si aceasta este chiar o sortare topologica posibila.
-Nu este corect sa consideram preordinea, asa cum reiese din exemplul urmatorul unde este posibil sa inseram $C$
-inaintea lui $B$ daca este vizitat inainte din $A$.
-
 \begin{figure}
   \caption{Contra-exemplu pentru algoritmul de sortare topologica in care se foloseste preordinea.}
   \centering
@@ -71,6 +117,46 @@ inaintea lui $B$ daca este vizitat inainte din $A$.
     \path [->] (A) edge node[left] {} (C);
   \end{tikzpicture}
 \end{figure}
+
+Algoritmul practic construieste inversa postordinii si aceasta este chiar o sortare topologica posibila.
+Nu este corect sa consideram preordinea, asa cum reiese din exemplul urmatorul unde este posibil sa inseram $C$
+inaintea lui $B$ daca este vizitat inainte din $A$.
+
+Avand calculata sortarea topologica, o prima solutie cu backtracking va considera nodurile in ordinea inversa.
+Ne putem imagina caile ca o colorare, iar acum la fiecare pas al algoritmului trebuie sa stabilim culoarea pentru
+nodul curent. Pentru ca le procesam in ordinea inversa sortarii topologice, stim ca am procesat deja toti vecinii lui
+iar acestia sunt colorati in culorile $\{C_{1}, C_{2}, \ldots, C_{k}\}$. Pentru a asigura invariantul de cale, odata ce
+un nod preia culoarea unui vecin, vecinul isi pierde culoarea si nu mai poate fi ales pe masura ce coboram in adancime.
+Atunci, pentru nodul curent trebuie sa alegem una din aceste culori sau sa cream o culoare noua. Dupa ce toate nodurile
+au fost colorate putem sa ne uitam la numarul de culori diferite folosite si aceasta va fi un candidat pentru raspunsul
+problemei.
+
+\begin{lem}
+  Complexitatea acestei solutii este de $O(|E|2^{|V|})$.
+\end{lem}
+
+\begin{proof}
+  In cel mai rau caz, consideram nodurile in ordine si la fiecare pas avem o decizie, ne atasam la o cale existenta sau cream o cale
+  noua.
+\end{proof}
+
+\noindent Solutia polinomiala a problemei nu este evidenta, dar este sugerata de conexiunea cuplajului in graf bipartit cu teorema lui
+Dilworth. Vom numi o \textbf{anticale} o secventa de noduri $v_{1}, v_{2}, \ldots, v_{k}$ pentru care
+$\forall \ v_{i}, v_{j} \ (v_{i}, v_{j}), (v_{j}, v_{i}) \notin E$.
+
+\begin{thm}
+  \label{Dilworth}
+  \textbf{Dilworth.} Numarul minim de cai necesare ca sa acoperi graful este egal cu marimea celei mai lungi anticai.
+\end{thm}
+
+\begin{thm}
+  \label{Konig}
+  \textbf{Kőnig (1931).} In orice graf bipartit, numarul de muchii dintr-un cuplaj maximal este egal cu numarul de noduri din acoperirea minima.
+\end{thm}
+
+Avand aceasta observatie, este mai clara reducerea la cuplaj in graf bipartit. Construim graful bipartit in care dublam fiecare nod din graful
+initial astfel incat sa apara in ambele multimi. Apoi, muchiile din graful initial le vom considera si in acesta, doar ca vor conecta doar
+noduri din multimi diferite. Acum, daca am gasi o multime maxima de noduri independente, aceasta va fi o \textbf{anticale}.
 
 \pagebreak
 
@@ -126,18 +212,13 @@ muchie intre $2u_{1}$ si $2u_{2} + 1$. Ramane de gasit cea mai mare multime de n
 \textbf{maximal independent set}. Pe caz general aceasta nu se poate rezolva polinomial, insa graful creat este evident unul bipartit. In grafurile
 bipartite \textbf{maximal independent set} este complementul acoperirii minime cu nodurilor (\textbf{minimal vertex cover}).
 
-\begin{thm}
-  \textbf{Kőnig (1931).} In orice graf bipartit, numarul de muchii dintr-un cuplaj maximal este egal cu numarul de noduri din acoperirea minima.
-\end{thm}
-
-Asadar, putem folosi algoritmul de cuplaj maximal \ref{Algoritm paralelizabil pentru cuplaj} pentru a calcula raspunsul problemei.
+Asadar, folosind \ref{Konig}, putem folosi algoritmul de cuplaj maximal \ref{Algoritm paralelizabil pentru cuplaj} pentru a calcula raspunsul problemei.
 
 \pagebreak
 
 \section{Divisible Matching}
 
 \begin{tabular}{l@{\extracolsep{1cm}}l}
-  Autor: & Konstantin Khadaev\\
   Concurs: & CS Academy Round \#67\\
   Limita de timp: & 4\ s\\
   Limita de memorie: & 256\ MB\\
@@ -198,7 +279,6 @@ de ajuns sa se incadreze in limitele date.
 \section{Xor Matching}
 
 \begin{tabular}{l@{\extracolsep{1cm}}l}
-  Autor: & Bogdan Ciobanu\\
   Concurs: & Codechef September Challenge 2018 Division 1\\
   Limita de timp: & 2\ s\\
   Limita de memorie: & 2\ GB\\
