@@ -53,6 +53,46 @@ Constructia lui $P$ a fost oferita de Joseph Louis Lagrange in $1795$:
   P(x) := \sum_{i_{1}=0}^{k} (y_{i_{1}} * \prod_{1 \leq i_{2} \leq k + 1 \ \land \ i_{1} \neq i_{2}} \frac{x - x_{i_{2}}}{x_{i_{1}} - x_{i_{2}}})
 \end{equation}
 
+\section{Eliminare Gaussiana}
+\label{gauss}
+
+O metoda de a rezolva sisteme de ecuatii liniare este \textbf{Eliminarea Gaussiana}.
+Aceasta se mai numeste si metoda \textbf{Gauss-Jordan} pentru ca este o variatie a
+metodei lui Gauss, descrisa de catre Jordan in anul 1887.
+
+Algoritmul face eliminari secventiale a tuturor variabilelor pana cand fiecare ecuatie
+ramane cu o singura variabila. Daca o privim ca o ecuatie $Ax = b$, atunci se poate
+vedea ca, in cazul in care $A$ este o matrice patratica, atunci vrem sa o transformam
+in matricea identitate si sa rezolvam sistemul pe acest caz trivial.
+
+La primul pas, algoritmul imparte prima linie cu $a_{1, 1}$ si apoi adauga o combinatie
+liniara a primei ecuatii tuturor celorlalte astfel incat toti ceilalti coeficienti de pe
+prima coloana sa fie $0$; mai exact pentru randul $a_{i}, i \geq 2$, vom adauga primul rand
+inmultit cu $-a_{i}$. Toate aceste operatii se executa si pe vectorul coloana $b$. Se
+continua aceleasi operatii pentru restul liniilor.
+
+Este posibil ca acele valori sa fie $0$. De aceea exista mai multe euristici, in special gandite
+pentru a stabiliza operatiile pe numere reale in virgula flotanta. Euristica cea mai des folosita
+in practica este sa se caute valoarea cea mai mare absoluta pe acea coloana si sa se interschimbe
+cele doua randuri.
+
+Complexitatea algoritmului este de $O(N^{2}M)$ daca $A$ este de marime $N \times M$, cu $N \leq M$.
+In practica acest algoritm se poate aplica si atunci cand se lucreaza intr-un corp finit.
+Un caz des intalnit este in $\mathbb{F}_{2}$. Pe modelul RAM acest caz se poate implementa chiar in
+complexitate $O(\frac{N^{2}M}{w})$, unde $w$ este marimea unui cuvant, adica $64$ pentru procesoarele
+moderne.
+
+Metoda poate fi folosita si pentru a calcula inversa unei matrice. Tot ce este de facut, pentru o matrice
+$A$ de marime $N \times N$ este sa se execute algoritmul pe matricea $[A\ |\ I_{N}]$ de marime $N \times 2N$,
+iar matricea de pe blocul din dreapta (coloanele mai mari ca $N$) va fi chiar $A^{-1}$.
+
+Pentru calculul determinantului, putem executa algoritmul de inainte cu mentiunea ca nu vom mai imparti fiecare
+linie, dar vom inmulti acele valori de pivot si de fiecare data cand schimbam doua linii, schimbam semnul
+rezultatului. Daca la un moment dat nu se gaseste un pivot, atunci rezultatul este chiar $0$. Daca se
+doreste calculul rangului, atunci aceste este chiar numarul pivotilor diferiti de $0$.
+
+\pagebreak
+
 \section{Teoria grafurilor}
 
 \begin{defn}
