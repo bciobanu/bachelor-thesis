@@ -56,6 +56,39 @@ polinoamele ireductibile si constante.
 Avand acest algoritm, putem construi o solutie cu backtracking in care pornind din frunze, eliminam o multime de noduri, mai exact atatea
 noduri cat are $A$ in plus fata de $B$ si apoi verificam izomorfismul cu algoritmul dat.
 
+In continuare, observam din solutia precedenta ca raspunsul este fix $|A| - |B|$, daca exista o secventa de operatii. Vom nota cu $a_{v_{1}}$
+subarborele nodului $v_{1}$ din $A$ si cu $b_{v_{2}}$ subarborele nodului $v_{2}$ din $B$. Vom construi urmatoarea recurenta folosind
+programare dinamica: $d_{v_{1}, v_{2}}$ este adevarat daca putem executa o secventa de operatii astfel incat sa transformam subarborele
+nodului $v_{1}$ intr-unul izomorfm subarborelui nodului $v_{2}$ (din celalalt arbore). Este clar ca pentru perechi unde $|a_{v_{1}}| < |b_{v_{2}}|$ valoarea va fi fals. Altfel, consideram fii directi ai acestor doua noduri: $c_{1, 1}, c_{1, 2}, \ldots, c_{1, n_{1}}$ si $c_{2, 1}, c_{2, 2}, \ldots, c_{2, n_{2}}$.
+Daca $n_{1} < n_{2}$, atunci nu se poate sa eliminam noduri, micsorand astfel $n_{1}$, incat sa obtinem $n_{2}$. In ce urmeaza ne intereseaza sa gasim o
+submultime a fiilor primului nod $c_{1, i_{1}}, c_{1, i_{2}}, \ldots, c_{1, i_{n_{2}}}$ astfel incat $d_{c_{1, i_{j}}, c_{2, j}}$ sa fie adevarate
+pentru toti $1 \leq j \leq n_{2}$.
+
+O prima solutie ar fi sa consideram toate cele $\binom{n_{1}}{n_{2}}$ solutii posibile. Aceasta solutie este deja mai eficienta decat prima propusa.
+
+\begin{thm}
+  \label{hall}
+  \textbf{Hall.} Fie $G = (U \cup V, E)$ un graf bipartit. Exista un cuplaj care acopera $U$ daca si numai daca pentru orice submultime $W$
+  a lui $U$, daca consideram multimea $N_{G}(W)$ ca fiind reuniunea vecinilor nodurilor din $W$, atunci $|W| \leq N_{G}(W)$.
+\end{thm}
+
+Cum putem folosi \textbf{teorema lui Hall} in cazul nostru este sa construim matricea $d'$ asociata vecinilor lui $v_{1}$, respectiv $v_{2}$
+unde $d'_{i, j} = d_{c_{1, i}, c_{2, j}}$. Daca pentru fiecare multime de coloane consideram multimea liniilor care au macar o valoare de adevarat
+pe vreuna din coloane, atunci vrem ca numarul de linii sa nu fie mai mic decat numarul de coloane. Aceasta solutie din pacate ramane exponentiala
+si se poate construi in timp $O(2^{n_{2}} n_{1})$ daca se proceseaza submultimile de coloane in ordinea codurilor Gray, in timp ce solutia evidenta ar lua
+$O(2^{n_{2}} n_{1}n_{2})$. O proprietate inedita a codurilor Gray este ca mastile consecutive de biti vor fi diferite pe fix un bit. Astfel vom determina acel bit,
+asociat unei coloane si apoi vom folosi un vector de frecventa pentru a determina ce linii mai raman active pentru noua submultime de coloane, in timp
+cel mult $O(n_{1})$.
+
+Problema pe matricea $d'$ este chiar de cuplaj in graf bipartit, iar $d'$ este chiar textbf{matricea Edmonds} (\ref{edmonds}). Ramane sa ii calculam
+rangul si sa verificam ca este egal cu $n_{2}$. Complexitatea acestei solutii este:
+
+\begin{equation}
+  \sum_{v_{1} \in A} \sum_{v_{2} \in B} n_{1}n_{2}^{2} = \sum_{v_{1} \in A} n_{1} \sum_{v_{2} \in B} n_{2}^{2} \leq |A||B|^{2}
+\end{equation}
+
+\noindent pentru ca $a^{2} + b^{2} \leq (a + b)^{2}$.
+
 \pagebreak
 
 \section{Acoperire cu cai a unui graf orientat aciclic}
