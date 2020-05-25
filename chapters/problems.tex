@@ -249,6 +249,48 @@ Asadar, folosind \ref{Konig}, putem folosi algoritmul de cuplaj maximal \ref{Alg
 
 \pagebreak
 
+\section{Paritatea numarului de cuplaje}
+\begin{tabular}{l@{\extracolsep{1cm}}l}
+  Concurs: & Olimpiada nationala pentru studenti 2015, Runda finala\\
+  Limita de timp: & 1\ s\\
+  Limita de memorie: & 20\ MB\\
+\end{tabular}
+
+\hspace{1cm}
+
+\noindent \textbf{Enunt.} Se da un graf bipartit $G = (U + V, E)$ unde $|U|, |V| \leq 100$. Sa se determine paritatea numarul de cuplaje perfecte.
+
+\hspace{1cm}
+
+\noindent \textbf{Solutie.} Este clar ca daca $|U| \neq |V|$ atunci numarul este $0$, deci par. Altfel, putem pentru inceput sa testam fiecare permutare, in complexitate $O(|U|!)$.
+
+Putem imbunatati solutia precedenta daca o abordam cu programare dinamica. Construim tabela $D_{i, S}$ care este paritatea numarului de cuplaje a
+primelor $i$ elemente din $U$ cu multimea de noduri din $S \subseteq V$. Recurenta se poate construi astfel:
+
+\begin{equation}
+  D_{i, S} = \sum_{(u_{i}, v_{j}) \in E} D_{i-1, S - \{v_{j}\}} \mod 2
+\end{equation}
+
+\noindent Aceasta solutie are complexitate de timp $O(2^{|U|} (|U| + |E|))$
+
+\begin{thm}
+  Numarul de cuplaje perfecte este egal cu permanentul matricei Edmonds asociat.
+\end{thm}
+
+\begin{proof}
+  Permanentul unei matrice patratica $A$ de marime $N \times N$ este egal cu $\sum_{P \in S_{N}} \prod_{i=1}^{N} A_{i, P_{i}}$.
+  Valoarea $\prod_{i=1}^{N} A_{i, P_{i}}$ este $1$ daca si numai daca $P$ este un cuplaj perfect. Insumam aceasta valoare
+  pentru toate permutarile. Deci am numarat cuplajele perfecte.
+\end{proof}
+
+Se observa, din formula, ca permanentul este determinantul ``fara semn''. Totusi, atunci cand lucram in $\mathbb{F}_{2}$,
+semnul nu conteaza, pentru ca $-1 \mod 2 = 1$. Asadar, pentru a afla paritatea numarului de cuplaje, este de ajuns sa
+determinam paritatea determinatului. Pentru aceasta, putem folosi metoda Eliminarii Gauss in $\mathbb{F}_{2}$, in complexitate
+$O(\frac{N^{3}}{w})$, unde $w$ este marimea unui cuvant. Pana acum nu se cunoste vreun algoritm polinomial pentru a calcula
+permanentul pe caz general.
+
+\pagebreak
+
 \section{Divisible Matching}
 
 \begin{tabular}{l@{\extracolsep{1cm}}l}
