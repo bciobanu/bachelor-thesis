@@ -1,11 +1,40 @@
 \chapter{Probleme}
 
+\section{Cuplaj cu costuri pe noduri}
+
+\noindent \textbf{Enunt.} Se da un graf bipartit $G(U + V, E)$ si o functie de cost $w \colon U \to \mathbb{R}$. Sa se determine cuplajul
+maximal care maximizeaza suma costurilor nodurilor alese in cuplaj.
+
+\noindent \textbf{Solutie.} Este corect sa prioritizam nodurile in ordinea descrescatoare a costurilor asociate.
+
+\pagebreak
+
+\section{Cuplaj cu costuri pe muchii}
+
+\noindent \textbf{Enunt.} Se da un graf bipartit $G(U + V, E)$ si o functie de cost $w \colon E \to \mathbb{R}$. Sa se determine cuplajul
+\textbf{perfect} care maximizeaza suma costurilor muchiilor alese in cuplaj.
+
+\noindent \textbf{Solutie.} Consideram urmatoarea formulare a problemei ca una de programare liniara:
+
+\begin{equation*}
+\begin{array}{ll@{}ll}
+  \text{max}  & \sum_{(x, y) \in E} w((x, y))m_{x, y} &\\
+  \text{s.t.} & \sum_{y} m_{x, y} = 1 \ \forall x &\\
+              & \sum_{x} m_{x, y} = 1 \ \forall y &\\
+              & m_{x,y} \in \{0, 1\} \ \forall x, y
+\end{array}
+\end{equation*}
+
+\pagebreak
+
 \section{Izomorfism de subarbori}
 \begin{tabular}{l@{\extracolsep{1cm}}l}
   Concurs: & Lot Râmnicu Vâlcea 2015 - Baraj 2 Seniori\\
   Limita de timp: & 0.3\ s\\
   Limita de memorie: & 64\ MB\\
 \end{tabular}
+
+\hspace{1cm}
 
 \noindent \textbf{Enunt.} Se dau doi arbori cu radacina in nodul $0$ si cel mult $500$ de noduri, $A$ si $B$.
 O operatia consta in stergerea unei frunze. Care este numarul minim de operatii aplicate pe $A$ astfel incat
