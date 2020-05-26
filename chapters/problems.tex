@@ -14,16 +14,83 @@ maximal care maximizeaza suma costurilor nodurilor alese in cuplaj.
 \noindent \textbf{Enunt.} Se da un graf bipartit $G(U + V, E)$ si o functie de cost $w \colon E \to \mathbb{R}$. Sa se determine cuplajul
 \textbf{perfect} care maximizeaza suma costurilor muchiilor alese in cuplaj.
 
-\noindent \textbf{Solutie.} Consideram urmatoarea formulare a problemei ca una de programare liniara:
+\noindent \textbf{Solutie.} Consideram urmatoarea formulare a problemei ca una de programare liniara (\cite{assignmentlp}):
 
 \begin{equation*}
 \begin{array}{ll@{}ll}
   \text{max}  & \displaystyle\sum\limits_{(x, y) \in E} w((x, y))m_{x, y} &\\
-  \text{s.t.} & \displaystyle\sum\limits_{y} m_{x, y} = 1 \ \forall x &\\
-              & \displaystyle\sum\limits_{x} m_{x, y} = 1 \ \forall y &\\
+  \text{s.t.} & \displaystyle\sum\limits_{y} m_{x, y} = 1 \ \forall \ x &\\
+              & \displaystyle\sum\limits_{x} m_{x, y} = 1 \ \forall \ y &\\
               & m_{x,y} \in \{0, 1\} \ \forall x, y
 \end{array}
 \end{equation*}
+
+Aceasta este o problema discreta pentru ca am conditionat ca $m_{x, y}$ sa fie $0$ sau $1$, dar se poate arata ca in cazul problemei cuplajului
+de cost maxim putem relaxa aceasta conditie la varianta continua si anume $0 \leq m_{x, y} \leq 1$. \textbf{Teorema Birkhoff-von Neumann} spune
+ca fiecare cuplaj fractionar poate fi descompus ca o combinatie convexa de cuplaje. Sa consideram formularea duala a acestei probleme:
+
+\begin{equation*}
+\begin{array}{ll@{}ll}
+  \text{min}  & \displaystyle\sum\limits_{x} p_{x} + \displaystyle\sum\limits_{y} q_{y} &\\
+  \text{s.t.} & p_{x} + q_{y} \leq w((x, y)) \ \forall \ (x, y) \in E &\\
+              & \displaystyle\sum\limits_{y} q_{y} m_{x, y} = q_{y} \ \forall \ x &\\
+              & \displaystyle\sum\limits_{x} p_{x} m_{x, y} = p_{x} \ \forall \ y &\\
+\end{array}
+\end{equation*}
+
+Duala unei probleme de maximizare este una de minimizare, iar optimul ei consistuie o limita superioara pentru problema primala
+\textbf{(dualitate usoara)}. Atunci cand este chiar egala, se numeste \textbf{dualitate puternica}.
+
+\begin{thm}
+  Problema cuplajului perfect de cost maxim admite dualitate puternica.
+\end{thm}
+
+\begin{thm}
+  Duala problemei cuplajului maximal este acoperirea muchiilor cu numar minim de noduri.
+\end{thm}
+
+\begin{proof}
+  Daca am formula problema cuplajului maximal ca o problema de programare liniara atunci golul ar fi sa maximizam numarul de muchii alese,
+  cu restrictia ca fiecare nod trebuie sa aiba cel mult o muchia aleasa incidenta. Folosind iar \textbf{teorema Birkhoff-von Neumann} putem
+  arata ca putem relaxa problema dintr-una discreta intr-una continua. Duala acestei probleme este sa se minimizeze numarul de noduri alese
+  cu restrictia ca fiecare muchie trebuie sa aiba macar un nod ales. Aceasta este chiar problema acoperirii muchiilor cu numar minim de noduri.
+\end{proof}
+
+\textbf{Algoritmul ungar} este un algoritm care rezolva problema cuplajului de cost maxim, folosindu-se de dualitatea prezentata. Acesta
+construieste simultan un cuplaj perfect de cost minim si solutia duala a caror valoare este egala cu costul cuplajului. Se pastreaza
+urmatorii invarianti:
+
+\begin{itemize}
+  \item Fiecare muchie $(x, y)$ satisface $p_{x} + q_{y} \geq w((x, y))$. Daca $p_{x} + q_{y} = w((x, y))$, atunci $(x, y)$ este o muchie stransa.
+  \item Muchiile alese in cuplaj sunt si stranse.
+  \item Dupa fiecare faza a algoritmului, marimea cuplajului creste cu $1$ pana ajunge la cel perfect.
+\end{itemize}
+
+\noindent Algoritmul urmareste acesti pasi (\cite{hungarian}):
+
+\begin{enumerate}
+  \item Initializam $p_{x} = 0 \ \forall \ x$ si $q_{y} = \max w((x, y)) \ \forall \ (x, y) \in E \ \forall \ y$.
+  \item Se cauta cuplajul maximal folosind doar muchii stranse.
+  \item Daca cuplajul este perfect algoritmul se termina. Altfel, folosind cuplajul calculat, se calculeaza dualul $V$,
+    adica acoperirea muchiilor cu numar minim de noduri.
+  \item Se calculeaza $\bigtriangleup = \text{min}_{(x, y) \in E, x \notin V, y \notin V} p_{x} + q_{y} - w((x, y))$.
+  \item Potentialii se recalculeaza dupa urmatorea regula:
+    \begin{itemize}
+      \item $p_{x} = p_{x} + \bigtriangleup \ \forall \ x \in V$
+      \item $q_{y} = q_{y} - \bigtriangleup \ \forall \ y \notin V$
+    \end{itemize}
+  \item Repeta pasul 2.
+\end{enumerate}
+
+Se observa ca algoritmul ungar foloseste algoritmul de cuplaj maximal ca un oracol. In lucrarea initiala se foloseste un algoritm bazat pe
+ideea de la algoritmii de flux maxim, incrementand dimensiunea cuplajului mereu cu 1, gasind o cale alternanta $P$ si inlocuind cuplajul $M$
+cu $M \oplus P$. Insa aici putem folosi metodele algebrice studiate.
+
+Pentru a calcula cuplajul maximal este de ajuns sa gasim rangul matricei Edmonds asociata grafului, adica marimea bazei formata din spatiul
+liniar al vectorilor de pe linii. Acestea vor fi chiar nodurile alese in cuplaj din $U$.
+
+Ca sa obtinem acoperirea minima a muchiilor cu numar minim de noduri, acestea sunt chiar nodurile aflate la distanta impara
+de vreun nod necuplat din $U$.
 
 \pagebreak
 
