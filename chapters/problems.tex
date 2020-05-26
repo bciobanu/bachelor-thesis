@@ -18,9 +18,9 @@ maximal care maximizeaza suma costurilor nodurilor alese in cuplaj.
 
 \begin{equation*}
 \begin{array}{ll@{}ll}
-  \text{max}  & \sum_{(x, y) \in E} w((x, y))m_{x, y} &\\
-  \text{s.t.} & \sum_{y} m_{x, y} = 1 \ \forall x &\\
-              & \sum_{x} m_{x, y} = 1 \ \forall y &\\
+  \text{max}  & \displaystyle\sum\limits_{(x, y) \in E} w((x, y))m_{x, y} &\\
+  \text{s.t.} & \displaystyle\sum\limits_{y} m_{x, y} = 1 \ \forall x &\\
+              & \displaystyle\sum\limits_{x} m_{x, y} = 1 \ \forall y &\\
               & m_{x,y} \in \{0, 1\} \ \forall x, y
 \end{array}
 \end{equation*}
@@ -113,7 +113,7 @@ Problema pe matricea $d'$ este chiar de cuplaj in graf bipartit, iar $d'$ este c
 rangul si sa verificam ca este egal cu $n_{2}$. Complexitatea acestei solutii este:
 
 \begin{equation}
-  \sum_{v_{1} \in A} \sum_{v_{2} \in B} n_{1}n_{2}^{2} = \sum_{v_{1} \in A} n_{1} \sum_{v_{2} \in B} n_{2}^{2} \leq |A||B|^{2}
+  \displaystyle\sum\limits_{v_{1} \in A} \displaystyle\sum\limits_{v_{2} \in B} n_{1}n_{2}^{2} = \displaystyle\sum\limits_{v_{1} \in A} n_{1} \displaystyle\sum\limits_{v_{2} \in B} n_{2}^{2} \leq |A||B|^{2}
 \end{equation}
 
 \noindent pentru ca $a^{2} + b^{2} \leq (a + b)^{2}$.
@@ -253,8 +253,8 @@ problemei de flux maxim. In aceasta problema sunt $N$ pixeli. Fiecarui pixel $i$
 $f_{i}$ sau o culoare de fundal $b_{i}$. Daca doi pixeli $i$ si $j$ sunt adiacenti si au asocieri diferite, atunci trebuie scazuta
 o valoare $p_{i,j}$. Problema cere sa se efectueze asocierile in asa fel incat sa maximizeze costul. Fie $P$ multimea pixelilor carora
 le-a fost asociat prim-planul si $Q$ multimea pixelilor carora le-a fost asociat fundalul, atunci dorim sa maximizam
-$\sum_{i \in P} f_{i} + \sum_{i \in Q} b_{i} - \sum_{i \in P, j \in Q \lor i \in Q, j \in P} p_{i,j}$. Aceasta se poate reformula ca o problema
-de minimizare a valorii $\sum_{i \in P, j \in Q \lor i \in Q, j \in P} p_{i,j}$. Reteaua de flux maxim dubleaza nodurile pentru fiecare pixel
+$\displaystyle\sum\limits_{i \in P} f_{i} + \displaystyle\sum\limits_{i \in Q} b_{i} - \displaystyle\sum\limits_{i \in P, j \in Q \lor i \in Q, j \in P} p_{i,j}$. Aceasta se poate reformula ca o problema
+de minimizare a valorii $\displaystyle\sum\limits_{i \in P, j \in Q \lor i \in Q, j \in P} p_{i,j}$. Reteaua de flux maxim dubleaza nodurile pentru fiecare pixel
 in asa fel incat un nodul $2u$ inseamna $u$ a fost asociat pe prim-plan, iar $2u+1$ inseamna $u$ a fost asociat pe fundal. Sursa este
 conectata catre toate nodurile de prim-plan $2u$ cu capacitate $f_{u}$, iar destinatia este conectata catre toate nodurile de fundal $2u+1$
 cu capacitate $b_{u}$. Muchii de capacitate $p_{i,j}$ se adauga intre nodurile adiacente de asocieri diferite. A taietura de la sursa la
@@ -297,7 +297,7 @@ Putem imbunatati solutia precedenta daca o abordam cu programare dinamica. Const
 primelor $i$ elemente din $U$ cu multimea de noduri din $S \subseteq V$. Recurenta se poate construi astfel:
 
 \begin{equation}
-  D_{i, S} = \sum_{(u_{i}, v_{j}) \in E} D_{i-1, S - \{v_{j}\}} \mod 2
+  D_{i, S} = \displaystyle\sum\limits_{(u_{i}, v_{j}) \in E} D_{i-1, S - \{v_{j}\}} \mod 2
 \end{equation}
 
 \noindent Aceasta solutie are complexitate de timp $O(2^{|U|} (|U| + |E|))$
@@ -307,7 +307,7 @@ primelor $i$ elemente din $U$ cu multimea de noduri din $S \subseteq V$. Recuren
 \end{thm}
 
 \begin{proof}
-  Permanentul unei matrice patratica $A$ de marime $N \times N$ este egal cu $\sum_{P \in S_{N}} \prod_{i=1}^{N} A_{i, P_{i}}$.
+  Permanentul unei matrice patratica $A$ de marime $N \times N$ este egal cu $\displaystyle\sum\limits_{P \in S_{N}} \prod_{i=1}^{N} A_{i, P_{i}}$.
   Valoarea $\prod_{i=1}^{N} A_{i, P_{i}}$ este $1$ daca si numai daca $P$ este un cuplaj perfect. Insumam aceasta valoare
   pentru toate permutarile. Deci am numarat cuplajele perfecte.
 \end{proof}
@@ -333,7 +333,7 @@ permanentul pe caz general.
 \noindent \textbf{Enunt.} Se da un graf bipartit $G(U \cup V, E)$ cu $1 \leq |U| = |V| \leq 100$,
 un numar intreg $2 \leq K \leq 100$ si o functie pentru a determina valoarea unei muchii
 $f : E \to \{0, 1, \ldots, K-1\}$. Sa se determine daca exista un cuplaj perfect $M$,
-astfel incat $K \ | \ \sum_{e \in M} f(e)$.
+astfel incat $K \ | \ \displaystyle\sum\limits_{e \in M} f(e)$.
 
 \hspace{1cm}
 

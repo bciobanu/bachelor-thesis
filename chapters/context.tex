@@ -50,7 +50,7 @@ $(x_{1}, y_{1}), (x_{2}, y_{2}), \ldots, (x_{k+1}, y_{k+1})$ avem ca
 $P(x_{i}) = y_{i}\ \forall\ 1 \leq i \leq K + 1$. \par
 Constructia lui $P$ a fost oferita de Joseph Louis Lagrange in $1795$:
 \begin{equation}
-  P(x) := \sum_{i_{1}=0}^{k} (y_{i_{1}} * \prod_{1 \leq i_{2} \leq k + 1 \ \land \ i_{1} \neq i_{2}} \frac{x - x_{i_{2}}}{x_{i_{1}} - x_{i_{2}}})
+  P(x) := \displaystyle\sum\limits_{i_{1}=0}^{k} (y_{i_{1}} * \prod_{1 \leq i_{2} \leq k + 1 \ \land \ i_{1} \neq i_{2}} \frac{x - x_{i_{2}}}{x_{i_{1}} - x_{i_{2}}})
 \end{equation}
 
 \section{Eliminare Gaussiana}
@@ -196,7 +196,7 @@ detecting unique solutions'', publicata in 1986.
   $w : \{1, 2, \ldots, n\} \to \{1, 2, \ldots, m\}$ o functie care asociaza
   valori uniform aleatoare si independente din codomeniu. Atunci, cu o
   probabilitate de cel putin $1 - \frac{n}{m}$, va exista o singura multime $S$ in
-  $F$ pentru care $\sum_{x\in S}{w(x)}$ este minima.
+  $F$ pentru care $\displaystyle\sum\limits_{x\in S}{w(x)}$ este minima.
 \end{thm}
 
 \pagebreak
@@ -233,7 +233,7 @@ permutarii $P$.
 
 \begin{equation}
   \label{isolationdet}
-  \det(A) = \sum_{P \in S_{n}} (\text{sgn}(P) * \prod_{1 \leq i \leq N} A_{i, P_{i}})
+  \det(A) = \displaystyle\sum\limits_{P \in S_{n}} (\text{sgn}(P) * \prod_{1 \leq i \leq N} A_{i, P_{i}})
 \end{equation}
 
 Pentru fiecare cuplaj din $G$ putem asocia unic o permutare $P$ din $S_{n}$:
@@ -448,8 +448,8 @@ variabile, aplicandu-se modulo $x^{2}-1$ pe fiecare variabila. Fie $p_{i_{1}, i_
 \end{equation}
 
 Daca in cazul \textbf{transformarii Fourieri discrete} obtineam
-$C_{i+j} = \sum A_{i} B_{j}$, in cazul \textbf{transformarii Hadamard} obtinem
-$C_{i \oplus j} = \sum A_{i} B_{j}$, unde $\oplus$ este operatia de sau exclusiv
+$C_{i+j} = \displaystyle\sum\limits A_{i} B_{j}$, in cazul \textbf{transformarii Hadamard} obtinem
+$C_{i \oplus j} = \displaystyle\sum\limits A_{i} B_{j}$, unde $\oplus$ este operatia de sau exclusiv
 (xor) pe biti. Intuitiv, de ce se obtine operatie de xor este pentru ca
 cele $n$ monoame reprezentau bitii fiecarui numar de la $0$ la $2^{n} - 1$.
 Acestora la inmultire li se aplica modulo $x^{2} - 1$, asemanator bitilor in
@@ -583,14 +583,14 @@ Fie $x'$ un vector de $n$ elemente alese uniform aleator si independent din $F$,
 iar $x = Ax'$. Fie $S = [x, Ax, A^{2}x, \ldots]$.
 Consideram un alt vector de $n$ elemente, $y$ si urmatorul sir de valori din $F$: $[yx, yAx, yA^{2}x, \ldots ]$.
 
-Stim ca $P(A) = 0$, atunci $\sum_{i=0}^{n'} a_{i} A^{i} = 0$. Obtinem ca si
-$\sum_{i=0}^{n'} y (a_{i} (A^{i} x)) = 0$. Intuitiv, stim ca $P(S) = 0$, insa nu
+Stim ca $P(A) = 0$, atunci $\displaystyle\sum\limits_{i=0}^{n'} a_{i} A^{i} = 0$. Obtinem ca si
+$\displaystyle\sum\limits_{i=0}^{n'} y (a_{i} (A^{i} x)) = 0$. Intuitiv, stim ca $P(S) = 0$, insa nu
 stim sa calculam eficient o secventa $b_{0}, b_{1}, \ldots b_{k}$ astfel incat
-$\sum_{i=0}^{k} b_{i} S_{i+o} = 0 \ \forall \ o \geq 0$, pentru ca elementele din $S$ sunt vectori, insa
+$\displaystyle\sum\limits_{i=0}^{k} b_{i} S_{i+o} = 0 \ \forall \ o \geq 0$, pentru ca elementele din $S$ sunt vectori, insa
 atunci cand reducem la cazul cu valori, o sansa destul de mare ca secventa $b$
 care anihileaza $yS$ sa anihileze si $S$, deci
-$\sum_{i=0}^{k} b_{i} M^{i}x = 0$.
-Inlocuind cu $x = Ax'$, obtinem ca $M \sum_{i=0}^{k} b_{i} M^{i} x' = 0$, deci
+$\displaystyle\sum\limits_{i=0}^{k} b_{i} M^{i}x = 0$.
+Inlocuind cu $x = Ax'$, obtinem ca $M \displaystyle\sum\limits_{i=0}^{k} b_{i} M^{i} x' = 0$, deci
 daca $b_{i} M^{i} x'$ este nenul, atunci am obtinem un nucleu al lui $M$.
 
 Pentru a calcula elementele secventei $S$ se folosesc algoritmi pentru gasirea
@@ -624,13 +624,13 @@ constans la un tip de corp anume \cite{sugiyama}.
 
 \begin{defn}
   Un ideal al unui inel $R$ generat de $S \subset R$ este
-  $\{f = \sum_{i=1}^{r} x_{i}s_{i} \ | \ r \in \mathbb{N}, \ s_{i} \in S, x_{i} \in R\}$.
+  $\{f = \displaystyle\sum\limits_{i=1}^{r} x_{i}s_{i} \ | \ r \in \mathbb{N}, \ s_{i} \in S, x_{i} \in R\}$.
 \end{defn}
 
 \begin{defn}
   Un ideal $<S>$ dintr-un inel $R$ este de tip finit daca admite un sistem finit de generatori:
   $\exists \ s_{1}, s_{2}, \ldots s_{r} \in \ <S>$  astfel incat
-  $\forall \ s \in \ <S>, s = \sum_{i=1}^{r} x_{i} s_{i}, \ x_{i} \in R$.
+  $\forall \ s \in \ <S>, s = \displaystyle\sum\limits_{i=1}^{r} x_{i} s_{i}, \ x_{i} \in R$.
 \end{defn}
 
 \begin{defn}
@@ -656,8 +656,8 @@ constans la un tip de corp anume \cite{sugiyama}.
 \end{clr}
 
 \begin{thm}
-  Functia generatoare $A(x) = \sum_{n=0}^{\infty} a_{n}x^{n}$ este rationala:
-  $A(x) = \frac{P(x)}{Q(x)}$ unde $deg(P) < k$, iar $Q(x) = 1 - \sum_{i=1}^{k} c_{i}x^{i}$.
+  Functia generatoare $A(x) = \displaystyle\sum\limits_{n=0}^{\infty} a_{n}x^{n}$ este rationala:
+  $A(x) = \frac{P(x)}{Q(x)}$ unde $deg(P) < k$, iar $Q(x) = 1 - \displaystyle\sum\limits_{i=1}^{k} c_{i}x^{i}$.
 \end{thm}
 
 \begin{thm}
@@ -686,15 +686,15 @@ atunci cand indexurile sunt periodice modulo $n$.
 
 \begin{thm}
   Daca $p$ este un polinom si $\zeta$ este o radacina a unitatii de ordin
-  $n$ ($\zeta^{n} = 1$), atunci $\frac{1}{n} \sum_{i=0}^{n-1} p(\zeta^{i})$
+  $n$ ($\zeta^{n} = 1$), atunci $\frac{1}{n} \displaystyle\sum\limits_{i=0}^{n-1} p(\zeta^{i})$
   este suma indexurilor dizibile prin $n$.
 \end{thm}
 
 \begin{proof}
   Fie $p = a_{0}x^{0} + a_{1}x^{1} + \ldots + a_{k}x^{k}$. Consideram contributia
   unui index $p$, nedivizibil prin $n$ la suma
-  $\sum_{i=0}^{n-1} p(\zeta^{i}) = a_{p}(\zeta^{0} + \zeta^{p} + \zeta^{2p} + \ldots + \zeta^{(n-1)p})$.
-  Termenul din partea dreapta este de fapt $\sum_{i=0}^{n-1} \zeta^{i*p} = \frac{\zeta^{p*n} - 1}{\zeta^{p} - 1} = 0$,
+  $\displaystyle\sum\limits_{i=0}^{n-1} p(\zeta^{i}) = a_{p}(\zeta^{0} + \zeta^{p} + \zeta^{2p} + \ldots + \zeta^{(n-1)p})$.
+  Termenul din partea dreapta este de fapt $\displaystyle\sum\limits_{i=0}^{n-1} \zeta^{i*p} = \frac{\zeta^{p*n} - 1}{\zeta^{p} - 1} = 0$,
   deci se anuleaza. Celelalte indexuri vor avea coeficient $1$ pentru fiecare
   $\zeta^{i}$, deci se vor aduna in total de $n$ ori, motiv pentru care toata suma
   se imparte la $n$.
