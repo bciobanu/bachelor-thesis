@@ -166,23 +166,7 @@ lui $v_{j}$ in ordonare. Algoritmul pentru a calcula sortarea topologica este ur
 
 \pagebreak
 
-\begin{figure}
-  \caption{Contra-exemplu pentru algoritmul de sortare topologica in care se foloseste preordinea.}
-  \centering
-  \begin{tikzpicture}
-    \node[shape=circle,draw=black] (A) at (0,0) {A};
-    \node[shape=circle,draw=black] (B) at (0,3) {B};
-    \node[shape=circle,draw=black] (C) at (2.5,4) {C};
-
-    \path [->] (A) edge node[left] {} (B);
-    \path [->](B) edge node[left] {} (C);
-    \path [->] (A) edge node[left] {} (C);
-  \end{tikzpicture}
-\end{figure}
-
 Algoritmul practic construieste inversa postordinii si aceasta este chiar o sortare topologica posibila.
-Nu este corect sa consideram preordinea, asa cum reiese din exemplul urmatorul unde este posibil sa inseram $C$
-inaintea lui $B$ daca este vizitat inainte din $A$.
 
 Avand calculata sortarea topologica, o prima solutie cu backtracking va considera nodurile in ordinea inversa.
 Ne putem imagina caile ca o colorare, iar acum la fiecare pas al algoritmului trebuie sa stabilim culoarea pentru
