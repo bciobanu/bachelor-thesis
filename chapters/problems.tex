@@ -71,13 +71,13 @@ urmatorii invarianti:
 \begin{enumerate}
   \item Initializam $p_{x} = 0 \ \forall \ x$ si $q_{y} = \max w((x, y)) \ \forall \ (x, y) \in E \ \forall \ y$.
   \item Se cauta cuplajul maximal folosind doar muchii stranse.
-  \item Daca cuplajul este perfect algoritmul se termina. Altfel, folosind cuplajul calculat, se calculeaza dualul $V$,
+  \item Daca cuplajul este perfect algoritmul se termina. Altfel, folosind cuplajul calculat, se calculeaza dualul $C$,
     adica acoperirea muchiilor cu numar minim de noduri.
-  \item Se calculeaza $\bigtriangleup = \text{min}_{(x, y) \in E, x \notin V, y \notin V} p_{x} + q_{y} - w((x, y))$.
+  \item Se calculeaza $\bigtriangleup = \text{min}_{(x, y) \in E, x \notin C, y \notin C} p_{x} + q_{y} - w((x, y))$.
   \item Potentialii se recalculeaza dupa urmatorea regula:
     \begin{itemize}
-      \item $p_{x} = p_{x} + \bigtriangleup \ \forall \ x \in V$
-      \item $q_{y} = q_{y} - \bigtriangleup \ \forall \ y \notin V$
+      \item $p_{x} = p_{x} + \bigtriangleup \ \forall \ x \in C$
+      \item $q_{y} = q_{y} - \bigtriangleup \ \forall \ y \notin C$
     \end{itemize}
   \item Repeta pasul 2.
 \end{enumerate}
@@ -89,14 +89,27 @@ cu $M \oplus P$. Insa aici putem folosi metodele algebrice studiate.
 Pentru a calcula cuplajul maximal este de ajuns sa gasim rangul matricei Edmonds asociata grafului, adica marimea bazei formata din spatiul
 liniar al vectorilor de pe linii. Acestea vor fi chiar nodurile alese in cuplaj din $U$.
 
-Ca sa obtinem acoperirea minima a muchiilor cu numar minim de noduri, acestea sunt chiar nodurile aflate la distanta impara
-de vreun nod necuplat din $U$.
+Ce ramane de facut este avand cuplajul $M$, sa gasim acoperirea muchiilor cu numar minim de noduri $C$. $C$ se poate construi alegand
+cate un nod din fiecare muchie din $M$. Pentru fiecare muchie $i$ din cuplaj putem crea un literal $x_{i}$ care sa adevarat daca alegem
+nodul din multimea $V$ si fals daca alegem nodul din multimea $U$. Relatiile intre acestia se pot scrie ca o formula 2-CNF. Consideram o
+muchie $(u,v) \in E - M$, atunci:
+\begin{itemize}
+  \item Daca $u$ si $v$ sunt noduri saturate, atunci fie $i_{1}$, respectiv $i_{2}$ muchiile din cuplaj asociate. In acest caz adaugam clauza
+  $\neg x_{i_{1}} \lor x_{i_{2}}$, insemnand ca fie $i_{1}$ isi foloseste capatul din $U$, fie $i_{2}$ isi foloseste capatul din $V$.
+  \item Daca $u$ este saturat, iar $v$ nu, atunci fie $i$ muchia din cuplaj asociata. Trebuie ca $u$ sa fie inclus in $C$, deci $x_{i}$ trebuie
+  sa fie fals.
+  \item Aidoma daca $v$ este saturat, iar $u$ nu.
+  \item Ambele noduri nu pot sa fie nesaturate, pentru ca ar contrazice faptul ca $M$ este un cuplaj maximal.
+\end{itemize}
+
+Problema de 2-SAT se poate rezolva apoi in complexitate de timp $O(|U| + |E|)$. Acest proces se poate simplifica in implementare
+pentru ca in $C$ vor fi chiar acele noduri aflate la distanta impara de nodurile nesaturate din $U$.
 
 \pagebreak
 
 \section{Izomorfism de subarbori}
 \begin{tabular}{l@{\extracolsep{1cm}}l}
-  Concurs: & Lot Râmnicu Vâlcea 2015 - Baraj 2 Seniori\\
+  Concurs: & Lot Informatica Râmnicu Vâlcea 2015 - Baraj 2 Seniori\\
   Limita de timp: & 0.3\ s\\
   Limita de memorie: & 64\ MB\\
 \end{tabular}
