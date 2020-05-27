@@ -102,10 +102,15 @@ muchie $(u,v) \in E - M$, atunci:
   \item Ambele noduri nu pot sa fie nesaturate, pentru ca ar contrazice faptul ca $M$ este un cuplaj maximal.
 \end{itemize}
 
-Problema de 2-SAT se poate rezolva apoi in complexitate de timp $O(|U| + |E|)$. Acest proces se poate simplifica in implementare
-pentru ca in $C$ vor fi chiar acele noduri aflate la distanta impara de nodurile nesaturate din $U$.
+Presupunem ca $|U|, |V| = O(n)$. Problema de 2-SAT se poate rezolva apoi in complexitate de timp $O(n^{2})$. Acest proces se poate simplifica
+in implementare pentru ca in $C$ vor fi chiar acele noduri aflate la distanta impara de nodurile nesaturate din $U$.
 
-\pagebreak
+In acest algoritm marimea cuplajului nu va scadea niciodata, iar aceasta creste pana la $|U|$. De fiecare data cand se schimba
+marimea cuplajului, putem sa recalculam multimea muchiilor si acoperirea minima in timp $O(n^{3})$. Pana sa creasca marimea
+cuplajului pot exista $O(n)$ schimbari de potentiale. Putem sa determinam in timp $O(n^{2})$ pentru fiecare dintr-acestea
+cum modifica rangul. In total algoritmul are complexitate de timp $O(n^{4})$, dar foloseste primitive algebrice care se pot
+executa in paralel sau chiar concurent pe procesoarele moderne si pot beneficia de toate optimizarile cunoscute aici, printre care
+si algoritmul lui Coppersmith (\ref{coppersmith}).
 
 \section{Izomorfism de subarbori}
 \begin{tabular}{l@{\extracolsep{1cm}}l}

@@ -313,14 +313,13 @@ certitudine destul de mare. Asadar si aceasta parte a algoritmului poate fi
 calculata in timp polilogaritmic, daca avem la dispozitie un numar polinomial de
 procesoare.
 
-Deja se comporta mai prost decat algoritmii clasici de flux si inca nu am adus in discutie costul de
-a lucra cu numere intregi de ordinul $O(4^{n^{4}})$, adica numere intregi cu
-$2 * n^{4}$ biti. Avem nevoie de operatia de inmultire pe aceste numere, iar
-aceasta nu se poate executa mai bine de $O(n^{4}\log n)$, rezultat recent
-obtinut de algoritmul Harvey-Hoeven in 2019.
-De asemenea, in ipoteza curenta algoritmul nu este determinist si
-are probabilitate de succes de $\frac{1}{2}$, deci trebuie rulat de mai multe
-ori pentru a gasi un rezultat de certitudine mare.
+In \cite{optimalmatching} se arata ca acest algoritm poate fi rafinat la complexitate
+$O(n^{3})$, observandu-se ca o muchie $(u_{i}, v_{j})$ face parte din cuplaj daca si
+numai daca $A^{-1}_{i, j} \neq 0$. Mai mult, folosindu-se de aceasta proprietate si
+de o schema de a reduce eliminarea Gaussiana (\ref{gauss}) la $O(1)$ inmultiri de matrici,
+acest algoritm are complexitate $O(n^{w})$, unde $w < 2.38$, astfel obtinandu-se un
+algoritm mai eficient decat cel bazat pe flux maxim, Hopcroft-Karp, care are complexitatea
+$O(n^{2.5})$.
 
 \pagebreak
 
@@ -524,6 +523,7 @@ $\frac{1}{\sqrt{2}}$, care poate fi aplicat la final.
 \pagebreak
 
 \section{Algoritmul lui Coppersmith}
+\label{coppersmith}
 
 In cadrul algoritmilor de algebra liniara pentru cuplaj avem des problema de a
 calcula determinanti. De obicei, aceste grafuri nu vor fi atat de dense, deci
