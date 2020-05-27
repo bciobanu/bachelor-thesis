@@ -7,6 +7,50 @@ maximal care maximizeaza suma costurilor nodurilor alese in cuplaj.
 
 \noindent \textbf{Solutie.} Este corect sa prioritizam nodurile in ordinea descrescatoare a costurilor asociate.
 
+\begin{lem}
+  \textbf{Berge}. Un cuplaj $M$ in $G$ este maximal daca si numai daca nu exista o cale care porneste dintr-un nod nesaturat, se incheie pe un alt
+  nod nesaturat si alterneaza intre muchii alese in $M$ si restul.
+\end{lem}
+
+\begin{proof}
+  Sa presupunem ca executand algoritmul in ordinea sortata obtinem cuplajul $A$, iar cel optim este de fapt $B$.
+  Fie $u$ primul nod in ordinea descrescatoare a costurilor care nu este saturat in $B$, dar este saturat in $A$.
+  Pentru ca $u$ a fost cuplat inaintea nodurilor cu cost mai mic decat el, atunci exista un lant alternant in
+  $A \oplus B$ de la $u$ catre un alt nod din $U$, $u'$, pentru care $w(u) \geq w(u')$. Acest lant ar putea fi folosit
+  in $B$ si ar aduce un cost total cel putin la fel de bun.
+\end{proof}
+
+O explicatie alternativa, relevanta problemelor de optimizare este teoria despre matroizi. Un matroid $M$ este o pereche
+$(E, I)$, unde $E$ este o multime, iar $I$ este o familie de submultimi ale lui $E$, iar cele doua satisfac urmatoarele conditii:
+
+\begin{itemize}
+  \item Multimea $E$ este finita.
+  \item Familia $I$ este ereditara, mai exact $s \in I, s' \subset s \implies s' \in I$.
+  \item Pentru doua submultimi $s_{1}, s_{2} \in I$, cu $|s_{1}| < |s_{2}|$, exista un element
+    $x \in s_{2} - s_{1}$ astfel incat $s_{1} \cup \{x\} \in I$.
+\end{itemize}
+
+Elementele lui $I$ se numesc submultimi independente. Daca se poate asocia o greutate fiecarei submultimi independente, atunci un rezultat
+important al acestei structuri este ca, pentru a gasi submultimea independenta de cost maxim, este de ajuns sa construim un algoritm greedy
+care porneste cu submultimea vida (care prin definitie face parte din $I$) si incearca sa adauge pe rand elemente din $M$, in ordinea descrescatoare
+a costurilor.
+
+Problema cuplajului maximal este de fapt o intersectia de matroizi. Unul din acestia este matroidul $(U, I)$, unde $I$ sunt submultimi de noduri
+din $U$, pentru care exista cel putin un cuplaj in care toate nodurile din submultime sunt saturate. Greutatea unei submultimi este suma valorilor
+imaginii functiei $w$ peste aceasta submultime. Ramane sa verificam ca este intr-adevar un matroid:
+
+\begin{itemize}
+  \item Multimea $U$ este finita.
+  \item Daca stim un cuplaj pentru o multime de noduri, atunci putem construi cuplajul pentru orice submultime, pastrand doar perechile nodurilor
+  ramase.
+  \item Reamintim ca matroidul este pe noduri din $U$, nu pe perechi de noduri cuplate. Fie $M_{1}$ si $M_{2}$ doua submultimi independente pentru care
+    $|M_{2}| \geq |M_{1}|$, atunci din reciproca \textbf{lemei lui Berge}, putem mari cuplajul $M_{1}$ folosind un nod din $M_{2} - M_{1}$ pastrand
+    toate nodurile din $M_{1}$.
+\end{itemize}
+
+Apoi, se poate observa ca Eliminarea Gaussiana (\ref{gauss}) se poate comporta greedy in cautarea rangului, deoarece poate prioritiza in timpul pivotarii
+acele linii (asociate nodurilor) in ordinea descrescatoare a valorii functiei $w$.
+
 \pagebreak
 
 \section{Cuplaj cu costuri pe muchii}
