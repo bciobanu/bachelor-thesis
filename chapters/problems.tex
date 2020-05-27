@@ -535,4 +535,50 @@ simplitatea operatiilor aritmetice. Avand \textbf{matricea Edmonds} $A$ construi
 $\det(A)$ este un polinom monic in variabila $y$. Atunci cand voiam sa aflam daca exista un cuplaj cu numar
 fix de muchii rosii, interpolam $\det(A)$ si verificam daca $y^{k}$ are un coeficient nenul. In cazul de fata
 ne intereseaza daca exista macar un termen $y^{k}$ cu coeficient nenul, iar $k$ e par pentru cazul cu suma
-xor $0$, iar impar pentru cazul cu suma xor $1$.
+xor $0$, iar impar pentru cazul cu suma xor $1$. Fie $p(y) = \det(A)$. Pentru a determina suma coeficientilor
+pari vom calcula $\frac{p(1) + p(-1)}{2}$, iar pentru cei impari $\frac{p(1) - p(-1)}{2}$. Ne intereseaza daca
+aceste valori sunt nenule, deci putem sa ignoram factorul de $\frac{1}{2}$.
+
+In continuare vom generaliza pentru numere de $2$ biti, adica atunci cand $\max(A) = 3$. Vom considera constructia polinomului de inainte,
+dar de data aceasta in $2$ variabile, $y_{1}$ si $y_{2}$. In acest caz vor fi patru colori, determinate de urmatoarele combinatii de variabile:
+$y_{1}y_{2}, y_{1}, y_{2}, 1$ corespunzatoare valorilor $3, 2, 1, 0$. Calculam determinantul in aceste variabile. Obtinem valori de tipul
+$a y_{1}^{k_{1}}y_{2}^{k_{2}}$. Ne intereseaza de fapt doar paritatea valorilor $k_{1}$ si $k_{2}$: spre exemplu $k_{1}$ par si $k_{2}$ impar ar
+insemna suma xor $2$, iar ambele pare ar insemna suma xor $0$. Fie $p(y_{1}, y_{2}) = \det(A)$. Sa spunem ca ne intereseaza sa afla suma
+coeficientiilor atunci cand $k_{1}$ si $k_{2}$ sunt pare. Atunci valoarea este chiar $p(1, 1) + p(-1, 1) + p(1, -1) + p(-1, -1)$.
+Similar, daca ne dorim sa aflam coeficientul pentru $k_{1}$ par si $k_{2}$ impar vom calcula $p(1, 1) + p(-1, 1) - p(1, -1) - p(-1, -1)$.
+Mai exact sistemul arata in felul urmator:
+
+\begin{center}
+\begin{tabular}{ c| c | c | c | c |}
+p & PP & IP & PI & II \\
+\hline
+1 1 & + & + & + & + \\
+\hline
+-1 1 & + & - & + & - \\
+\hline
+1 -1 & + & + & - & - \\
+\hline
+-1 -1 & + & - & - & + \\
+\hline
+\end{tabular}
+\end{center}
+
+Putem extinde aceasta abordare acum pentru numere de $K$ biti. Consideram variabilele $y_{0}, y_{1}, \ldots, y_{K-1}$.
+Pentru orice numar $i$ din $\{0, 1, \ldots, 2^{K} - 1\}$, ii consideram scrierea in baza $2$: $2^{p_{1}} + 2^{p_{2}} + \ldots + 2^{p_{t}}$,
+atunci pozitiile din matricea Edmonds unde se gaseste aceasta valoare vor fi inmultite cu $y_{p_{1}} y_{p_{2}} \ldots y_{p_{t}}$.
+Consideram polinomul asociat determinantului, $p = \det(A)$. Calculam $p$ in $2^{K}$ puncte $k$-dimensionale, in spatii de marime $2$:
+$(s_{0}, s_{1}, \ldots, s_{k-1})$, unde $s_{i} \in \{0, 1\}$ ii este asociat $p(-1^{s_{0}}, -1^{s_{1}}, \ldots, -1^{s_{k-1}})$. Pana aici,
+complexitatea de timp este $O(2^{K}N^{3})$, insa se pot aplica optimizari in cazul determinatului, cum ar fi algoritmul lui Coppersmith
+(\ref{coppersmith}).
+
+Putem construi un sistem de ecuatii asa cum reiese din tablou si sa determinam valorile pentru toate combinatiile de paritati, care apoi
+sunt asociate cuplajelor de o suma xor fixata, insa aceasta abordare ar avea complexitate $O(2^{3K})$, dar in cazul nostru este prea mult.
+
+Putem sa generalizam insa solutiile pe care le-am gasit pe cazul cu $K=2$. Mai exact, daca vrem sa aflam coeficientul sumei xor
+$(x_{0}, x_{1}, \ldots, x_{k-1})$, vom aduna valorile din acele puncte care au numar par de $1$ comuni cu suma pe care vrem sa o obtinem,
+iar pe restul le vom scadea. Acest lucru se poate demonstra din principiul includerii si excluderii. Aceasta solutie are complexitatea de timp
+$O(2^{2K})$ si este de ajuns pentru problema data.
+
+Totusi, se poate rezolva chiar mai bine de atat. Se observa din constructie ca sirul valorilor polinomului in punctele alese este chiar
+valoarea aplicarii functiei Walsh pe sirul pe care vrem sa-l obtinem, deci putem folosi algoritmul Fast Walsh-Hadamard
+(\ref{fasthadamard}) pentru a calcula inversa transformarii in timp $O(2^{K}K)$.
