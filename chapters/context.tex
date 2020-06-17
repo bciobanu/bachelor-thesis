@@ -1,41 +1,41 @@
 \chapter{Context}
 
-\section{Concepte din algebra liniara}
+\section{Concepte din algebra liniară}
 
 \begin{defn}
-  Un \textbf{monoid} $G = (A, \circ)$ este o structura algebrica formata dintr-o
-  multime $A$ si o lege de compozitie asociativa si cu element neutru.
+  Un \textbf{monoid} $G = (A, \circ)$ este o structură algebrică formată dintr-o
+  mulțime $A$ și o lege de compoziție asociativă și cu element neutru.
 \end{defn}
 
 \begin{defn}
-  Un \textbf{grup} $G = (A, \circ)$ este o structura algebrica formata dintr-o
-  multime $A$ si o lege de compozitie care respecta urmatoarele proprietati:
+  Un \textbf{grup} $G = (A, \circ)$ este o structură algebrică formată dintr-o
+  mulțime $A$ și o lege de compoziție care respectă următoarele proprietăți:
   \begin{itemize}
       \item{$\forall\ x_{1}, x_{2} \in G, x_{1} \circ x_{2} \in G$.}
       \item{$\forall\ x_{1}, x_{2}, x_{3} \in G, (x_{1} \circ x_{2}) \circ x_{3} = x_{1} \circ (x_{2} \circ x_{3})$.}
       \item{$\exists\ e \in G \text{ astfel
-      incat } \forall\ x \in G\ e \circ x = x \circ e = x$.}
+      încât } \forall\ x \in G\ e \circ x = x \circ e = x$.}
       \item{$\forall\ x_{1} \in G\ \exists\ x_{2} \in G \ x_{1} \circ x_{2} = x_{2} \circ x_{1} = e$.}
   \end{itemize}
-  In plus, acesta este abelian daca
+  În plus, acesta este abelian dacă
   $\forall\ x_{1}, x_{2} \in G\ x_{1} \circ x_{2} = x_{2} \circ x_{1}$.
 \end{defn}
 
 \begin{defn}
-  Un \textbf{inel} $I = (A, +, *)$ este o structura algebrica formata dintr-o
-  multime $A$ si doua operatii binare definite pe $A \times A$ cu valori tot in
-  $A$, care respecta urmatoarele proprietati:
+  Un \textbf{inel} $I = (A, +, *)$ este o structura algebrică formată dintr-o
+  mulțime $A$ și două operații binare definite pe $A \times A$ cu valori tot în
+  $A$, care respectă următoarele proprietăți:
   \begin{itemize}
       \item{$(A, +)$ este un grup abelian.}
       \item{$(A, *)$ este un monoid.}
-      \item{Distributivitatea lui $*$ fata de $+$.}
+      \item{Distributivitatea lui $*$ față de $+$.}
   \end{itemize}
 \end{defn}
 
 \begin{defn}
-  Un \textbf{polinom} este o expresie construita dintr-una sau mai multe
-  variabile si constante, folosind doar operatii de adunare, scadere, inmultire
-  si ridicare la putere constanta pozitiva intreaga.
+  Un \textbf{polinom} este o expresie construită dintr-una sau mai multe
+  variabile și constante, folosind doar operații de adunare, scădere, înmulțire
+  și ridicare la putere constanta pozitivă întreagă.
 \end{defn}
 
 \begin{defn}
@@ -44,89 +44,89 @@
 
 \subsection{Interpolare Lagrange}
 
-\textbf{Polinomul de interpolare Lagrange} este un polinom $P$ construit in asa
-fel incat avand $k + 1$ perechi
-$(x_{1}, y_{1}), (x_{2}, y_{2}), \ldots, (x_{k+1}, y_{k+1})$ avem ca
+\textbf{Polinomul de interpolare Lagrange} este un polinom $P$ construit în așa
+fel încât având $k + 1$ perechi
+$(x_{1}, y_{1}), (x_{2}, y_{2}), \ldots, (x_{k+1}, y_{k+1})$ avem că
 $P(x_{i}) = y_{i}\ \forall\ 1 \leq i \leq K + 1$. \par
-Constructia lui $P$ a fost oferita de Joseph Louis Lagrange in $1795$:
+Construcția lui $P$ a fost oferită de Joseph Louis Lagrange în $1795$:
 \begin{equation}
   P(x) := \displaystyle\sum\limits_{i_{1}=0}^{k} (y_{i_{1}} * \prod_{1 \leq i_{2} \leq k + 1 \ \land \ i_{1} \neq i_{2}} \frac{x - x_{i_{2}}}{x_{i_{1}} - x_{i_{2}}})
 \end{equation}
 
-\section{Eliminare Gaussiana}
+\section{Eliminare Gaussiană}
 \label{gauss}
 
-O metoda de a rezolva sisteme de ecuatii liniare este \textbf{Eliminarea Gaussiana}.
-Aceasta se mai numeste si metoda \textbf{Gauss-Jordan} pentru ca este o variatie a
-metodei lui Gauss, descrisa de catre Jordan in anul 1887.
+O metodă de a rezolva sisteme de ecuații liniare este \textbf{Eliminarea Gaussiană}.
+Aceasta se mai numește și metoda \textbf{Gauss-Jordan} pentru că este o variație a
+metodei lui Gauss, descrisă de către Jordan în anul 1887.
 
-Algoritmul face eliminari secventiale a tuturor variabilelor pana cand fiecare ecuatie
-ramane cu o singura variabila. Daca o privim ca o ecuatie $Ax = b$, atunci se poate
-vedea ca, in cazul in care $A$ este o matrice patratica, atunci vrem sa o transformam
-in matricea identitate si sa rezolvam sistemul pe acest caz trivial.
+Algoritmul face eliminări secvențiale a tuturor variabilelor până când fiecare ecuație
+rămâne cu o singură variabilă. Dacă o privim ca o ecuație $Ax = b$, atunci se poate
+vedea că, în cazul în care $A$ este o matrice pătratică, atunci vrem să o transformăm
+în matricea identitate și să rezolvăm sistemul pe acest caz trivial.
 
-La primul pas, algoritmul imparte prima linie cu $a_{1, 1}$ si apoi adauga o combinatie
-liniara a primei ecuatii tuturor celorlalte astfel incat toti ceilalti coeficienti de pe
-prima coloana sa fie $0$; mai exact pentru randul $a_{i}, i \geq 2$, vom adauga primul rand
-inmultit cu $-a_{i}$. Toate aceste operatii se executa si pe vectorul coloana $b$. Se
-continua aceleasi operatii pentru restul liniilor.
+La primul pas, algoritmul împarte prima linie cu $a_{1, 1}$ și apoi adaugă o combinație
+liniară a primei ecuații tuturor celorlalte astfel încât toți ceilalți coeficienți de pe
+prima coloană să fie $0$; mai exact pentru rândul $a_{i}, i \geq 2$, vom adaugă primul rând
+înmulțit cu $-a_{i}$. Toate aceste operații se execută și pe vectorul coloană $b$. Se
+continuă aceleași operații pentru restul liniilor.
 
-Este posibil ca acele valori sa fie $0$. De aceea exista mai multe euristici, in special gandite
-pentru a stabiliza operatiile pe numere reale in virgula flotanta. Euristica cea mai des folosita
-in practica este sa se caute valoarea cea mai mare absoluta pe acea coloana si sa se interschimbe
-cele doua randuri.
+Este posibil ca acele valori să fie $0$. De aceea există mai multe euristici, în special gândite
+pentru a stabiliza operațiile pe numere reale în virgulă flotantă. Euristica cea mai des folosită
+în practică este să se caute valoarea cea mai mare absolută de pe acea coloană și să se interschimbe
+cele două rânduri.
 
-Complexitatea algoritmului este de $O(N^{2}M)$ daca $A$ este de marime $N \times M$, cu $N \leq M$.
-In practica acest algoritm se poate aplica si atunci cand se lucreaza intr-un corp finit.
-Un caz des intalnit este in $\mathbb{F}_{2}$. Pe modelul RAM acest caz se poate implementa chiar in
-complexitate $O(\frac{N^{2}M}{w})$, unde $w$ este marimea unui cuvant, adica $64$ pentru procesoarele
+Complexitatea algoritmului este de $O(N^{2}M)$ dacă $A$ este de mărime $N \times M$, cu $N \leq M$.
+În practică acest algoritm se poate aplica și atunci când se lucrează într-un corp finit.
+Un caz des întâlnit este în $\mathbb{F}_{2}$. Pe modelul RAM acest caz se poate implementa chiar în
+complexitate $O(\frac{N^{2}M}{w})$, unde $w$ este mărimea unui cuvânt, adică $64$ pentru procesoarele
 moderne.
 
-Metoda poate fi folosita si pentru a calcula inversa unei matrice. Tot ce este de facut, pentru o matrice
-$A$ de marime $N \times N$ este sa se execute algoritmul pe matricea $[A\ |\ I_{N}]$ de marime $N \times 2N$,
-iar matricea de pe blocul din dreapta (coloanele mai mari ca $N$) va fi chiar $A^{-1}$.
+Metoda poate fi folosită și pentru a calcula inversa unei matrice. Tot ce este de făcut, pentru o matrice
+$A$ de mărime $N \times N$ este să se execute algoritmul pe matricea $[A\ |\ I_{N}]$ de mărime $N \times 2N$,
+iar matricea de pe blocul din dreapta (coloanele  cu indicemai mare ca $N$) va fi chiar $A^{-1}$.
 
-Pentru calculul determinantului, putem executa algoritmul de inainte cu mentiunea ca nu vom mai imparti fiecare
-linie, dar vom inmulti acele valori de pivot si de fiecare data cand schimbam doua linii, schimbam semnul
-rezultatului. Daca la un moment dat nu se gaseste un pivot, atunci rezultatul este chiar $0$. Daca se
-doreste calculul rangului, atunci aceste este chiar numarul pivotilor diferiti de $0$.
+Pentru calculul determinantului, putem executa algoritmul de înainte cu mențiunea că nu vom mai împărți fiecare
+linie, dar vom înmulți acele valori de pivot și de fiecare dată când schimbăm două linii, schimbăm semnul
+rezultatului. Dacă la un moment dat nu se găsește un pivot, atunci rezultatul este chiar $0$. Dacă se
+dorește calculul rangului, atunci aceste este chiar numărul pivoților diferiți de $0$.
 
 \pagebreak
 
 \section{Teoria grafurilor}
 
 \begin{defn}
-  Un \textbf{graf neorientat} este o pereche ordonata $G(V, E)$, unde:
+  Un \textbf{graf neorientat} este o pereche ordonată $G(V, E)$, unde:
   \begin{itemize}
-    \item{$V$ este multimea de noduri}.
+    \item{$V$ este mulțimea de noduri}.
     \item{$E \subseteq \{(x, y)\ |\ (x, y) \in V^2 \land x \neq y\}$ este
-      multimea de muchii, care sunt perechi neordonate de noduri}.
+      mulțimea de muchii, care sunt perechi neordonate de noduri}.
   \end{itemize}
 \end{defn}
 
 \begin{defn}
-  Un textbf{arbore} este un graf neorientat conex aciclic.
+  Un \textbf{arbore} este un graf neorientat conex aciclic.
 \end{defn}
 
 \begin{defn}
-  Un \textbf{graf bipartit} este un graf neorientat $G(V, E)$ ale carui noduri pot fi
-  partitionate in doua multimi disjuncte $V_{1}$ si $V_{2}$, altfel incat fiecare muchie
-  conecteaza un nod din multimea $V_{1}$ cu un nod din multimea $V_{2}$. Atunci,
+  Un \textbf{graf bipartit} este un graf neorientat $G(V, E)$ ale cărui noduri pot fi
+  partiționate în două mulțimi disjuncte $V_{1}$ și $V_{2}$, altfel încât fiecare muchie
+  conectează un nod din mulțimea $V_{1}$ cu un nod din mulțimea $V_{2}$. Atunci,
   se va nota cu $G(V_{1}, V_{2}, E)$.
 \end{defn}
 
 \begin{defn}
-  Un \textbf{cuplaj} intr-un graf este o multime de muchii fara noduri in comun.
+  Un \textbf{cuplaj} într-un graf este o mulțime de muchii fără noduri în comun.
 \end{defn}
 
 \begin{defn}
   \textbf{Matricea Edmonds} $A$ a grafului bipartit $G(U, V, E)$, unde
   $U = \{u_{1}, u_{2}, u_{3}, \ldots, u_{n}\}$,
-  $V = \{v_{1}, v_{2}, v_{3}, \ldots, v_{n}\}$ si $x_{i,j}$ indeterminate, se defineste ca:
+  $V = \{v_{1}, v_{2}, v_{3}, \ldots, v_{n}\}$ și $x_{i,j}$ indeterminate, se definește ca:
    \begin{equation}
     A=
     \begin{cases}
-      x_{i,j} & \text{daca}\ (u_{i}, v_{j}) \in E \\
+      x_{i,j} & \text{dacă}\ (u_{i}, v_{j}) \in E \\
       0 & \text{altfel}
     \end{cases}
   \end{equation}
@@ -134,69 +134,68 @@ doreste calculul rangului, atunci aceste este chiar numarul pivotilor diferiti d
 
 \begin{thm}
   \label{edmonds}
-  Un graf bipartit $G(U, V, E)$ admite cuplaj perfect daca si numai daca
+  Un graf bipartit $G(U, V, E)$ admite cuplaj perfect dacă și numai dacă
   polinomul determinantului matricei sale Edmonds nu este polinomul nul.
 \end{thm}
 
 \begin{clr}
-  Numarul de cuplaje perfecte este egal cu numarul monoamelor in polinomul $det(A_{i,j})$.
+  Numărul de cuplaje perfecte este egal cu numărul monoamelor în polinomul $det(A_{i,j})$.
 \end{clr}
 
 \begin{clr}
-  Rangul matricei Edmonds este egal marimea cuplajului maximal.
+  Rangul matricei Edmonds este egal cu mărimea cuplajului maximal.
 \end{clr}
 
 \pagebreak
 
 \section{Lema Schwartz–Zippel}
-\textbf{Lema Schwartz-Zippel} este o metoda utila pentru a verifica intr-un mod
-probabilistic daca un polinom in mai multe variabile este polinomul nul.
-% TODO: poate discutie despre autori?
+\textbf{Lema Schwartz-Zippel} este o metodă utilă pentru a verifica într-un mod
+probabilistic dacă un polinom în mai multe variabile este polinomul nul.
 
 \begin{thm}
   Fie $P \in F \lbrack x_{1}, x_{2}, \ldots, x_{n} \rbrack$ un polinom nenul de grad $d \geq 0$
-  peste corpul $F$ si $S$ o submultime finita a lui $F$. Alegem
-  $r_{1}, r_{2}, \ldots, r_{n}$ uniform aleator si independent din $S$. Atunci:
+  peste corpul $F$ și $S$ o submultime finită a lui $F$. Alegem
+  $r_{1}, r_{2}, \ldots, r_{n}$ uniform aleator și independent din $S$. Atunci:
   \begin{equation}
     \Pr \lbrack P(r_{1}, r_{2}, \ldots, r_{n}) = 0 \rbrack \leq \frac{d}{|S|}
   \end{equation}
 \end{thm}
 
-Acest rezultat are sens odata ce ne gandim pe cazul de baza, cand $n=1$ deoarece
-un polinom de grad $d$ are cel mult $d$ radacini. Intreaga demonstratie se
-bazeaza pe inductie matematica si se poate consulta in \cite{schwartzzippel}.
+Acest rezultat are sens odată ce ne gândim pe cazul de baza, când $n=1$ deoarece
+un polinom de grad $d$ are cel mult $d$ rădăcini. Întreagă demonstrație se
+bazează pe inducție matematică și se poate consulta în \cite{schwartzzippel}.
 
 \begin{thm}
-  Lema Schwartz-Zippel se poate folosi in \ref{edmonds} pentru a verifica
-  existenta unui cuplaj perfect in timp polinomial.
+  Lema Schwartz-Zippel se poate folosi în \ref{edmonds} pentru a verifica
+  existența unui cuplaj perfect în timp polinomial.
 \end{thm}
 
-Fie $A$ \textbf{matricea Edmonds} asociata grafului. $\det(A)$ este un polinom
-in $n^{2}$ variabile, de grad $n$. Alegem corpul pe care lucram ca fiind
-$\mathbb{F}_{p}$. Determinantul poate fi calculat sub $\mathbb{F}_{p}$ in timp $O(n^{3})$
-folosind Eliminare Gaussiana. Chiar mai mult decat atat, acest calcul
-poate fi facut in timp $O(\log^{2} n)$ daca avem la dispozitie $O(n^{3.5})$
-procesoare \cite{paralleldet}. Probabilitatea de esec a algoritmului este de $\frac{n}{p}$.
+Fie $A$ \textbf{matricea Edmonds} asociată grafului. $\det(A)$ este un polinom
+în $n^{2}$ variabile, de grad $n$. Alegem corpul pe care lucrăm că fiind
+$\mathbb{F}_{p}$. Determinantul poate fi calculat sub $\mathbb{F}_{p}$ în timp $O(n^{3})$
+folosind Eliminare Gaussiana. Chiar mai mult decât atât, acest calcul
+poate fi făcut în timp $O(\log^{2} n)$ dacă avem la dispoziție $O(n^{3.5})$
+procesoare \cite{paralleldet}. Probabilitatea de eșec a algoritmului este de $\frac{n}{p}$.
 
 \pagebreak
 
 \section{Lema de izolare}
-\textbf{Lema de izolare} este o metoda de a reduce numarul de solutii ale unei
-probleme la una singura, daca aceasta exista. Aceasta se obtine prin adaugarea
-unor constrangeri aleatoare in asa fel incat, cu o probabilitate neglijabila,
-va exista o singura solutie care satisface constragerile aditionale.
+\textbf{Lema de izolare} este o metodă de a reduce numărul de soluții ale unei
+probleme la una singură, dacă aceasta există. Această se obține prin adăugarea
+unor constrângeri aleatoare în așa fel încât, cu o probabilitate neglijabilă,
+va există o singură soluție care satisface constragerile adiționale.
 
-Lema a fost introdusa de Valiant si Vazirani in lucrarea ``NP is as easy as
-detecting unique solutions'', publicata in 1986.
+Lema a fost introdusă de Valiant și Vazirani în lucrarea ``NP is as easy as
+detecting unique solutions'', publicată în 1986.
 
 \begin{thm}
   \label{isolation}
-  Fie $n$ si $m$ doua numere intregi pozitive si $F$ o familie de submultimi a
+  Fie $n$ și $m$ două numere întregi pozitive și $F$ o familie de submultimi a
   lui $\{1, 2, \ldots n\}$. Fie
-  $w : \{1, 2, \ldots, n\} \to \{1, 2, \ldots, m\}$ o functie care asociaza
-  valori uniform aleatoare si independente din codomeniu. Atunci, cu o
-  probabilitate de cel putin $1 - \frac{n}{m}$, va exista o singura multime $S$ in
-  $F$ pentru care $\displaystyle\sum\limits_{x\in S}{w(x)}$ este minima.
+  $w : \{1, 2, \ldots, n\} \to \{1, 2, \ldots, m\}$ o funcție care asociază
+  valori uniform aleatoare și independente din codomeniu. Atunci, cu o
+  probabilitate de cel puțin $1 - \frac{n}{m}$, va există o singură mulțime $S$ în
+  $F$ pentru care $\displaystyle\sum\limits_{x\in S}{w(x)}$ este minimă.
 \end{thm}
 
 \pagebreak
@@ -204,31 +203,31 @@ detecting unique solutions'', publicata in 1986.
 \section{Algoritm paralelizabil pentru cuplaj}
 \label{Algoritm paralelizabil pentru cuplaj}
 
-In ``Matching is as easy as matrix inversion'' \cite{matchingezmatrix} se
-descrie o metoda pentru a cauta cuplajul perfect folosind acest rezultat.
-Consideram $G(U, V, E)$ un graf bipartit. Asociem fiecarei muchii din $E$ un
-cost uniform din multimea $\{1, 2, \ldots, 2|E|\}$. Conform \ref{isolation}, cu
-probabilitate de cel putin $\frac{1}{2}$ va exista un cuplaj unic de cost minim.
-Consideram $U = \{u_{1}, u_{2}, u_{3}, \ldots, u_{n}\}$,
-$V = \{v_{1}, v_{2}, v_{3}, \ldots, v_{n}\}$ si costul aleator ales mai devreme muchiei
-$(u_{i}, v_{j})$ ca fiind $w_{i,j}$. Fie $A$ matricea Edmonds a acestui
-graf, construita in felul urmator:
+În ``Matching is as easy as matrix inversion'' \cite{matchingezmatrix} se
+descrie o metodă pentru a căuta cuplajul perfect folosind acest rezultat.
+Considerăm $G(U, V, E)$ un graf bipartit. Asociem fiecărei muchii din $E$ un
+cost uniform din mulțimea $\{1, 2, \ldots, 2|E|\}$. Conform \ref{isolation}, cu
+probabilitate de cel puțin $\frac{1}{2}$ va exista un cuplaj unic de cost minim.
+Considerăm $U = \{u_{1}, u_{2}, u_{3}, \ldots, u_{n}\}$,
+$V = \{v_{1}, v_{2}, v_{3}, \ldots, v_{n}\}$ și costul aleator ales mai devreme muchiei
+$(u_{i}, v_{j})$ că fiind $w_{i,j}$. Fie $A$ matricea Edmonds a acestui
+graf, construită în felul următor:
 \begin{equation}
 A=
 \begin{cases}
-  2^{w_{i,j}} & \text{daca}\ (u_{i}, v_{j}) \in E \\
+  2^{w_{i,j}} & \text{dacă}\ (u_{i}, v_{j}) \in E \\
   0 & \text{altfel}
 \end{cases}
 \end{equation}
 
-Definim costul unui cuplaj ca fiind suma costurilor muchiilor alese in acea multime.
+Definim costul unui cuplaj ca fiind suma costurilor muchiilor alese în acea mulțime.
 \begin{lem}
-  Daca $p$ este costul cuplajului minim si acesta este si unic, atunci $\det(A) \neq 0$, iar
-  $2^{p} \ |\ \det(A)$ si $2^{p+1} \not| \ \det(A)$.
+  Dacă $p$ este costul cuplajului minim și acesta este și unic, atunci $\det(A) \neq 0$, iar
+  $2^{p} \ |\ \det(A)$ și $2^{p+1} \not| \ \det(A)$.
 \end{lem}
 
-Fie $\text{sgn} : S_{n} \to \{\pm 1\}$, $\text{sgn}(P)$ este $+1$ daca $P$
-este permutare para, altfel $-1$. $\text{sgn}(P)$ se numeste signatura
+Fie $\text{sgn} : S_{n} \to \{\pm 1\}$, $\text{sgn}(P)$ este $+1$ dacă $P$
+este permutare pară, altfel $-1$. $\text{sgn}(P)$ se numește signatura
 permutarii $P$.
 
 \begin{equation}
@@ -237,51 +236,51 @@ permutarii $P$.
 \end{equation}
 
 Pentru fiecare cuplaj din $G$ putem asocia unic o permutare $P$ din $S_{n}$:
-daca muchia $(u_{i}, v_{j})$ este aleasa in cuplaj, atunci $P_{i} \equiv j$.
+dacă muchia $(u_{i}, v_{j})$ este aleasă în cuplaj, atunci $P_{i} \equiv j$.
 Pentru o permutare care nu are asociat un cuplaj perfect, aceasta nu va
 contribui deloc la valoarea expresiei \ref{isolationdet}. \par
 
-Daca $P$ este permutarea asociata cuplajului de cost minim, atunci
-$\prod_{1 \leq i \leq N} A_{i, P_{i}} = 2^{p}$. Valoarea celorlalte permutari
-este fie $0$, fie o putere de $2$ mai mare decat $2^{p}$ (deoarece $P$ este
-unica). Asadar, valoarea determinatului o sa fie divizibila cu $2^{p}$ si
-mai mult, aceasta va fi cel mai mare divizor de aceasta forma.
+Dacă $P$ este permutarea asociată cuplajului de cost minim, atunci
+$\prod_{1 \leq i \leq N} A_{i, P_{i}} = 2^{p}$. Valoarea celorlalte permutări
+este fie $0$, fie o putere de $2$ mai mare decât $2^{p}$ (deoarece $P$ este
+unică). Așadar, valoarea determinatului o să fie divizibilă cu $2^{p}$ și
+mai mult, această va fi cel mai mare divizor de această formă.
 
 \pagebreak
 
-Pentru a determina multimea muchiilor din cuplaj, trebuie sa mai notam cateva observatii.
+Pentru a determina mulțimea muchiilor din cuplaj, trebuie să mai facem câteva observații.
 
 \begin{lem}
-  Fie $A'$ matricea obtinuta eliminand linia $i$ si coloana $j$. Fie
+  Fie $A'$ matricea obținută eliminând linia $i$ și coloana $j$. Fie
   $C \def \det(A') * \frac{2^{w_{i,j}}}$. Muchia
-  $(u_{i}, v_{j})$ face parte din cuplaj daca si numai daca $2^{p} \ | \ C$,
-  $2^{p+1} \not| \ C$ si $C \neq 0$.
+  $(u_{i}, v_{j})$ face parte din cuplaj dacă și numai dacă $2^{p} \ | \ C$,
+  $2^{p+1} \not| \ C$ și $C \neq 0$.
 \end{lem}
 
-In primul rand, valoarea $\det(A') * 2^{w_{i,j}}$ este chiar valoarea
-determinantului calculat dupa formula de la \ref{isolationdet}, cu precizarea ca
-se vor consider doar permutarile $P$ cu $P_{i} = j$. Acest lucru se datoreaza
-faptului ca permutarile alese in calculul lui $\det(A')$ vor avea cu un element
-mai putin decat cele din $\det(A)$, iar pentru elementul lipsa inmultim mereu cu
-valorea asociata muchiei $(u_{i}, v_{j})$, adica $2^{w_{i,j}}$.
-Aplicand apoi observatiile demonstratiei pentru \ref{isolationdet} obtinem
-rezultatul dorit si in cele din urma, un algoritm pentru determinarea cuplajului
-perfect care nu se bazeaza pe retele de flux, ci doar pe obiect de algebra
-liniara: \par
+În primul rând, valoarea $\det(A') * 2^{w_{i,j}}$ este chiar valoarea
+determinantului calculat după formula de la \ref{isolationdet}, cu precizarea că
+se vor considera doar permutările $P$ cu $P_{i} = j$. Acest lucru se datorează
+faptului că permutările alese în calculul lui $\det(A')$ vor avea cu un element
+mai puțin decât cele din $\det(A)$, iar pentru elementul lipsă înmulțim mereu cu
+valorea asociată muchiei $(u_{i}, v_{j})$, adică $2^{w_{i,j}}$.
+Aplicând apoi observațiile demonstrației pentru \ref{isolationdet} obținem
+rezultatul dorit și în cele din urmă, un algoritm pentru determinarea cuplajului
+perfect care nu se bazează pe rețele de flux, ci doar pe obiect de algebră
+liniară: \par
 
 \vspace{5 mm}
 
 \begin{algorithm}[H]
  \label{cuplajizolare}
  \KwData{Graf bipartit G(U, V, E) care admite cuplaj perfect}
- \KwResult{Multimea muchiilor alese intr-un posibil cuplaj perfect}
+ \KwResult{Mulțimea muchiilor alese într-un posibil cuplaj perfect}
  \Begin{
-  determina w\;
-  construieste A\;
+  determină w\;
+  construiește A\;
   $p \longleftarrow \det(A)$\;
   $C \longleftarrow \{\}$\;
   \For{$(u_{i}, v_{j}) \in E$}{
-    determina $A'$\;
+    determină $A'$\;
     \If{$\frac{\det(A') * 2^{w_{i,j}}}{2^{p}} \mod 2 = 1$}{
       $C \longleftarrow C \cup \{(u_{i}, v_{j})\}$\;
     }

@@ -3,17 +3,18 @@
 
 \usepackage[pdftex]{graphicx}
 
-\usepackage{times}       % Font Times New Roman
-\usepackage{setspace}    % Spatierea intre linii
-\usepackage{titlesec}    % Capitole, sectiuni, subsectiuni..
-\usepackage{enumerate}   % Liste
-\usepackage{amsmath}     % Formatari in ecuatii
-\usepackage{amsfonts}    % Formatari speciale, cum ar fi multimea numerelor naturale
-\usepackage{amsthm}      % Modulul de teoreme
-\usepackage{hyperref}    % Linkuri in document
-\usepackage{algorithm2e} % Pseudocod inline
-\usepackage{tikz}        % Creare de diagramare
-\usepackage{float}       % Figuri in paralel cu text
+\usepackage[romanian]{babel} % Suport limba romana
+\usepackage{times}           % Times New Roman
+\usepackage{setspace}        % Spatierea intre linii
+\usepackage{titlesec}        % Capitole, sectiuni, subsectiuni..
+\usepackage{enumerate}       % Liste
+\usepackage{amsmath}         % Formatari in ecuatii
+\usepackage{amsfonts}        % Formatari speciale
+\usepackage{amsthm}          % Modulul de teoreme
+\usepackage{hyperref}        % Linkuri in document
+\usepackage{algorithm2e}     % Pseudocod inline
+\usepackage{tikz}            % Creare de diagramare
+\usepackage{float}           % Figuri in paralel cu text
 
 % Calea catre imagini
 \graphicspath{{images/}}
@@ -38,7 +39,7 @@
 \setlength{\skip\footins}{0.5cm}
 
 % Continut
-\renewcommand{\contentsname}{Continut}
+\renewcommand{\contentsname}{Conținut}
 
 % Teorema
 \theoremstyle{definition} % Prefer stilul de la definitii si aici
@@ -46,7 +47,7 @@
 
 % Definitie
 \theoremstyle{definition}
-  \newtheorem{defn}[thm]{Definitia}
+  \newtheorem{defn}[thm]{Definiția}
 
 % Lema
 \theoremstyle{definition}
@@ -57,7 +58,7 @@
   \newtheorem{clr}[thm]{Corolar}
 
 % Demonstratie
-\renewcommand*{\proofname}{Demonstratie}
+\renewcommand*{\proofname}{Demonstrație}
 
 % Bibliografie
 \renewcommand{\bibname}{Bibliografie}
