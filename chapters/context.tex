@@ -292,122 +292,122 @@ liniară: \par
 
 \pagebreak
 
-In continuare vom presupune ca putem efectua operatiile aritmetice de baza in timp $O(1)$.
-Atunci algoritmul \ref{cuplajizolare} dureaza $O(n^{5})$, daca folosim
-algoritmul lui Gauss pentru calcularea determinantului. Putem sa nu recalculam
-valoarea determinantului la fiecare iteratie folosind:
+În continuare vom presupune că putem efectua operațiile aritmetice de bază în timp $O(1)$.
+Atunci algoritmul \ref{cuplajizolare} durează $O(n^{5})$, dacă folosim
+algoritmul lui Gauss pentru calcularea determinantului. Putem să nu recalculăm
+valoarea determinantului la fiecare iterație folosind:
 \begin{equation}
   \det(A + uv^{T}) = (1 + v^{T} A^{-1} u) \det(A)
 \end{equation}
 
-Cu aceasta proprietatea a determinantului, cunoscuta si ca \textbf{Matrix
-  determinant lemma} putem reduce complexitatea la $O(n^{4})$. In plus,
+Cu această proprietatea a determinantului, cunoscută și ca \textbf{Matrix
+  determinant lemma} putem reduce complexitatea la $O(n^{4})$. În plus,
 algoritmul se poate paraleliza bine, deoarece determinantul unei matrice
-de marime $n \times n$ se poate calcula in timp $O(\log^{2}n)$ pe $O(n^{3.5})$ procesoare.
+de mărime $n \times n$ se poate calcula în timp $O(\log^{2}n)$ pe $O(n^{3.5})$ procesoare.
 
-Unicitatea solutiei, garantata de \textbf{lema de izolare} permite procesoarelor
-sa execute si pasul urmator, in care se testeaza o muchie daca face parte din
-cuplaj, in paralel, deoarece se indreapta catre aceeasi solutie, cu o
-certitudine destul de mare. Asadar si aceasta parte a algoritmului poate fi
-calculata in timp polilogaritmic, daca avem la dispozitie un numar polinomial de
+Unicitatea soluției, garantata de \textbf{lema de izolare} permite procesoarelor
+să execute și pasul următor, în care se testează dacă o muchie face parte din
+cuplaj, în paralel, deoarece se îndreaptă către aceeași soluție, cu o
+certitudine destul de mare. Așadar și această parte a algoritmului poate fi
+calculată în timp polilogaritmic, dacă avem la dispoziție un număr polinomial de
 procesoare.
 
-In \cite{optimalmatching} se arata ca acest algoritm poate fi rafinat la complexitate
-$O(n^{3})$, observandu-se ca o muchie $(u_{i}, v_{j})$ face parte din cuplaj daca si
-numai daca $A^{-1}_{i, j} \neq 0$. Mai mult, folosindu-se de aceasta proprietate si
-de o schema de a reduce eliminarea Gaussiana (\ref{gauss}) la $O(1)$ inmultiri de matrici,
+În \cite{optimalmatching} se arată că acest algoritm poate fi rafinat la complexitate
+$O(n^{3})$, observandu-se că o muchie $(u_{i}, v_{j})$ face parte din cuplaj dacă și
+numai dacă $A^{-1}_{i, j} \neq 0$. Mai mult, folosindu-se de această proprietate și
+de o schemă de a reduce eliminarea Gaussiana (\ref{gauss}) la $O(1)$ înmulțiri de matrici,
 acest algoritm are complexitate $O(n^{w})$, unde $w < 2.38$, astfel obtinandu-se un
-algoritm mai eficient decat cel bazat pe flux maxim, Hopcroft-Karp, care are complexitatea
+algoritm mai eficient decât cel bazat pe flux maxim, Hopcroft-Karp, care are complexitatea
 $O(n^{2.5})$.
 
 \pagebreak
 
-\section{Cuplaj rosu-albastru}
+\section{Cuplaj roșu-albastru}
 \label{redbluematching}
 
-Sa consideram un graf bipartit $G(U, V, E)$, unde $E_{1}$ este multimea
-muchiilor rosii, $E_{2}$ este multimea muchiilor albastre, iar
-$E = E_{1} \cup E_{2}$. Dorim sa alfam daca exista un cuplaj perfect
-in care se folosesc exact $k$ muchii rosii, stiind ca daca acesta exista, atunci
-este si \textbf{unic}. \par
+Să considerăm un graf bipartit $G(U, V, E)$, unde $E_{1}$ este mulțimea
+muchiilor roșii, $E_{2}$ este mulțimea muchiilor albastre, iar
+$E = E_{1} \cup E_{2}$. Dorim să alfam dacă există un cuplaj perfect
+în care se folosesc exact $k$ muchii roșii, știind că dacă acesta există, atunci
+este și \textbf{unic}. \par
 
-Aceasta problema nu se poate rezolva cu algoritmi de flux maxim, spre deosebire
-de celelalte probleme de pana acum. Totusi, avem sanse sa o rezolvam, daca
-procedam prin a modifica \textbf{matricea Edmonds} cat sa avem un mod de a ne da seama de
-culoarea muchiilor alese in cuplaj:
+Aceasta problemă nu se poate rezolva cu algoritmi de flux maxim, spre deosebire
+de celelalte probleme de până acum. Totuși, avem șanse să o rezolvam, dacă
+procedam prin a modifica \textbf{matricea Edmonds} astfel încât să avem un mod
+de a ne da seama de culoarea muchiilor alese în cuplaj:
 
 \begin{equation}
   A=
   \begin{cases}
-    y & \text{daca}\ (u_{i}, v_{j}) \in E_{1} \\
-    1 & \text{daca}\ (u_{i}, v_{j}) \in E_{2} \\
+    y & \text{dacă}\ (u_{i}, v_{j}) \in E_{1} \\
+    1 & \text{dacă}\ (u_{i}, v_{j}) \in E_{2} \\
     0 & \text{altfel}
   \end{cases}
 \end{equation}
 
-$\det(A)$ va fi un polinom in $y$ de grad $n$. $G$ va avea un cuplaj perfect cu
-$k$ muchii rosii daca coeficientul lui $y^{k}$ va fi nenul. Pentru a determina
-acest numar putem sa interpolam polinomul $\det(A)$ folosind interpolarea
-Lagrange. Tot ce ramane de facut este sa evaluam polinomul in $n+1$ puncte. \par
+$\det(A)$ va fi un polinom în $y$ de grad $n$. $G$ va avea un cuplaj perfect cu
+$k$ muchii roșii dacă coeficientul lui $y^{k}$ va fi nenul. Pentru a determina
+acest număr putem să interpolăm polinomul $\det(A)$ folosind interpolarea
+Lagrange. Tot ce rămâne de făcut este să evaluăm polinomul în $n+1$ puncte. \par
 
-Pentru cazul general, cand cuplajul rosu-albastru nu este neaparat unic, putem
-folosi una din cele doua leme sa reducem problema la una mai simpla.
+Pentru cazul general, când cuplajul roșu-albastru nu este neapărat unic, putem
+folosi una din cele două leme să reducem problema la una mai simpla.
 
 \subsection{Folosind Lema Schwartz-Zippel}
 
 Pentru fiecare muchie $(u_{i}, v_{j})$ alegem o valoarea aleatoare $x_{i,j}$ dintr-o
-multimea $S$. Construim matricea astfel:
+mulțimea $S$. Construim matricea astfel:
 
 \begin{equation}
   A=
   \begin{cases}
-    y * x_{i,j} & \text{daca}\ (u_{i}, v_{j}) \in E_{1} \\
-    x_{i,j} & \text{daca}\ (u_{i}, v_{j}) \in E_{2} \\
+    y * x_{i,j} & \text{dacă}\ (u_{i}, v_{j}) \in E_{1} \\
+    x_{i,j} & \text{dacă}\ (u_{i}, v_{j}) \in E_{2} \\
     0 & \text{altfel}
   \end{cases}
 \end{equation}
 
-Ca inainte, vom interpola $\det(A)$ pentru a afla coeficientul lui $y^{k}$.
-Acest coeficient trebuie sa fie nenul. Iar acum, cu probabilitate mare, acest
-lucru este adevarat, pentru ca daca doua polinoame se ``anuleaza'' unul pe
-celalalt in urma calculului determinantului, atunci cu probabilitate de cel mult
+Ca înainte, vom interpola $\det(A)$ pentru a afla coeficientul lui $y^{k}$.
+Acest coeficient trebuie să fie nenul. Iar acum, cu probabilitate mare, acest
+lucru este adevărat, pentru că dacă două polinoame se ``anulează'' unul pe
+celalalt în urma calculului determinantului, atunci cu probabilitate de cel mult
 $\frac{n}{|S|}$ acestea erau diferite.
 
 \subsection{Folosind Lema de izolare}
-Asemanator algoritmului prezentat la \ref{Algoritm paralelizabil pentru cuplaj}
-si solutiei precedente cu Lema Schwartz-Zippel, avand valorile $w_{i,j}$ alese
+Asemănător algoritmului prezentat la \ref{Algoritm paralelizabil pentru cuplaj}
+și soluției precedente cu Lema Schwartz-Zippel, având valorile $w_{i,j}$ alese
 din $\{1, 2, \ldots, 2|E_{1} \cup E_{2}|\}$, vom construi matricea astfel:
 
 \begin{equation}
   A=
   \begin{cases}
-    y * 2^{w_{i,j}} & \text{daca}\ (u_{i}, v_{j}) \in E_{1} \\
-    2^{w_{i,j}} & \text{daca}\ (u_{i}, v_{j}) \in E_{2} \\
+    y * 2^{w_{i,j}} & \text{dacă}\ (u_{i}, v_{j}) \in E_{1} \\
+    2^{w_{i,j}} & \text{dacă}\ (u_{i}, v_{j}) \in E_{2} \\
     0 & \text{altfel}
   \end{cases}
 \end{equation}
 
-In continuare ramane sa ne uitam la coeficientul lui $y^{k}$ in $\det(A)$. Spre
-deosebire de lema \textbf{Schwartz-Zippel}, acesta varianta are posibilitatea sa fie
-paralelizabil, deoarece, cu probabilitate de cel putin $\frac{1}{2}$, cuplajul
-pe care vrem sa-l gasim este acum unic.
+În continuare rămâne să ne uităm la coeficientul lui $y^{k}$ în $\det(A)$. Spre
+deosebire de lema \textbf{Schwartz-Zippel}, acesta variantă are posibilitatea să fie
+paralelizabil, deoarece, cu probabilitate de cel puțin $\frac{1}{2}$, cuplajul
+pe care vrem să-l găsim este acum unic.
 
 \pagebreak
 
-\section{Transformari Fourier}
+\section{Transformări Fourier}
 
-\subsection{Transformarea Fourier Discreta}
-Consideram $n = 2^{p}$ si urmatorul polinom de grad $n-1$:
+\subsection{Transformarea Fourier Discreta \cite{fft}}
+Considerăm $n = 2^{p}$ și următorul polinom de grad $n-1$:
 \begin{equation}
   A = a_{0}x^{0} + a_{1}x^{1} + \ldots + a_{n-1}x^{n-1}
 \end{equation}
 
-Solutia ecuatiei $x^{n} = 1$ are $n$ solutii in multimea numerelor complexe.
-Acestea sunt de forma $w_{p} = e^{\frac{2k\pi i}{n}}$ pentru $p$ un numar intreg
-intre $0$ si $n-1$. Aceste radacini au multe proprietati utile, iar cea pe care
-urmeaza sa o folosim este ca $w_{p} = w_{0}^{p}$. \par
-\textbf{Transformarea discreta Fourier} a polinomului $A$ este definita ca fiind
-vectorul obtinut prin evaluarea polinomului in radacinile unitatii:
+Soluția ecuației $x^{n} = 1$ are $n$ soluții în mulțimea numerelor complexe.
+Acestea sunt de forma $w_{p} = e^{\frac{2k\pi i}{n}}$ pentru $p$ un număr întreg
+intre $0$ și $n-1$. Aceste rădăcini au multe proprietăți utile, iar cea pe care
+urmează să o folosim este că $w_{p} = w_{0}^{p}$. \par
+\textbf{Transformarea discretă Fourier} a polinomului $A$ este definită ca fiind
+vectorul obținut prin evaluarea polinomului în rădăcinile unității:
 
 \begin{equation}
   \label{dft}
@@ -415,30 +415,30 @@ vectorul obtinut prin evaluarea polinomului in radacinile unitatii:
                 = (A(w_{0}^{1}), A(w_{0}^{2}), \ldots, A(w_{0}^{n-1}))
 \end{equation}
 
-Similar, avand vectorul din partea dreapta a ecuatiei \ref{dft}, \textbf{inversa
-transformarii discrete Fourieri} reconstituie coeficientii polinomului $A$:
-$(a_{0}, a_{1}, \ldots a_{n-1})$. Vom nota aceasta transformare cu
+Similar, având vectorul din partea dreapta a ecuației \ref{dft}, \textbf{inversa
+transformării discrete Fourieri} reconstituie coeficienții polinomului $A$:
+$(a_{0}, a_{1}, \ldots a_{n-1})$. Vom nota această transformare cu
 $\text{InverseDFT}$. \par
 
-O aplicatie utila este inmultirea polinoamelor. Fie $\textbf{dot}$ operatia de
-inmultire scalara a doi vectori. Aceasta se bazeaza pe o
-proprietatea a transformarii, si anume:
+O aplicație utila este înmulțirea polinoamelor. Fie $\textbf{dot}$ operația de
+înmulțire scalara a doi vectori. Aceasta se bazează pe o
+proprietatea a transformării, și anume:
 \begin{equation}
   \text{DFT}(A * B) = \text{dot}(\text{DFT}(A), \text{DFT}(B))
 \end{equation}
 
-Aceasta proprietate este utila, fiind la baza unui algoritm rapid de inmultire a
-polinoamelor, deoarece $\text{DFT}(A)$ si $\text{InverseDFT}(A)$ se pot calcula
-in timp $O(n \log n)$.
+Aceasta proprietate este utilă, fiind la baza unui algoritm rapid de înmulțire a
+polinoamelor, deoarece $\text{DFT}(A)$ și $\text{InverseDFT}(A)$ se pot calcula
+în timp $O(n \log n)$.
 
 \subsection{Transformarea Hadamard}
 \label{hadamard}
 
-\textbf{Transformarea Hadamard} este o transformare Fourier generalizata,
-executand o operatie liniara pe $2^{n}$ numere reale. Aceasta este echivalenta
-cu o transformare discreta $n$-dimensionala Fourier de marime
-$2 \times 2 \ldots \times 2$. In mod intuitiv, se inmultesc monoame a $n$
-variabile, aplicandu-se modulo $x^{2}-1$ pe fiecare variabila. Fie $p_{i_{1}, i_{2}} \in \{0, 1\}$:
+\textbf{Transformarea Hadamard} este o transformare Fourier generalizată,
+executând o operație liniară pe $2^{n}$ numere reale. Aceasta este echivalenta
+cu o transformare discretă $n$-dimensională Fourier de mărime
+$2 \times 2 \ldots \times 2$. În mod intuitiv, se înmulțesc monoame a $n$
+variabile, aplicandu-se modulo $x^{2}-1$ pe fiecare variabilă. Fie $p_{i_{1}, i_{2}} \in \{0, 1\}$:
 \begin{equation}
   A = a_{0} x_{0}^{p_{0, 0}} x_{1}^{p_{0, 1}} \ldots x_{n-1}^{p_{0, n-1}}
   + a_{1} x_{0}^{p_{1, 0}} x_{1}^{p_{1, 1}} \ldots x_{n-1}^{p_{1, n-1}}
@@ -446,24 +446,24 @@ variabile, aplicandu-se modulo $x^{2}-1$ pe fiecare variabila. Fie $p_{i_{1}, i_
   + a_{n-1} x_{0}^{p_{n-1, 0}} x_{1}^{p_{n-1, 1}} \ldots x_{n-1}^{p_{n-1, n-1}}
 \end{equation}
 
-Daca in cazul \textbf{transformarii Fourieri discrete} obtineam
-$C_{i+j} = \displaystyle\sum\limits A_{i} B_{j}$, in cazul \textbf{transformarii Hadamard} obtinem
-$C_{i \oplus j} = \displaystyle\sum\limits A_{i} B_{j}$, unde $\oplus$ este operatia de sau exclusiv
-(xor) pe biti. Intuitiv, de ce se obtine operatie de xor este pentru ca
-cele $n$ monoame reprezentau bitii fiecarui numar de la $0$ la $2^{n} - 1$.
-Acestora la inmultire li se aplica modulo $x^{2} - 1$, asemanator bitilor in
-timpul unei operatii de xor, care este ca o adunare, in urma careia se aplica
-modulo $2$, totul efectuat separat pe fiecare bit in parte.
+Daca în cazul \textbf{transformării Fourieri discrete} obțineam
+$C_{i+j} = \displaystyle\sum\limits A_{i} B_{j}$, în cazul \textbf{transformării Hadamard} obținem
+$C_{i \oplus j} = \displaystyle\sum\limits A_{i} B_{j}$, unde $\oplus$ este operația de sau exclusiv
+(xor) pe biți. Intuitiv, de ce se obține operație de xor este pentru că
+cele $n$ monoame reprezentau biții fiecărui număr de la $0$ la $2^{n} - 1$.
+Acestora la înmulțire li se aplica modulo $x^{2} - 1$, asemănător biților în
+timpul unei operații de xor, care este ca o adunare, în urma căreia se aplica
+modulo $2$, totul efectuat separat pe fiecare bit în parte.
 
 \subsection{Algoritmul Fast Walsh-Hadamard}
 \label{fasthadamard}
 
-\textbf{Algoritmul Fast Walsh-Hadamard} este un algoritm eficient pentru a
-calcula \textbf{transformarea Hadamard}. O implementare naiva a transformarii
-necesita complexitate de timp $O(2^{2n})$, in timp ce algoritmul pe care urmeaza
-sa-l prezentam necesita doar $O(n2^{n})$. Algoritmul se bazeaza pe paradigma
-divide et impera, impartind o problema de marime $2^{n}$ in doua de marime
-$2^{n-1}$, urmarind definitia recursiva a matricei Hadamard:
+\textbf{Algoritmul Fast Walsh-Hadamard} \cite{fwht} este un algoritm eficient pentru a
+calcula \textbf{transformarea Hadamard}. O implementare naivă a transformării
+necesită complexitate de timp $O(2^{2n})$, în timp ce algoritmul pe care urmează
+să-l prezentam necesita doar $O(n2^{n})$. Algoritmul se bazează pe paradigma
+divide et impera, împărțind o problema de mărime $2^{n}$ în doua de mărime
+$2^{n-1}$, urmărind definiția recursiva a matricei Hadamard:
 
 \begin{equation}
   \label{hadamardmatrix}
@@ -474,7 +474,7 @@ $2^{n-1}$, urmarind definitia recursiva a matricei Hadamard:
   \end{pmatrix}
 \end{equation}
 
-Ecuatia \ref{hadamardmatrix} omite factorul de normalizare de
+Ecuația \ref{hadamardmatrix} omite factorul de normalizare de
 $\frac{1}{\sqrt{2}}$, care poate fi aplicat la final.
 
 \begin{algorithm}[H]
@@ -526,37 +526,37 @@ $\frac{1}{\sqrt{2}}$, care poate fi aplicat la final.
 \section{Algoritmul lui Coppersmith}
 \label{coppersmith}
 
-In cadrul algoritmilor de algebra liniara pentru cuplaj avem des problema de a
-calcula determinanti. De obicei, aceste grafuri nu vor fi atat de dense, deci
+În cadrul algoritmilor de algebră liniară pentru cuplaj avem des problema de a
+calcula determinanți. De obicei, aceste grafuri nu vor fi atât de dense, deci
 nici matricea Edmonds (\ref{edmonds}) nu va avea multe elemente nenule.
 
 \textbf{Algoritmul lui Coppersmith} \cite{wiedemann} este un algoritm rapid pentru calcularea
-vectorilor nucleu al unei matrice intr-un corp finit. Acesta este in particular
-eficient pentru matricele rare, cele care nu au atat de multe elemente nenule. \\
+vectorilor nucleu al unei matrice într-un corp finit. Acesta este în particular
+eficient pentru matricele rare, cele care nu au atât de multe elemente nenule. \\
 
-Consideram $A$ o matrice patratica de marime $n \times n$ peste un corp finit $F$, atunci:
+Considerăm $A$ o matrice pătratică de mărime $n \times n$ peste un corp finit $F$, atunci:
 
 \begin{defn}
-  Polinomul caracteristic al lui $A$ este definit ca
+  Polinomul caracteristic al lui $A$ este definit că
   $p(\lambda) = \det(\lambda I_{n} - A)$.
 \end{defn}
 
 \begin{thm}
   \label{cayleyhamilton}
-  \textbf{Cayley-Hamilton} spune ca fiecare matrice patratica intr-un inel
-  comutativ isi satisface ecuatia caracteristica, mai exact $p(A) = 0$.
+  \textbf{Cayley-Hamilton} spune că fiecare matrice pătratica într-un inel
+  comutativ își satisface ecuația caracteristica, mai exact $p(A) = 0$.
 \end{thm}
 
 $A$ are un polinom monic $P$ peste corpul $F$ de grad minim pentru care
-$P(A) = 0$. $P$ se numeste polinomul minim al lui $A$. In
-cazul matricelor rare, ne asteptam ca acest polinom sa aiba un grad mai mic
-decat cel al polinomului caracteristic. $P$ mereu va divide polinomul
+$P(A) = 0$. $P$ se numește polinomul minim al lui $A$. În
+cazul matricelor rare, ne așteptam că acest polinom să aibă un grad mai mic
+decât cel al polinomului caracteristic. $P$ mereu va divide polinomul
 caracteristic, iar din \ref{cayleyhamilton}, gradul acestuia nu va fi mai mare
 de $n$. Fie $P = a_{0} + a_{1}x + \ldots + a_{n'}x^{n'}$, unde $n' \leq n$.
 
 \begin{lem}
   \label{polminimdet}
-  Daca $n' = n$, atunci $P$ este chiar polinomul caracteristic al lui $A$, iar
+  Dacă $n' = n$, atunci $P$ este chiar polinomul caracteristic al lui $A$, iar
   determinantul este chiar $(-1)^{n}P(0)$.
 \end{lem}
 
@@ -566,61 +566,61 @@ de $n$. Fie $P = a_{0} + a_{1}x + \ldots + a_{n'}x^{n'}$, unde $n' \leq n$.
 
 \begin{proof}
   Fie $d$ un vector de $n$ elemente
-  alese uniform aleator si independent din $F$, iar
+  alese uniform aleator și independent din $F$, iar
   $D =
   \begin{bmatrix}
     d_{1} & 0 & \dots \\
     0 & d_{2} & \dots \\
     \vdots & \ddots & \\
     0 & \dots & d_{n}
-  \end{bmatrix}$. Conform lemei Schwartz-Zippel, matricea $AD$ este singulara cu
-  probabilitate de cel mult $\frac{n}{|F|}$. In cazul in care nu este, atunci ne
-  asteptam ca polinomul minim sa aiba grad egal chiar cu $n$. In acest caz,
-  putem calcula rapid $\det(AD)$ folsind \ref{polminimdet} si apoi sa aflam
+  \end{bmatrix}$. Conform lemei Schwartz-Zippel, matricea $AD$ este singulară cu
+  probabilitate de cel mult $\frac{n}{|F|}$. În cazul în care nu este, atunci ne
+  așteptăm ca polinomul minim să aibă grad egal chiar cu $n$. În acest caz,
+  putem calcula rapid $\det(AD)$ folsind \ref{polminimdet} și apoi să aflăm
   $\det(A) = \frac{\det(AD)}{det(D)}$, iar $\det(D) = \prod_{i=1}^{n} d_{i}$.
 \end{proof}
 
-Fie $x'$ un vector de $n$ elemente alese uniform aleator si independent din $F$,
+Fie $x'$ un vector de $n$ elemente alese uniform aleator și independent din $F$,
 iar $x = Ax'$. Fie $S = [x, Ax, A^{2}x, \ldots]$.
-Consideram un alt vector de $n$ elemente, $y$ si urmatorul sir de valori din $F$: $[yx, yAx, yA^{2}x, \ldots ]$.
+Considerăm un alt vector de $n$ elemente, $y$ și următorul șir de valori din $F$: $[yx, yAx, yA^{2}x, \ldots ]$.
 
-Stim ca $P(A) = 0$, atunci $\displaystyle\sum\limits_{i=0}^{n'} a_{i} A^{i} = 0$. Obtinem ca si
-$\displaystyle\sum\limits_{i=0}^{n'} y (a_{i} (A^{i} x)) = 0$. Intuitiv, stim ca $P(S) = 0$, insa nu
-stim sa calculam eficient o secventa $b_{0}, b_{1}, \ldots b_{k}$ astfel incat
-$\displaystyle\sum\limits_{i=0}^{k} b_{i} S_{i+o} = 0 \ \forall \ o \geq 0$, pentru ca elementele din $S$ sunt vectori, insa
-atunci cand reducem la cazul cu valori, o sansa destul de mare ca secventa $b$
-care anihileaza $yS$ sa anihileze si $S$, deci
+Știm că $P(A) = 0$, atunci $\displaystyle\sum\limits_{i=0}^{n'} a_{i} A^{i} = 0$. Obținem că și
+$\displaystyle\sum\limits_{i=0}^{n'} y (a_{i} (A^{i} x)) = 0$. Intuitiv, știm că $P(S) = 0$, însă nu
+știm să calculam eficient o secvență $b_{0}, b_{1}, \ldots b_{k}$ astfel încât
+$\displaystyle\sum\limits_{i=0}^{k} b_{i} S_{i+o} = 0 \ \forall \ o \geq 0$, pentru că elementele din $S$ sunt vectori, însă
+atunci când reducem la cazul cu valori, există o șansă destul de mare ca secvență $b$
+care anihilează $yS$ să anihileze și $S$, deci
 $\displaystyle\sum\limits_{i=0}^{k} b_{i} M^{i}x = 0$.
-Inlocuind cu $x = Ax'$, obtinem ca $M \displaystyle\sum\limits_{i=0}^{k} b_{i} M^{i} x' = 0$, deci
-daca $b_{i} M^{i} x'$ este nenul, atunci am obtinem un nucleu al lui $M$.
+Înlocuind cu $x = Ax'$, obținem că $M \displaystyle\sum\limits_{i=0}^{k} b_{i} M^{i} x' = 0$, deci
+dacă $b_{i} M^{i} x'$ este nenul, atunci am obținem un nucleu al lui $M$.
 
-Pentru a calcula elementele secventei $S$ se folosesc algoritmi pentru gasirea
-\textbf{polinomului minim al unei recurente liniare}. Algoritmul
-\textbf{Berlekamp Massey} daca $|F|$ este un numar prim (doua corpuri de
-aceeasi marime sunt izomorfe), altfel, se factorizeaza
-$|F| = p_{1}^{k_{1}} p_{2}^{k_{2}} \ldots p_{t}^{k_{t}}$ si se rezolva $t$
+Pentru a calcula elementele secvenței $S$ se folosesc algoritmi pentru găsirea
+\textbf{polinomului minim al unei recurențe liniare}. Algoritmul
+\textbf{Berlekamp Massey} dacă $|F|$ este un număr prim (doua corpuri de
+aceeași mărime sunt izomorfe), altfel, se factorizează
+$|F| = p_{1}^{k_{1}} p_{2}^{k_{2}} \ldots p_{t}^{k_{t}}$ și se rezolvă $t$
 probleme cu $|F_{i}'| = p_{i}^{k_{i}}$ cu algoritmul \textbf{Reeds-Sloane}, iar
-rezultatele se combina folosind teorema chineza a resturilor. In ce urmeaza vom
-prezenta un alt algoritm echivalent care nu foloseste impartiri, deci nu este
+rezultatele se combina folosind teorema chineză a resturilor. În ce urmează vom
+prezenta un alt algoritm echivalent care nu folosește împărțiri, deci nu este
 constans la un tip de corp anume \cite{sugiyama}.
 
 \pagebreak
 
-\section{Polinomul minim al unei recurente liniare}
+\section{Polinomul minim al unei recurențe liniare}
 
 \begin{defn}
-  O secventa infinita $a$ cu elemente dintr-un corp $F$ se numeste recurenta
-  liniara daca si numai daca exista constantele $c_{1}, c_{2}, \ldots, c_{k}$
-  astfel incat
+  O secvență infinita $a$ cu elemente dintr-un corp $F$ se numește recurență
+  liniară dacă și numai daca exista constantele $c_{1}, c_{2}, \ldots, c_{k}$
+  astfel încât
   $a_{t} = a_{t-1}c_{1} + a_{t-2}c_{2} + \ldots + a_{t-k}c_{k} \ \forall \ t > k$.
 \end{defn}
 
 \begin{defn}
-  Pentru o recurenta liniara $a$ si $c_{0}, c_{1}, \ldots c_{k} \in F$, astfel
-  incat
+  Pentru o recurența liniară $a$ și $c_{0}, c_{1}, \ldots c_{k} \in F$, astfel
+  încât
   $c_{0} a_{t} = a_{t-1}c_{1} + a_{t-2}c_{2} + \ldots + a_{t-k}c_{k} \ \forall \ t > k$,
   atunci polinomul $c_{0} x^{k} + c_{1} x^{k-1} + \ldots + c_{k} x^{0}$ se
-  numeste anihilator al lui $a$.
+  numește anihilator al lui $a$.
 \end{defn}
 
 \begin{defn}
@@ -629,18 +629,18 @@ constans la un tip de corp anume \cite{sugiyama}.
 \end{defn}
 
 \begin{defn}
-  Un ideal $<S>$ dintr-un inel $R$ este de tip finit daca admite un sistem finit de generatori:
-  $\exists \ s_{1}, s_{2}, \ldots s_{r} \in \ <S>$  astfel incat
-  $\forall \ s \in \ <S>, s = \displaystyle\sum\limits_{i=1}^{r} x_{i} s_{i}, \ x_{i} \in R$.
+  Un ideal $<S>$ dintr-un inel $R$ este de tip finit dacă admite un sistem finit de generatori:
+  $\exists \ s_{1}, s_{2}, \ldots s_{r} \in \ $  astfel încât
+  $\forall \ s \in \ , s = \displaystyle\sum\limits_{i=1}^{r} x_{i} s_{i}, \ x_{i} \in R$.
 \end{defn}
 
 \begin{defn}
-  Un ideal se numeste principal daca admite un sistem de generatori format
+  Un ideal se numește principal dacă admite un sistem de generatori format
   dintr-un singur element.
 \end{defn}
 
 \begin{defn}
-  Inelul $R$ se numeste principal daca orice ideal este principal.
+  Inelul $R$ se numește principal dacă orice ideal este principal.
 \end{defn}
 
 \begin{thm}
@@ -648,97 +648,97 @@ constans la un tip de corp anume \cite{sugiyama}.
 \end{thm}
 
 \begin{lem}
-  Anihilatoarele lui $a$ formeaza un ideal in $F[x]$.
+  Anihilatoarele lui $a$ formează un ideal în $F[x]$.
 \end{lem}
 
 \begin{clr}
   Idealul format din anihilatoarele lui $a$ este generat de un polinom monic de
-  grad minim. Acesta se numeste polinomul minim al lui $a$.
+  grad minim. Acesta se numește polinomul minim al lui $a$.
 \end{clr}
 
 \begin{thm}
-  Functia generatoare $A(x) = \displaystyle\sum\limits_{n=0}^{\infty} a_{n}x^{n}$ este rationala:
+  Funcția generatoare $A(x) = \displaystyle\sum\limits_{n=0}^{\infty} a_{n}x^{n}$ este rațională:
   $A(x) = \frac{P(x)}{Q(x)}$ unde $deg(P) < k$, iar $Q(x) = 1 - \displaystyle\sum\limits_{i=1}^{k} c_{i}x^{i}$.
 \end{thm}
 
 \begin{thm}
-  Daca stim ca gradul polinomului minim este cel mult $m$, atunci acesta este
+  Dacă știm că gradul polinomului minim este cel mult $m$, atunci acesta este
   unic determinat de primele $2m$ elemente ale lui $a$; sau altfel spus
   $P(x) \equiv Q(X) A(X) \mod x^{2m}$.
 \end{thm}
 
-\noindent \textbf{Identitatea lui Bezout}: daca $g$ este cel mai mare divizor comun al
-polinoamelor $a$ si $b$, atunci exista doua polinoame $u$ si $v$ astfel incat
+\noindent \textbf{Identitatea lui Bezout}: dacă $g$ este cel mai mare divizor comun al
+polinoamelor $a$ și $b$, atunci există două polinoame $u$ și $v$ astfel încât
 $ua + vb = g$.
 
-In \cite{sugiyama} se arata ca putem executa algoritmul lui Euclid extins pentru
-calcularea valorilor $u$ si $v$, alegand $a = A(x) \mod x^{2m}$, iar
-$b = x^{2m}$ pana cand $deg(g) < m$.
+În \cite{sugiyama} se arată că putem executa algoritmul lui Euclid extins pentru
+calcularea valorilor $u$ și $v$, alegând $a = A(x) \mod x^{2m}$, iar
+$b = x^{2m}$ până când $deg(g) < m$.
 
 \pagebreak
 
-\section{Filtrare prin radacini ale unitatii}
+\section{Filtrare prin rădăcini ale unității}
 
 \label{rootsofunityfilter}
 
-\textbf{Filtrarea prin radacini ale unitatii} este o tehnica de izolare si
-insumare a coeficientilor unui polinom. Aceasta se preteaza, in particular,
-atunci cand indexurile sunt periodice modulo $n$.
+\textbf{Filtrarea prin rădăcini ale unității} \cite{rootsofunityfilter} este o tehnică de izolare și
+însumare a coeficienților unui polinom. Aceasta se pretează, în particular,
+atunci când indexurile sunt periodice modulo $n$.
 
 \begin{thm}
-  Daca $p$ este un polinom si $\zeta$ este o radacina a unitatii de ordin
+  Dacă $p$ este un polinom și $\zeta$ este o rădăcină a unității de ordin
   $n$ ($\zeta^{n} = 1$), atunci $\frac{1}{n} \displaystyle\sum\limits_{i=0}^{n-1} p(\zeta^{i})$
   este suma indexurilor dizibile prin $n$.
 \end{thm}
 
 \begin{proof}
-  Fie $p = a_{0}x^{0} + a_{1}x^{1} + \ldots + a_{k}x^{k}$. Consideram contributia
+  Fie $p = a_{0}x^{0} + a_{1}x^{1} + \ldots + a_{k}x^{k}$. Consideram contribuția
   unui index $p$, nedivizibil prin $n$ la suma
   $\displaystyle\sum\limits_{i=0}^{n-1} p(\zeta^{i}) = a_{p}(\zeta^{0} + \zeta^{p} + \zeta^{2p} + \ldots + \zeta^{(n-1)p})$.
-  Termenul din partea dreapta este de fapt $\displaystyle\sum\limits_{i=0}^{n-1} \zeta^{i*p} = \frac{\zeta^{p*n} - 1}{\zeta^{p} - 1} = 0$,
-  deci se anuleaza. Celelalte indexuri vor avea coeficient $1$ pentru fiecare
-  $\zeta^{i}$, deci se vor aduna in total de $n$ ori, motiv pentru care toata suma
-  se imparte la $n$.
+  Termenul din partea dreaptă este de fapt $\displaystyle\sum\limits_{i=0}^{n-1} \zeta^{i*p} = \frac{\zeta^{p*n} - 1}{\zeta^{p} - 1} = 0$,
+  deci se anulează. Celelalte indexuri vor avea coeficient $1$ pentru fiecare
+  $\zeta^{i}$, deci se vor aduna în total de $n$ ori, motiv pentru care toată suma
+  se împarte la $n$.
 \end{proof}
 
 
 \pagebreak
 
-\section{Radacini primitive}
+\section{Rădăcini primitive}
 \label{primitiveroot}
 
-In ce urmeaza presupunem ca lucram intr-un corp finit $\mathbb{F}_{p}$, unde $p$ este un numar prim.
+\cite{primitiveroot} În ce urmează presupunem că lucrăm într-un corp finit $\mathbb{F}_{p}$, unde $p$ este un număr prim.
 
 \begin{defn}
-  Un numar $g$ se numeste radacina primitiva modulo $n$ daca si numai daca pentru orice $a$ coprim cu $p$ exista un alt numar
-  $l$ astfel incat $g^{l} = a \mod p$.
+  Un număr $g$ se numește rădăcină primitiva modulo $n$ dacă și numai dacă pentru orice $a$ coprim cu $p$ există un alt număr
+  $l$ astfel încât $g^{l} = a \mod p$.
 \end{defn}
 
 \begin{thm}
   \label{carmichael}
-  (Functia Carmichael) Fie $g$ o radacina primitiva, atunci cel mai mic numar $l$ astfel incat $g^{l} = 1$ este $\phi(p)$.
+  (Funcția Carmichael) Fie $g$ o rădăcină primitivă, atunci cel mai mic număr $l$ astfel încât $g^{l} = 1$ este $\phi(p)$.
 \end{thm}
 
 \begin{thm}
   \label{carmichaelr}
-  Reciproca teoremei \ref{carmichael} este adevarata si sta la baza algoritmului pentru aflarea generatorului.
+  Reciproca teoremei \ref{carmichael} este adevărată și stă la baza algoritmului pentru aflarea generatorului.
 \end{thm}
 
-Un algoritm evident pentru a cauta radacini primitive incearca numerele din $\mathbb{F}_{p}$ pe rand si apoi le calculeaza
-puterile pentru a verifica daca sunt diferite. Desi in general radacina primitiva este un numar destul de mic, acest algoritm
+Un algoritm evident pentru a caută rădăcini primitive încearcă numerele din $\mathbb{F}_{p}$ pe rând și apoi le calculează
+puterile pentru a verifica dacă sunt diferite. Deși în general rădăcină primitivă este un număr destul de mic, acest algoritm
 nu este cel mai eficient posibil.
 
-Din \ref{carmichaelr} stim ca, pentru un $a$ fixat, daca gasim un $l < \phi(p)$ pentru care $a^{l} = 1$, atunci acesta nu este un
-generator. Din \textbf{teorema lui Euler} stim ca orice $a$ coprim cu $p$ satisface $a^{\phi(p)} = 1 \mod p$. Aceste observatii pot
-imbunatati algoritmul mentionat anterior, insa, pentru ca noi il folosim pentru $p$ numar prim, atunci $\phi(p) = p - 1$, deci nu
-ajuta foarte mult. \textbf{Teorema lui Lagrange} mai spune ca este suficient sa verificam ca $a^{d} \neq 1 \mod p$ pentru toti $d \ |\ \phi(p)$.
-Aceasta este deja o imbunatatire foarte mare, deoarece numarul de divizori ai lui $\phi(p)$ este de ordinul $O(p^{\frac{1.066}{\ln \ln p}})$.
+Din \ref{carmichaelr} știm că, pentru un $a$ fixat, dacă găsim un $l < \phi(p)$ pentru care $a^{l} = 1$, atunci acesta nu este un
+generator. Din \textbf{teorema lui Euler} știm că orice $a$ coprim cu $p$ satisface $a^{\phi(p)} = 1 \mod p$. Aceste observații pot
+îmbunătăți algoritmul menționat anterior, însă, pentru că noi îl folosim pentru $p$ număr prim, atunci $\phi(p) = p - 1$, deci nu
+ajută foarte mult. \textbf{Teorema lui Lagrange} mai spune că este suficient să verificam că $a^{d} \neq 1 \mod p$ pentru toți $d \ |\ \phi(p)$.
+Aceasta este deja o îmbunatățire foarte mare, deoarece numărul de divizori ai lui $\phi(p)$ este de ordinul $O(p^{\frac{1.066}{\ln \ln p}})$.
 
-Daca $\phi(p) = a_{1}^{b_{1}} a_{2}^{b_{2}} \ldots a_{t}^{b_{t}}$, atunci este de ajuns sa se verifice acei $d = \frac{\phi(p)}{a_{i}}$.
+Dacă $\phi(p) = a_{1}^{b_{1}} a_{2}^{b_{2}} \ldots a_{t}^{b_{t}}$, atunci este de ajuns să se verifice acei $d = \frac{\phi(p)}{a_{i}}$.
 
 \begin{proof}
-  Presupunem ca exista un divizor propriu $d$ al lui $\phi(p)$ astfel incat $g^{d} = 1 \mod p$. Atunci exista un factor prim $a_{i}$
-  din factorizarea lui $\phi(p)$ astfel incat $d \ | \ \frac{\phi(p)}{a_{i}}$ si evident $g^{\frac{\phi(p)}{a_{i}}} = 1 \mod p$.
+  Presupunem că există un divizor propriu $d$ al lui $\phi(p)$ astfel încât $g^{d} = 1 \mod p$. Atunci există un factor prim $a_{i}$
+  din factorizarea lui $\phi(p)$ astfel încât $d \ | \ \frac{\phi(p)}{a_{i}}$ și evident $g^{\frac{\phi(p)}{a_{i}}} = 1 \mod p$.
 \end{proof}
 
-Complexitatea de timp a acestei solutii este acum $O(g \log^{2} p)$, iar daca presupunem ca ipoteza Riemann ca fiind adevarata, $g = O(\log^{6} p)$.
+Complexitatea de timp a acestei soluții este acum $O(g \log^{2} p)$, iar dacă presupunem ipoteza Riemann ca fiind adevărată, $g = O(\log^{6} p)$.
