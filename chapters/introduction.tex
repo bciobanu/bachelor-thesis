@@ -1,28 +1,46 @@
 \chapter{Introducere}
 
-Cuplajul este o problema fundamentala in teoria grafurilor. Aceasta are
-aplicatii vaste in informatica teoretica, fiind la baza unor probleme precum
-izomorfismul de subarbori, acoperirea unui graf orientat aciclic cu numar minim
-de cai disjuncte si detectarea obiectelor aflate in miscare, dar si in chimie
-pentru structura Kekule si indexul Hosoya. \par % TODO scrie explicatie aici
+Cuplajul este o problemă fundamentală în teoria grafurilor. Aceasta are
+aplicații vaste în informatica teoretică, fiind la baza unor probleme precum
+izomorfismul de subarbori, acoperirea unui graf orientat aciclic cu număr minim
+de cai disjuncte și detectarea obiectelor aflate în mișcare, dar și în chimie
+pentru structura Kekule și indexul Hosoya. \par
 
-De-alungul timpului s-au dezvoltat multi algoritmi eficienti, din punct de
-vedere al complexitatii de timp, pentru rezolvarea problemelor de cuplaj pe
+De-alungul timpului s-au dezvoltat mulți algoritmi eficienți, din punct de
+vedere al complexității de timp, pentru rezolvarea problemelor de cuplaj pe
 diferite tipuri de grafuri. \par
 
-In aceasta lucrare ne vom concentra pe grafurile bipartite. In particular pentru
-acestia, cuplajul maximal, o problema fundamentala de optimizare, se poate
-calcula eficient folosind algoritmi de flux maxim. Acest lucru este totusi si o
-piedica pentru arhitectura calculatoarelor moderne, fiind greu de paralelizat si
-optimizat pentru accesul memoriei cache. De asemenea, pentru acestia nu se
-cunosc extensii in timp polinomial pentru aflarea altor rezultate teoretice
-utile, cum ar fi numarul de cuplaje perfecte. Acest lucru a avut totusi sa se
-schimbe in 1995, cand R. Motwani si P. Raghavan au aratat cum se poate folosi
-matricea Edmonds, numita dupa Jack Edmonds care a avut multe contributii in
-domeniul optimizarilor, si algoritmi de algebra liniara pentru a afla marimea
-cuplajului maximal, in ``Randomized algorithms''\cite{randomizedalgorithms}. \par
+În această lucrare ne vom concentra pe grafurile bipartite. În particular pentru
+aceștia, cuplajul maximal, o problemă fundamentală de optimizare, se poate
+calcula eficient folosind algoritmi de flux maxim. Acest lucru este totuși și o
+piedică pentru arhitectură calculatoarelor moderne, fiind grei de paralelizat și
+optimizat pentru accesul memoriei cache. De asemenea, pentru aceștia nu se
+cunosc extensii în timp polinomial pentru aflarea altor rezultate teoretice
+utile, cum ar fi numărul de cuplaje perfecte. Acest lucru a avut totuși să se
+schimbe în 1995, când R. Motwani și P. Raghavan au arătat cum se poate folosi
+matricea Edmonds, numită după Jack Edmonds care a avut multe contribuții în
+domeniul optimizarilor, și algoritmi de algebră liniară pentru a afla mărimea
+cuplajului maximal, în lucrarea ``Randomized algorithms''\cite{randomizedalgorithms}. \par
 
-Algoritmii de algebra liniara au avantajul ca admit implementari eficiente pe
-procesoarele moderne, avand un potential mult mai mare pentru paralelism si
-concurenta. Observatiile pornind de la matricea lui Edmonds ne vor ajuta sa rezolvam
-probleme care nu au mai fost rezolvate pana acum in timp polinomial. \par
+Algoritmii de algebră liniară au avantajul că admit implementări eficiente pe
+procesoarele moderne, având un potențial mult mai mare pentru paralelism și
+concurență. Observațiile pornind de la matricea lui Edmonds ne vor ajută să rezolvăm
+probleme care nu au mai fost rezolvate până acum în timp polinomial. \par
+
+Lucrarea este împărțită în două părți: contextul și problemele. Contextul este o
+baza de informații folosite pentru a rezolve problemele. Acesta este compus în
+mare parte de noțiuni de teoria grafurilor și algebră, cu accentul pus pe cea din
+urmă. Apoi, prezentăm o colecție de problemele, unde fiecare a fost aleasă pentru
+a ilustra:
+\begin{itemize}
+    \item fie cum algoritmii de cuplaj bazați pe algebră liniară o pot rezolva în
+    timp polinomial, în timp ce algoritmii de flux nu pot îmbunătăți complexitatea
+    exponențială.
+    \item fie cum o problema care în aparență nu s-ar preta algoritmilor de cuplaj
+    bazați pe algebră liniară, dar se poate rezolva cu flux, se poate de fapt rezolva
+    și cu prima metodă având complexitate de timp cel puțin la fel de bună.
+\end{itemize}
+
+Problemele sunt alese fie din folclor, fie propuse la concursuri de
+programare competitivă. Dintre acestea, problema ``Xor Matching'' a fost propusă
+chiar de mine în 2018 și a fost inspirația pentru a scrie această lucrare.
