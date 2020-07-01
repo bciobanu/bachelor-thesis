@@ -35,7 +35,7 @@
 \begin{defn}
   Un \textbf{polinom} este o expresie construită dintr-una sau mai multe
   variabile și constante, folosind doar operații de adunare, scădere, înmulțire
-  și ridicare la putere constanta pozitivă întreagă.
+  și ridicare la putere constantă pozitivă întreagă.
 \end{defn}
 
 \begin{defn}
@@ -50,7 +50,7 @@ $(x_{1}, y_{1}), (x_{2}, y_{2}), \ldots, (x_{k+1}, y_{k+1})$ avem că
 $P(x_{i}) = y_{i}\ \forall\ 1 \leq i \leq K + 1$. \par
 Construcția lui $P$ a fost oferită de Joseph Louis Lagrange în $1795$:
 \begin{equation}
-  P(x) := \displaystyle\sum\limits_{i_{1}=0}^{k} (y_{i_{1}} * \prod_{1 \leq i_{2} \leq k + 1 \ \land \ i_{1} \neq i_{2}} \frac{x - x_{i_{2}}}{x_{i_{1}} - x_{i_{2}}})
+  P(x) := \displaystyle\sum\limits_{i_{1}=0}^{k} (y_{i_{1}} \prod_{1 \leq i_{2} \leq k + 1 \ \land \ i_{1} \neq i_{2}} \frac{x - x_{i_{2}}}{x_{i_{1}} - x_{i_{2}}})
 \end{equation}
 
 \section{Eliminare Gaussiană}
@@ -74,17 +74,18 @@ continuă aceleași operații pentru restul liniilor.
 Este posibil ca acele valori să fie $0$. De aceea există mai multe euristici, în special gândite
 pentru a stabiliza operațiile pe numere reale în virgulă flotantă. Euristica cea mai des folosită
 în practică este să se caute valoarea cea mai mare absolută de pe acea coloană și să se interschimbe
-cele două rânduri.
+cele două rânduri. Această valoare se numește pivot.
 
 Complexitatea algoritmului este de $O(N^{2}M)$ dacă $A$ este de mărime $N \times M$, cu $N \leq M$.
 În practică acest algoritm se poate aplica și atunci când se lucrează într-un corp finit.
-Un caz des întâlnit este în $\mathbb{F}_{2}$. Pe modelul RAM acest caz se poate implementa chiar în
-complexitate $O(\frac{N^{2}M}{w})$, unde $w$ este mărimea unui cuvânt, adică $64$ pentru procesoarele
-moderne.
+Un caz des întâlnit este în $\mathbb{F}_{2}$, corpul format din numerele întregi
+modulo 2. Pe modelul RAM acest caz se poate implementa chiar în complexitate
+$O(\frac{N^{2}M}{w})$, unde $w$ este mărimea unui cuvânt, adică $64$ pentru
+procesoarele moderne \cite{gaussf2}.
 
 Metoda poate fi folosită și pentru a calcula inversa unei matrice. Tot ce este de făcut, pentru o matrice
-$A$ de mărime $N \times N$ este să se execute algoritmul pe matricea $[A\ |\ I_{N}]$ de mărime $N \times 2N$,
-iar matricea de pe blocul din dreapta (coloanele  cu indicemai mare ca $N$) va fi chiar $A^{-1}$.
+$A$ de mărime $N \times N$ este să se execute eliminarea Gaussiană pe matricea $[A\ |\ I_{N}]$ de mărime $N \times 2N$,
+iar matricea de pe blocul din dreapta (coloanele  cu indice mai mare ca $N$) va fi chiar $A^{-1}$.
 
 Pentru calculul determinantului, putem executa algoritmul de înainte cu mențiunea că nu vom mai împărți fiecare
 linie, dar vom înmulți acele valori de pivot și de fiecare dată când schimbăm două linii, schimbăm semnul
@@ -102,6 +103,16 @@ dorește calculul rangului, atunci aceste este chiar numărul pivoților diferi�
     \item{$E \subseteq \{(x, y)\ |\ (x, y) \in V^2 \land x \neq y\}$ este
       mulțimea de muchii, care sunt perechi neordonate de noduri}.
   \end{itemize}
+\end{defn}
+
+\begin{defn}
+  Un graf se numește \textbf{conex} daca pentru oricare două noduri $x$ și $y$ din graf,
+  există un lanț între ele.
+\end{defn}
+
+\begin{defn}
+  Un graf este \textbf{aciclic} nu există un nod din care putem sa pornim un
+  lanț simplu și să ajungem iar el.
 \end{defn}
 
 \begin{defn}
@@ -232,7 +243,7 @@ permutarii $P$.
 
 \begin{equation}
   \label{isolationdet}
-  \det(A) = \displaystyle\sum\limits_{P \in S_{n}} (\text{sgn}(P) * \prod_{1 \leq i \leq N} A_{i, P_{i}})
+  \det(A) = \displaystyle\sum\limits_{P \in S_{n}} (\text{sgn}(P) \prod_{1 \leq i \leq N} A_{i, P_{i}})
 \end{equation}
 
 Pentru fiecare cuplaj din $G$ putem asocia unic o permutare $P$ din $S_{n}$:
@@ -356,7 +367,7 @@ folosi una din cele două leme să reducem problema la una mai simpla.
 \subsection{Folosind Lema Schwartz-Zippel}
 
 Pentru fiecare muchie $(u_{i}, v_{j})$ alegem o valoarea aleatoare $x_{i,j}$ dintr-o
-mulțimea $S$. Construim matricea astfel:
+mulțime $S$. Construim matricea astfel:
 
 \begin{equation}
   A=
@@ -416,12 +427,12 @@ vectorul obținut prin evaluarea polinomului în rădăcinile unității:
 \end{equation}
 
 Similar, având vectorul din partea dreapta a ecuației \ref{dft}, \textbf{inversa
-transformării discrete Fourieri} reconstituie coeficienții polinomului $A$:
+transformării discrete Fourier} reconstituie coeficienții polinomului $A$:
 $(a_{0}, a_{1}, \ldots a_{n-1})$. Vom nota această transformare cu
 $\text{InverseDFT}$. \par
 
 O aplicație utila este înmulțirea polinoamelor. Fie $\textbf{dot}$ operația de
-înmulțire scalara a doi vectori. Aceasta se bazează pe o
+înmulțire scalară a doi vectori. Aceasta se bazează pe o
 proprietatea a transformării, și anume:
 \begin{equation}
   \text{DFT}(A * B) = \text{dot}(\text{DFT}(A), \text{DFT}(B))
@@ -429,13 +440,13 @@ proprietatea a transformării, și anume:
 
 Aceasta proprietate este utilă, fiind la baza unui algoritm rapid de înmulțire a
 polinoamelor, deoarece $\text{DFT}(A)$ și $\text{InverseDFT}(A)$ se pot calcula
-în timp $O(n \log n)$.
+în timp $O(n \log n)$, așa cum se arată în \cite{fftpoly}.
 
 \subsection{Transformarea Hadamard}
 \label{hadamard}
 
-\textbf{Transformarea Hadamard} este o transformare Fourier generalizată,
-executând o operație liniară pe $2^{n}$ numere reale. Aceasta este echivalenta
+\textbf{Transformarea Hadamard} (\cite{hadamard}) este o transformare Fourier generalizată,
+executând o operație liniară pe $2^{n}$ numere reale. Aceasta este echivalentă
 cu o transformare discretă $n$-dimensională Fourier de mărime
 $2 \times 2 \ldots \times 2$. În mod intuitiv, se înmulțesc monoame a $n$
 variabile, aplicandu-se modulo $x^{2}-1$ pe fiecare variabilă. Fie $p_{i_{1}, i_{2}} \in \{0, 1\}$:
@@ -453,15 +464,17 @@ $C_{i \oplus j} = \displaystyle\sum\limits A_{i} B_{j}$, unde $\oplus$ este oper
 cele $n$ monoame reprezentau biții fiecărui număr de la $0$ la $2^{n} - 1$.
 Acestora la înmulțire li se aplica modulo $x^{2} - 1$, asemănător biților în
 timpul unei operații de xor, care este ca o adunare, în urma căreia se aplica
-modulo $2$, totul efectuat separat pe fiecare bit în parte.
+modulo $2$, totul efectuat separat pe fiecare bit în parte. Această echivalență
+se poate arata explicitând transformarea Hadamard și este ilustrată mai atent în
+\cite{hadamard}.
 
 \subsection{Algoritmul Fast Walsh-Hadamard}
 \label{fasthadamard}
 
-\textbf{Algoritmul Fast Walsh-Hadamard} \cite{fwht} este un algoritm eficient pentru a
+\textbf{Algoritmul Fast Walsh-Hadamard} este un algoritm eficient pentru a
 calcula \textbf{transformarea Hadamard}. O implementare naivă a transformării
 necesită complexitate de timp $O(2^{2n})$, în timp ce algoritmul pe care urmează
-să-l prezentam necesita doar $O(n2^{n})$. Algoritmul se bazează pe paradigma
+să-l prezentam necesita doar $O(n2^{n})$ (\cite{fwht}). Algoritmul se bazează pe paradigma
 divide et impera, împărțind o problema de mărime $2^{n}$ în doua de mărime
 $2^{n-1}$, urmărind definiția recursiva a matricei Hadamard:
 
@@ -473,6 +486,13 @@ $2^{n-1}$, urmărind definiția recursiva a matricei Hadamard:
     H_{n-1} & -H_{n-1}
   \end{pmatrix}
 \end{equation}
+
+Rândurile acestor matrice sunt chiar funcții Walsh (\cite{fwht}). Acestea formează
+o mulțime ortogonală de funcții cu care se poate reprezenta orice funcție discretă (\cite{hadamard}).
+De aceea si transformarea Hadamard se poate modifica să reprezinte și alte operații,
+cum ar fi sau pe biți.
+
+\pagebreak
 
 Ecuația \ref{hadamardmatrix} omite factorul de normalizare de
 $\frac{1}{\sqrt{2}}$, care poate fi aplicat la final.
@@ -543,8 +563,8 @@ Considerăm $A$ o matrice pătratică de mărime $n \times n$ peste un corp fini
 
 \begin{thm}
   \label{cayleyhamilton}
-  \textbf{Cayley-Hamilton} spune că fiecare matrice pătratica într-un inel
-  comutativ își satisface ecuația caracteristica, mai exact $p(A) = 0$.
+  \textbf{Cayley-Hamilton} (\cite{algebrabook}) spune că fiecare matrice pătratica
+  într-un inel comutativ își satisface ecuația caracteristica, mai exact $p(A) = 0$.
 \end{thm}
 
 $A$ are un polinom monic $P$ peste corpul $F$ de grad minim pentru care
@@ -559,6 +579,10 @@ de $n$. Fie $P = a_{0} + a_{1}x + \ldots + a_{n'}x^{n'}$, unde $n' \leq n$.
   Dacă $n' = n$, atunci $P$ este chiar polinomul caracteristic al lui $A$, iar
   determinantul este chiar $(-1)^{n}P(0)$.
 \end{lem}
+
+Vom avea nevoie de această metodă în cadrul calculelor pentru determinanți.
+Nu am găsit o metodă deterministă, insă pentru că deja ne folosim de lema
+Schwartz-Zippel în algoritm, am găsit următoarea metodă probabilistică:
 
 \begin{lem}
   Putem folosi polinomul minimal pentru a calcula determinantul matricei $A$.
@@ -630,8 +654,8 @@ constans la un tip de corp anume \cite{sugiyama}.
 
 \begin{defn}
   Un ideal $<S>$ dintr-un inel $R$ este de tip finit dacă admite un sistem finit de generatori:
-  $\exists \ s_{1}, s_{2}, \ldots s_{r} \in \ $  astfel încât
-  $\forall \ s \in \ , s = \displaystyle\sum\limits_{i=1}^{r} x_{i} s_{i}, \ x_{i} \in R$.
+  $\exists \ s_{1}, s_{2}, \ldots s_{r} \in \ <S>$  astfel încât
+  $\forall \ s \in \ <S>, s = \displaystyle\sum\limits_{i=1}^{r} x_{i} s_{i}, \ x_{i} \in R$.
 \end{defn}
 
 \begin{defn}
@@ -644,7 +668,7 @@ constans la un tip de corp anume \cite{sugiyama}.
 \end{defn}
 
 \begin{thm}
-  $F[x]$ este un inel principal.
+  $F[x]$ este un inel principal (\cite{abstractalgebra}).
 \end{thm}
 
 \begin{lem}
@@ -688,7 +712,7 @@ atunci când indexurile sunt periodice modulo $n$.
 \begin{thm}
   Dacă $p$ este un polinom și $\zeta$ este o rădăcină a unității de ordin
   $n$ ($\zeta^{n} = 1$), atunci $\frac{1}{n} \displaystyle\sum\limits_{i=0}^{n-1} p(\zeta^{i})$
-  este suma indexurilor dizibile prin $n$.
+  este suma indexurilor dizibile prin $n$ (\cite{complexnumbers}).
 \end{thm}
 
 \begin{proof}
@@ -732,7 +756,7 @@ Din \ref{carmichaelr} știm că, pentru un $a$ fixat, dacă găsim un $l < \phi(
 generator. Din \textbf{teorema lui Euler} știm că orice $a$ coprim cu $p$ satisface $a^{\phi(p)} = 1 \mod p$. Aceste observații pot
 îmbunătăți algoritmul menționat anterior, însă, pentru că noi îl folosim pentru $p$ număr prim, atunci $\phi(p) = p - 1$, deci nu
 ajută foarte mult. \textbf{Teorema lui Lagrange} mai spune că este suficient să verificam că $a^{d} \neq 1 \mod p$ pentru toți $d \ |\ \phi(p)$.
-Aceasta este deja o îmbunatățire foarte mare, deoarece numărul de divizori ai lui $\phi(p)$ este de ordinul $O(p^{\frac{1.066}{\ln \ln p}})$.
+Aceasta este deja o îmbunatățire foarte mare, deoarece numărul de divizori ai lui $\phi(p)$ este de ordinul $O(p^{\frac{1.066}{\ln \ln p}})$ (\cite{numdivisors}).
 
 Dacă $\phi(p) = a_{1}^{b_{1}} a_{2}^{b_{2}} \ldots a_{t}^{b_{t}}$, atunci este de ajuns să se verifice acei $d = \frac{\phi(p)}{a_{i}}$.
 

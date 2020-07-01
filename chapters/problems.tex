@@ -5,7 +5,8 @@
 \noindent \textbf{Enunț.} Se dă un graf bipartit $G(U + V, E)$ și o funcție de cost $w \colon U \to \mathbb{R}$. Să se determine cuplajul
 maximal care maximizează suma costurilor nodurilor alese în cuplaj.
 
-\noindent \textbf{Soluție.} Este corect să prioritizam nodurile în ordinea descrescătoare a costurilor asociate.
+\noindent \textbf{Soluție.} Este corect să căutăm un cuplaj maximal,
+prioritizând nodurile după costul lor.
 
 \begin{lem}
   \textbf{Berge}. Un cuplaj $M$ în $G$ este maximal dacă și numai dacă nu există o cale care pornește dintr-un nod nesaturat, se încheie pe un alt
@@ -16,8 +17,8 @@ maximal care maximizează suma costurilor nodurilor alese în cuplaj.
   Să presupunem că executând algoritmul în ordinea sortată obținem cuplajul $A$, iar cel optim este de fapt $B$.
   Fie $u$ primul nod în ordinea descrescătoare a costurilor care nu este saturat în $B$, dar este saturat în $A$.
   Pentru că $u$ a fost cuplat înaintea nodurilor cu cost mai mic decât el, atunci exista un lanț alternant în
-  $A \oplus B$ de la $u$ către un alt nod din $U$, $u'$, pentru care $w(u) \geq w(u')$. Acest lanț ar putea fi folosit
-  în $B$ și ar aduce un cost total cel puțin la fel de bun.
+  $A \oplus B$ (adică reuniunea muchiilor din cuplaje fară muchiile comune) de la $u$ către un alt nod din $U$, $u'$,
+  pentru care $w(u) \geq w(u')$. Acest lanț ar putea fi folosit în $B$ și ar aduce un cost total cel puțin la fel de bun.
 \end{proof}
 
 O explicație alternativa, relevantă problemelor de optimizare este teoria despre matroizi \cite{matroid}. Un matroid $M$ este o pereche
@@ -41,7 +42,7 @@ imaginii funcției $w$ peste această submulțime. Rămâne să verificam că es
 
 \begin{itemize}
   \item Mulțimea $U$ este finită.
-  \item Daca știm un cuplaj pentru o mulțime de noduri, atunci putem construi cuplajul pentru orice submulțime, păstrând doar perechile nodurilor
+  \item Dacă știm un cuplaj pentru o mulțime de noduri, atunci putem construi cuplajul pentru orice submulțime, păstrând doar perechile nodurilor
   rămase.
   \item Reamintim că matroidul este pe noduri din $U$, nu pe perechi de noduri cuplate. Fie $M_{1}$ și $M_{2}$ doua submulțimi independente pentru care
     $|M_{2}| \geq |M_{1}|$, atunci din reciproca \textbf{lemei lui Berge}, putem mări cuplajul $M_{1}$ folosind un nod din $M_{2} - M_{1}$ păstrând
@@ -135,8 +136,7 @@ liniar al vectorilor de pe linii. Acestea vor fi chiar nodurile alese în cuplaj
 
 Ce rămâne de făcut este având cuplajul $M$, să găsim acoperirea muchiilor cu număr minim de noduri $C$. $C$ se poate construi alegând
 câte un nod din fiecare muchie din $M$. Pentru fiecare muchie $i$ din cuplaj putem crea un literal $x_{i}$ care să fie adevărat daca alegem
-nodul din mulțimea $V$ și fals dacă alegem nodul din mulțimea $U$. Relațiile intre aceștia se pot scrie că o formulă 2-CNF. Considerăm o
-muchie $(u,v) \in E - M$, atunci:
+nodul din mulțimea $V$ și fals dacă alegem nodul din mulțimea $U$. Relațiile între aceștia se pot scrie ca o formulă în forma normala conjuctivă. Considerăm o muchie $(u,v) \in E - M$, atunci:
 \begin{itemize}
   \item Dacă $u$ și $v$ sunt noduri saturate, atunci fie $i_{1}$, respectiv $i_{2}$ muchiile din cuplaj asociate. În acest caz adaugăm clauza
   $\neg x_{i_{1}} \lor x_{i_{2}}$, însemnând că fie $i_{1}$ își folosește capătul din $U$, fie $i_{2}$ își folosește capătul din $V$.
@@ -146,8 +146,8 @@ muchie $(u,v) \in E - M$, atunci:
   \item Ambele noduri nu pot să fie nesaturate, pentru că ar contrazice faptul că $M$ este un cuplaj maximal.
 \end{itemize}
 
-Presupunem că $|U|, |V| = O(n)$. Problema de 2-SAT se poate rezolva apoi în complexitate de timp $O(n^{2})$. Acest proces se poate simplifica
-în implementare pentru că în $C$ vor fi chiar acele noduri aflate la distanță impară de nodurile nesaturate din $U$.
+Presupunem că $|U|, |V| = O(n)$. Problema de 2-satisfiabilitate se poate rezolva apoi în complexitate de timp $O(n^{2})$.
+Acest proces se poate simplifica în implementare pentru că în $C$ vor fi chiar acele noduri aflate la distanță impară de nodurile nesaturate din $U$.
 
 În acest algoritm mărimea cuplajului nu vă scădea niciodată, iar aceasta creste până la $|U|$. De fiecare data când se schimba
 mărimea cuplajului, putem să recalculam mulțimea muchiilor și acoperirea minima în timp $O(n^{3})$. Până să crească mărimea
@@ -234,7 +234,7 @@ Cum putem folosi \textbf{teorema lui Hall} în cazul nostru este să construim m
 unde $d'_{i, j} = d_{c_{1, i}, c_{2, j}}$. Dacă pentru fiecare mulțime de coloane considerăm mulțimea liniilor care au măcar o valoare de adevărat
 pe vreuna din coloane, atunci vrem ca numărul de linii să nu fie mai mic decât numărul de coloane. Această soluție din păcate rămâne exponențială
 și se poate construi în timp $O(2^{n_{2}} n_{1})$ daca se procesează submulțimile de coloane în ordinea codurilor Gray, în timp ce soluția evidentă ar lua
-$O(2^{n_{2}} n_{1}n_{2})$. O proprietate inedită a codurilor Gray este că măștile consecutive de biți vor fi diferite pe fix un bit. Astfel vom determina acel bit,
+$O(2^{n_{2}} n_{1}n_{2})$ (\cite{gray}). O proprietate inedită a codurilor Gray este că măștile consecutive de biți vor fi diferite pe fix un bit. Astfel vom determina acel bit,
 asociat unei coloane și apoi vom folosi un vector de frecvență pentru a determina ce linii mai rămân active pentru noua submulțime de coloane, în timp
 cel mult $O(n_{1})$.
 
@@ -249,14 +249,14 @@ rangul și să verificăm că este egal cu $n_{2}$. Complexitatea acestei soluț
 
 \pagebreak
 
-\section{Acoperire cu cai a unui graf orientat aciclic}
+\section{Acoperire cu căi a unui graf orientat aciclic}
 
-\noindent \textbf{Enunt.} Se da un graf orientat aciclic $G(V, E)$. Sa se gaseasca o multime de cardinal minim de cai, astfel incat
-fiecare nod sa faca parte din exact o cale.
+\noindent \textbf{Enunț.} Se da un graf orientat aciclic $G(V, E)$. Să se gasească o mulțime de cardinal minim de căi, astfel încat
+fiecare nod să faca parte din exact o cale.
 
-\noindent \textbf{Solutie.} Un graf orientat aciclic este un graf orientat fara cicli orientati. Acesta admite o sortate topologica,
-adica o ordonare a nodurilor $v_{1}, v_{2}, \ldots$ in asa fel incat daca exista arcul $(v_{i}, v_{j})$, atunci $v_{i}$ apare inaintea
-lui $v_{j}$ in ordonare. Algoritmul pentru a calcula sortarea topologica este urmatorul:
+\noindent \textbf{Soluție.} Un graf orientat aciclic este un graf orientat fară cicli orientati. Acesta admite o sortare topologică,
+adică o ordonare a nodurilor $v_{1}, v_{2}, \ldots$ în așa fel încat dacă există arcul $(v_{i}, v_{j})$, atunci $v_{i}$ apare înaintea
+lui $v_{j}$ în ordonare. Algoritmul pentru a calcula sortarea topologica este următorul:
 
 \begin{algorithm}[H]
   \DontPrintSemicolon
@@ -297,7 +297,7 @@ lui $v_{j}$ in ordonare. Algoritmul pentru a calcula sortarea topologica este ur
 
 Algoritmul practic construiește inversa postordinii și aceasta este chiar o sortare topologică posibila.
 
-Având calculată sortarea topologică, o prima soluție cu backtracking vă considera nodurile în ordinea inversă.
+Având calculată sortarea topologică, o prima soluție cu backtracking va considera nodurile în ordinea inversă.
 Ne putem imagina căile ca o colorare, iar acum la fiecare pas al algoritmului trebuie să stabilim culoarea pentru
 nodul curent. Pentru că le procesam în ordinea inversa sortării topologice, știm că am procesat deja toți vecinii lui
 iar aceștia sunt colorați în culorile $\{C_{1}, C_{2}, \ldots, C_{k}\}$. Pentru a asigura invariantul de cale, odată ce

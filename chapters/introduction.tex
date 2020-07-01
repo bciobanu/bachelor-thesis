@@ -11,16 +11,29 @@ vedere al complexității de timp, pentru rezolvarea problemelor de cuplaj pe
 diferite tipuri de grafuri. \par
 
 În această lucrare ne vom concentra pe grafurile bipartite. În particular pentru
-aceștia, cuplajul maximal, o problemă fundamentală de optimizare, se poate
-calcula eficient folosind algoritmi de flux maxim. Acest lucru este totuși și o
-piedică pentru arhitectură calculatoarelor moderne, fiind grei de paralelizat și
-optimizat pentru accesul memoriei cache. De asemenea, pentru aceștia nu se
-cunosc extensii în timp polinomial pentru aflarea altor rezultate teoretice
-utile, cum ar fi numărul de cuplaje perfecte. Acest lucru a avut totuși să se
-schimbe în 1995, când R. Motwani și P. Raghavan au arătat cum se poate folosi
-matricea Edmonds, numită după Jack Edmonds care a avut multe contribuții în
-domeniul optimizarilor, și algoritmi de algebră liniară pentru a afla mărimea
-cuplajului maximal, în lucrarea ``Randomized algorithms''\cite{randomizedalgorithms}. \par
+acestea, cuplajul maximal, o problemă fundamentală de optimizare, se poate
+calcula eficient folosind algoritmi de flux maxim. \par
+
+Algoritmii de flux presupun găsirea unui flux fezabil într-o rețea de transport.
+Rețeaua de transport este un model matematic pentru a simula ce întalnim și noi
+în viața de zi cu zi, cum ar fi cursul apei prin conducte sau al curentului în
+circuitele electrice. Însă, suprinzător la prima vedere este ca acestea pot
+formula o gamă foarte largă de probleme de optimizare întâlnite în informatică. \par
+
+Problema de flux maxim a fost prima dată formulată de către T.E. Harris și F.S.
+Ross în anul 1954 (\cite{flowhistory}), iar în anul urmator se va publica primul
+algoritm polinomial, numit după autorii Ford–Fulkerson. Între timp s-au dezvoltat
+multe îmbunătațiri, iar in momentul actual cel mai eficient algoritm din punct
+de vedere al complexității de timp a fost publicat în 2013 de către J. Orlin (\cite{orlin}).
+
+Algoritmii de flux sunt totuși și o piedică pentru arhitectura calculatoarelor
+moderne, fiind greu să îi paralelizezi sau optimizezi pentru accesul memoriei cache.
+De asemenea, pentru aceștia nu se cunosc extensii în timp polinomial pentru
+aflarea altor rezultate teoretice utile, cum ar fi numărul de cuplaje perfecte.
+Acest lucru a avut totuși să se schimbe în 1995, când R. Motwani și P. Raghavan
+au arătat cum se poate folosi matricea Edmonds, numită după Jack Edmonds care a avut
+multe contribuții în domeniul optimizarilor, și algoritmi de algebră liniară pentru
+a afla mărimea cuplajului maximal, în lucrarea ``Randomized algorithms''\cite{randomizedalgorithms}. \par
 
 Algoritmii de algebră liniară au avantajul că admit implementări eficiente pe
 procesoarele moderne, având un potențial mult mai mare pentru paralelism și

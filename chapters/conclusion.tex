@@ -10,8 +10,8 @@ fapt la baza multor altor problemele întâlnite în informatică, cum ar fi:
 
 \begin{itemize}
   \item În teoria jocurilor, soluția faimosului joc NIM este să determini dacă
-    suma xor a valorilor din șir este sau nu nenula. Astfel, putem folosi soluția
-    problemei pentru a determina dacă există măcar un cuplaj perfect cu suma xor 0.
+    suma xor a valorilor din șir este sau nu nenulă. Astfel, putem folosi soluția
+    problemei pentru a determina dacă există măcar un cuplaj perfect cu suma xor zero.
 
   \item Cum am văzut și în soluțiile parțiale care foloseau programare dinamică pe
     submultimi, numerele în baza 2 pot reprezenta de fapt o submultime de obiecte,
@@ -30,20 +30,20 @@ fapt la baza multor altor problemele întâlnite în informatică, cum ar fi:
 dar se pot reduce și ele la ``Xor Matching''. De asemenea putem să o extindem în
 feluri diferite. Ce proprietăți are operație xor pentru care am putut să rezolvăm
 problema? Transformarea Walsh Hadamard se poate modifica pentru a rezolva operații
-arbitrare atâta timp cât se găsesc matricele de transformare, cum ar fi or pe biți
-sau and pe biți.
+arbitrare atâta timp cât se găsesc matricele de transformare, cum ar fi sau pe biți
+sau și pe biți.
 
 Toate problemele s-au rezolvat în contextul matricei Edmonds, însă există o extensie
 directă a acesteia pentru grafuri oarecare, matricea Tutte \cite{tutte}. Ce
 proprietăți pierdem când facem trecerea și care dintre probleme rămân valabile
 odată ce facem această schimbare? În această lucrare am introdus algoritmul de
-cuplaj de cost minim pe muchii \ref{mincostmatching}, iar aceasta se știe că este
-o problema care admite un algoritm polinomial și pentru grafuri oarecare, dar care
-nu este bazat pe flux, dar pe un algoritm similar cu cel ungar în combinație cu
-metoda ``Blossom'' inventată de către Jack Edmonds. Acesta a fost considerat mult
-timp un algoritm mai complicat de înțeles și implementat iar o metodă bazată pe
-algoritmi de algebră liniară și matricea Tutte ar fi o alternativă tentantă, mai
-ales în cadrul concursurilor de programare competitivă.
+cuplaj de cost minim pe muchii \ref{mincostmatching}, iar pentru aceasta se cunoaște
+un algoritm polinomial și pentru grafuri oarecare, dar care nu este bazat pe flux,
+ci pe un algoritm similar cu cel ungar în combinație cu metoda ``Blossom'' inventată
+de către Jack Edmonds. Acesta a fost considerat mult timp un algoritm mai complicat
+de înțeles și implementat iar o metodă bazată pe algoritmi de algebră liniară și
+matricea Tutte ar fi o alternativă tentantă, mai ales în cadrul concursurilor de
+programare competitivă.
 
 Am pus deja destul de mult accent pe asta, dar consider că programarea competitivă
 și cercetarea în informatică au o corelație foarte puternică și mi-aș dori să văd
